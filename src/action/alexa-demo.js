@@ -157,7 +157,7 @@ Alexa = (function () {
 
     function handleOnLaunch(launchRequest, session, response) {
         var whatInfoPrompt = "What information would you like to retrieve from Adobe Analytics?",
-            speechOutput = "Welcome to Adobe Analytics.. Which report suite would you like to use?... Adobe I/O Portal, Partnerday Website.",
+            speechOutput = "Welcome to Adobe Analytics.. Which report suite would you like to use?... Blade Runner, Partnerday Website.",
             repromptOutput = "Please say either Adobe I/O Portal or Partnerday Website.";
 
         return response.ask(speechOutput, repromptOutput);
