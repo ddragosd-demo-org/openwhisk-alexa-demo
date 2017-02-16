@@ -5,5 +5,5 @@ package:
   actions:
     demo:
       version: 1.0
-      location: src/action/alexa-demo.js
+      location: openwhisk-alexa-demo-0.0.2.js
       runtime: nodejs@6

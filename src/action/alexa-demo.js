@@ -228,9 +228,22 @@ Alexa = (function () {
     return Alexa;
 })();
 
+var AlexaSDK = require('alexa-sdk');
+var handlers = {
+
+    'HelloWorldIntent': function () {
+        this.emit(':tell', 'Hello World!');
+    }
+
+};
+
 function main(event) {
     console.log('ALEXA Event', event.request.type + '!');
 
-    var alexa = new Alexa();
-    return alexa.handleEvent(event);
+    var alexaSDK = Alexa.handler(event, {});
+    alexaSDK.registerHandlers(handlers);
+    return alexaSDK.execute();
+
+    // var alexa = new Alexa();
+    // return alexa.handleEvent(event);
 }
