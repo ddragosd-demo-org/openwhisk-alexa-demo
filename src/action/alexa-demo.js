@@ -240,7 +240,7 @@ var handlers = {
 function main(event) {
     console.log('ALEXA Event', event.request.type + '!');
 
-    var alexaSDK = Alexa.handler(event, {});
+    var alexaSDK = AlexaSDK.handler(event, {});
     alexaSDK.registerHandlers(handlers);
     return alexaSDK.execute();
 
