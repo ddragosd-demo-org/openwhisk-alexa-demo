@@ -150,8 +150,8 @@ Alexa = (function () {
         "PartnerdayPageViewsIntent": function (intent, session, response) {
             return handlePartnerDayPageViewsRequest(intent, session, response);
         },
-        "PartnerdayPageViews": function(intent,session,response) {
-            return handlePartnerDayPageViewsGeneric(intent,session,response);
+        "PartnerdayPageViews": function (intent, session, response) {
+            return handlePartnerDayPageViewsGeneric(intent, session, response);
         }
     };
 
@@ -240,9 +240,15 @@ var handlers = {
 function main(event) {
     console.log('ALEXA Event', event.request.type + '!');
 
-    var alexaSDK = AlexaSDK.handler(event, {});
-    alexaSDK.registerHandlers(handlers);
-    return alexaSDK.execute();
+    return new Promise(
+        (resolve, reject) => {
+            var alexaSDK = AlexaSDK.handler(event,
+                {
+                    succeed: resolve
+                });
+            alexaSDK.registerHandlers(handlers);
+            return alexaSDK.execute();
+        });
 
     // var alexa = new Alexa();
     // return alexa.handleEvent(event);
