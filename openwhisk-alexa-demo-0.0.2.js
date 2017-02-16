@@ -6,7 +6,7 @@ module.exports.CreateStateHandler = AlexaLambdaHandler.CreateStateHandler;
 module.exports.StateString = AlexaLambdaHandler.StateString;
 },{"./lib/alexa":3}],2:[function(require,module,exports){
 'use strict';
-// var aws = require('aws-sdk');
+//removed aws-sdk ... = require('aws-sdk');
 var doc;
 
 module.exports = (function() {
@@ -111,7 +111,7 @@ var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 var i18n = require('i18next');
 var sprintf = require('i18next-sprintf-postprocessor');
-//var attributesHelper = require('./DynamoAttributesHelper');
+var attributesHelper = require('./DynamoAttributesHelper');
 var responseHandlers = require('./response');
 var _StateString = 'STATE';
 
@@ -525,7 +525,7 @@ module.exports.LambdaHandler = alexaRequestHandler;
 module.exports.CreateStateHandler = createStateHandler;
 module.exports.StateString = _StateString;
 
-},{"./response":4,"events":undefined,"i18next":23,"i18next-sprintf-postprocessor":7,"util":undefined}],4:[function(require,module,exports){
+},{"./DynamoAttributesHelper":2,"./response":4,"events":undefined,"i18next":23,"i18next-sprintf-postprocessor":7,"util":undefined}],4:[function(require,module,exports){
 'use strict';
 var attributesHelper = require('./DynamoAttributesHelper');
 
