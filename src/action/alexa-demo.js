@@ -247,3 +247,5 @@ function main(event) {
     // var alexa = new Alexa();
     // return alexa.handleEvent(event);
 }
+
+export default main;
