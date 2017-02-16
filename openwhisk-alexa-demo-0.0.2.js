@@ -3328,7 +3328,7 @@ function escape(data) {
 },{}],23:[function(require,module,exports){
 arguments[4][7][0].apply(exports,arguments)
 },{"./dist/commonjs/index.js":19,"dup":7}],"main-action":[function(require,module,exports){
-'use strict';/**
+'use strict';Object.defineProperty(exports,'__esModule',{value:!0});/**
  * Handler for Amazon Alexa.
  * SAMPLE EVENT:
  *
@@ -3372,7 +3372,7 @@ h.slots.MetricName&&h.slots.MetricName.value&&(l=h.slots.MetricName.value);var m
 return i=h.request.intent.name,j=new AlexaResponse,(null===this.intentHandlers[i]||'undefined'==typeof this.intentHandlers[i])&&(i='AMAZON.HelpIntent'),this.intentHandlers[i](h.request.intent,h.session,j)},a.prototype.intentHandlers={ThankYouIntent:function ThankYouIntent(h,i,j){return g(h,i,j)},'AMAZON.HelpIntent':function AMAZONHelpIntent(h,i,j){return f(j)},PartnerDayWebsiteIntent:function PartnerDayWebsiteIntent(h,i,j){return c(h,i,j)},PartnerdayPageViewsIntent:function PartnerdayPageViewsIntent(h,i,j){return d(h,i,j)},PartnerdayPageViews:function PartnerdayPageViews(h,i,j){return e(h,i,j)}},a.prototype.handleEvent=function(h){// differentiate request type: LaunchRequest vs IntentRequest
 var i=h.request.type||'LaunchRequest';return'LaunchRequest'==i?this.handleLaunchRequest(h):this.handleIntentRequest(h)},a}();var AlexaSDK=require('alexa-sdk'),handlers={HelloWorldIntent:function HelloWorldIntent(){this.emit(':tell','Hello World!')}};function main(a){console.log('ALEXA Event',a.request.type+'!');var b=Alexa.handler(a,{});return b.registerHandlers(handlers),b.execute();// var alexa = new Alexa();
 // return alexa.handleEvent(event);
-}
+}exports.default=main;
 
 },{"alexa-sdk":1}]},{},[]);
 var main = require('main-action').default;
