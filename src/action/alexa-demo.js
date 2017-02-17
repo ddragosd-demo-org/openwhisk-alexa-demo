@@ -43,14 +43,14 @@ var DateUtil = require('./alexa-date-util');
 
 var handlers = {
     'LaunchRequest': function () {
-        this.emit(':ask', 'Welcome to Adobe Analytics.. Which report suite would you like to use man? ' + getReportSuites(), "You can choose from the following report suites" + getReportSuites());
+        this.emit(':ask', 'Welcome to Adobe Analytics.. Which report suite would you like to use? ' + getReportSuites(), "You can choose from the following report suites" + getReportSuites());
     },    
     'ReportSuiteSelectionIntent': function () {
 
         this.emit(':ask', 'Ok. How can I help you?', 'I can currently tell you information about X, Y and Z');
     },    
     'OneshotReportIntent': function () {
-        handleOneshotReportRequest();
+        handleOneshotReportRequest(this.event.request.intent, this.event.session.user.accessToken);
     },    
     'ThankYouIntent': function () {
 
@@ -65,9 +65,9 @@ function getReportSuites(){
   return "Adobe I/O Portal, Bladerunner Lab";
 }
 
-function handleOneshotReportRequest() {
+function handleOneshotReportRequest(intent, accessToken) {
     // Determine metric
-    var metric = getMetricFromIntent()
+    var metric = getMetricFromIntent(intent)
     if (metric.error) {
         var repromptText = "Currently, I can tell you information about the following metrics: " + getAllMetricsText()
             + "Which metric would you like to load?";
@@ -139,8 +139,8 @@ function getMetric(metric, duration, metricResponseCallback) {
 /**
  * Gets the metric from the intent, or returns an error
  */
-function getMetricFromIntent(intent, assignDefault) {
-    var metricSlot = this.event.request.intent.slots.Metric;
+function getMetricFromIntent(intent) {
+    var metricSlot = intent.slots.Metric;
     // slots can be missing, or slots can be provided but with empty value.
     // must test for both.
     if (!metricSlot || !metricSlot.value) {
@@ -166,8 +166,8 @@ function getMetricFromIntent(intent, assignDefault) {
 /**
  * Gets the duration from the intent, or returns an error
  */
-function getDurationFromIntent() {
-    var durationSlot = this.event.request.intent.slots.Duration;
+function getDurationFromIntent(intent) {
+    var durationSlot = intent.slots.Duration;
     // slots can be missing, or slots can be provided but with empty value.
     // must test for both.
     if (!durationSlot || !durationSlot.value) {
@@ -177,6 +177,23 @@ function getDurationFromIntent() {
     }
 
     return durationSlot.value;
+}
+
+/**
+ * Gets the report from the intent, or returns an error
+ */
+function getMeasurementFromIntent(intent) {
+    console.log("Determining Intent Measurement");
+    var metricSlot = intent.slots.Metric;
+    var metricName = metricSlot.value;
+
+    var metricValue = METRICS[metricName.toLowerCase()];
+    var measurement = MEASUREMENT[metricValue];
+    if (measurement) {
+        return measurement;
+    } else {
+        return "";
+    }
 }
 
 function getAllMetricsText() {
