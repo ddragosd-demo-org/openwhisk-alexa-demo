@@ -32,6 +32,9 @@ var AlexaSDK = require('alexa-sdk');
 var handlers = {
     'HelloWorldIntent': function () {
         this.emit(':tell', 'Hello World!');
+    },
+    'Unhandled': function () {
+        this.emit(':tell', 'Unhandled');
     }
 };
 

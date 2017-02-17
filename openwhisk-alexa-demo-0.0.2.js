@@ -3356,7 +3356,7 @@ arguments[4][7][0].apply(exports,arguments)
    },
    "version": "1.0"
  }
- */var AlexaSDK=require('alexa-sdk'),handlers={HelloWorldIntent:function HelloWorldIntent(){this.emit(':tell','Hello World!')}};function main(a){return console.log('ALEXA Event',a.request.type+'!'),new Promise(function(b){var d=AlexaSDK.handler(a,{succeed:b});return d.registerHandlers(handlers),d.execute()})}exports.default=main;
+ */var AlexaSDK=require('alexa-sdk'),handlers={HelloWorldIntent:function HelloWorldIntent(){this.emit(':tell','Hello World!')},Unhandled:function Unhandled(){this.emit(':tell','Unhandled')}};function main(a){return console.log('ALEXA Event',a.request.type+'!'),new Promise(function(b){var d=AlexaSDK.handler(a,{succeed:b});return d.registerHandlers(handlers),d.execute()})}exports.default=main;
 
 },{"alexa-sdk":1}]},{},[]);
 var main = require('main-action').default;
