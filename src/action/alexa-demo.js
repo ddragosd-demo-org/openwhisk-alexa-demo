@@ -66,8 +66,6 @@ function getReportSuites(){
 }
 
 function handleOneshotReportRequest() {
-    this.emit(':tell', 'One shot report intent.. Metric is ' + this.event.request.intent.slots.Metric.value + '. Duration is ' + this.event.request.intent.slots.Duration.value);
-
     // Determine metric
     var metric = getMetricFromIntent()
     if (metric.error) {
