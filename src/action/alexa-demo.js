@@ -43,7 +43,7 @@ var DateUtil = require('./alexa-date-util');
 
 var handlers = {
     'LaunchRequest': function () {
-        this.emit(':ask', 'Welcome to Adobe Analytics.. Which report suite would you like to use?' + getReportSuites(), "You can choose from the following report suites" + getReportSuites());
+        this.emit(':ask', 'Welcome to Adobe Analytics.. Which report suite would you like to use dude?' + getReportSuites(), "You can choose from the following report suites" + getReportSuites());
     },    
     'ReportSuiteSelectionIntent': function () {
 
