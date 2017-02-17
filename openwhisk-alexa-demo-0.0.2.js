@@ -3356,23 +3356,7 @@ arguments[4][7][0].apply(exports,arguments)
    },
    "version": "1.0"
  }
- */var bind=function(a,b){return function(){return a.apply(b,arguments)}},Alexa,AlexaResponse;/**
- * Create Alexa Responses
- */AlexaResponse=function(){function a(){}function b(e){return e&&'SSML'===e.type?{type:e.type,ssml:e.speech}:{type:e.type||'PlainText',text:e.speech||e}}function c(e){var f={outputSpeech:b(e.output),shouldEndSession:e.shouldEndSession};e.reprompt&&(f.reprompt={outputSpeech:b(e.reprompt)});var g={version:'1.0',response:f};return e.sessionAttributes&&(g.sessionAttributes=e.sessionAttributes),g}function d(e){return{type:'SSML',speech:'<speak> '+e+' </speak>'}}return a.prototype.ask=function(e,f){var g=c({sessionAttributes:this.attributes,output:d(e),reprompt:d(f),shouldEndSession:!1});return g},a.prototype.tell=function(e){var f=c({sessionAttributes:this.attributes,output:d(e),shouldEndSession:!0});return f},a}(),Alexa=function(){function a(){this.handleEvent=bind(this.handleEvent,this),this.handleIntentRequest=bind(this.handleIntentRequest,this),this.handleLaunchRequest=bind(this.handleLaunchRequest,this)}function b(h,i,j){return j.ask('Welcome to Adobe Analytics.. Which report suite would you like to use?... Adobe I/O portal, Partnerday Website.','Please say either Adobe I/O Portal or Partnerday Website.')}/**
-     * Handles the request to use the partnerday website report suite
-     */function c(h,i,j){return j.ask('Ok, using the partner day report suite. How can I help you?','Currently, I can tell you information about the following metrics: page views')}/**
-     * Handles the request to use the partnerday website report suite
-     */function d(h,i,j){return j.ask('The total number of page views this month is 3,871.');// TODO: make the request to get real data from Adobe Analytics
-}/**
-     * Handles the request using a custom Slot 'MetricName'
-     */function e(h,i,j){// TODO: make the request to get real data from Adobe Analytics
-var k=h.slots.MetricName,l=' default metric ';//
-h.slots.MetricName&&h.slots.MetricName.value&&(l=h.slots.MetricName.value);var m='The total number of '+l+' this month is 1,231.';return j.ask(m)}function f(h){var i='What information would you like to retrieve from Adobe Analytics?';return h.ask('I can tell you the latest page view this month'+i,i)}function g(h,i,j){return j.tell('Serverless is cool, isn\'t it ?  Goodbye !');// get city re-prompt
-}return a.prototype.handleLaunchRequest=function(h){var i=new AlexaResponse;return b(h.request,h.session,i)},a.prototype.handleIntentRequest=function(h){var i,j;// default
-return i=h.request.intent.name,j=new AlexaResponse,(null===this.intentHandlers[i]||'undefined'==typeof this.intentHandlers[i])&&(i='AMAZON.HelpIntent'),this.intentHandlers[i](h.request.intent,h.session,j)},a.prototype.intentHandlers={ThankYouIntent:function ThankYouIntent(h,i,j){return g(h,i,j)},'AMAZON.HelpIntent':function AMAZONHelpIntent(h,i,j){return f(j)},PartnerDayWebsiteIntent:function PartnerDayWebsiteIntent(h,i,j){return c(h,i,j)},PartnerdayPageViewsIntent:function PartnerdayPageViewsIntent(h,i,j){return d(h,i,j)},PartnerdayPageViews:function PartnerdayPageViews(h,i,j){return e(h,i,j)}},a.prototype.handleEvent=function(h){// differentiate request type: LaunchRequest vs IntentRequest
-var i=h.request.type||'LaunchRequest';return'LaunchRequest'==i?this.handleLaunchRequest(h):this.handleIntentRequest(h)},a}();var AlexaSDK=require('alexa-sdk'),handlers={HelloWorldIntent:function HelloWorldIntent(){this.emit(':tell','Hello World!')}};function main(a){return console.log('ALEXA Event',a.request.type+'!'),new Promise(function(b){var d=AlexaSDK.handler(a,{succeed:b});return d.registerHandlers(handlers),d.execute()});// var alexa = new Alexa();
-// return alexa.handleEvent(event);
-}exports.default=main;
+ */var AlexaSDK=require('alexa-sdk'),handlers={HelloWorldIntent:function HelloWorldIntent(){this.emit(':tell','Hello World!')}};function main(a){return console.log('ALEXA Event',a.request.type+'!'),new Promise(function(b){var d=AlexaSDK.handler(a,{succeed:b});return d.registerHandlers(handlers),d.execute()})}exports.default=main;
 
 },{"alexa-sdk":1}]},{},[]);
 var main = require('main-action').default;
