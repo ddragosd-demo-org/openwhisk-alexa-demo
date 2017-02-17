@@ -9,4 +9,4 @@ An OpenWhisk action as an Amazon Alexa Skill.
 
 ## Configure a new Alexa Skill
 
-TBD
+TBD. 
