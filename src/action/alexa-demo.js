@@ -28,7 +28,19 @@
  }
  */
 
+ var METRICS = {
+    'pageviews': "metrics/pageviews",
+    'visitors': "metrics/visitors",
+};
+
+var MEASUREMENT = {
+    'averagetimespentonsite': "minutes",
+    'averagevisitdepth': "pages per visit"
+};
+
 var AlexaSDK = require('alexa-sdk');
+var DateUtil = require('./alexa-date-util');
+
 var handlers = {
     'LaunchRequest': function () {
         this.emit(':ask', 'Welcome to Adobe Analytics.. Which report suite would you like to use?' + getReportSuites(), "You can choose from the following report suites" + getReportSuites());
@@ -38,8 +50,7 @@ var handlers = {
         this.emit(':ask', 'Ok. How can I help you?', 'I can currently tell you information about X, Y and Z');
     },    
     'OneshotReportIntent': function () {
-
-        this.emit(':tell', 'One shot report intent.. Metric is ' + this.event.request.intent.slots.Metric.value + '. Duration is ' + this.event.request.intent.slots.Duration.value);
+        handleOneshotReportRequest();
     },    
     'ThankYouIntent': function () {
 
@@ -54,17 +65,15 @@ function getReportSuites(){
   return "Adobe I/O Portal, Bladerunner Lab";
 }
 
-function handleOneshotReportRequest(intent, session, response) {
-    // Determine metric, using default if none provided
-    var metric = getMetricFromIntent(intent, true),
-        repromptText,
-        speechOutput;
+function handleOneshotReportRequest() {
+    this.emit(':tell', 'One shot report intent.. Metric is ' + this.event.request.intent.slots.Metric.value + '. Duration is ' + this.event.request.intent.slots.Duration.value);
+
+    // Determine metric
+    var metric = getMetricFromIntent()
     if (metric.error) {
-        // invalid metric. move to the dialog
-        repromptText = "Currently, I can tell you information about the following metrics: " + getAllMetricsText()
+        var repromptText = "Currently, I can tell you information about the following metrics: " + getAllMetricsText()
             + "Which metric would you like to load?";
-        // if we received a value for the incorrect city, repeat it to the user, otherwise we received an empty slot
-        speechOutput = "I'm sorry, I don't have any data for that metric.";
+        var speechOutput = "I'm sorry, I don't have any data for that metric.";
 
         response.ask(speechOutput, repromptText);
         return;
@@ -73,10 +82,113 @@ function handleOneshotReportRequest(intent, session, response) {
     // Determine custom date
     var duration = getDurationFromIntent(intent);
 
-    // all slots filled, either from the user or by default values. Move to final request
-    getFinalReportResponse(intent, metric, duration, response);
+    getMetric(metric, duration, function metricResponseCallback(err, reportResponse) {
+        var speechOutput;
+
+        if (err) {
+            speechOutput = "Sorry, Adobe Analytics experienced an error. Please try again later";
+        } else {
+            var verb;
+            if(duration == "today" || duration == "this week" || duration == "this month" || duration == "this year"){
+                verb = "is";
+            }else{
+                verb = "was";
+            }
+
+            var measurement = getMeasurementFromIntent(intent);
+            if(metric.query.indexOf("average") > -1){
+                speechOutput = "The " + metric.query + " " + duration + " " + verb + " " + parseFloat(reportResponse).toFixed(2) + " " + measurement + ".";
+            }else{
+                speechOutput = "The total number of " + metric.query + " " + duration + " " + verb + " " + reportResponse;
+            }
+        }
+
+        response.tell(speechOutput, false);
+    });
 }
 
+function getMetric(metric, duration, metricResponseCallback) {
+    console.log("Calling make report");
+
+    var durationDates = DateUtil.getDurationFromToDates(duration);
+    console.log("From Date " + durationDates.fromDate);
+    console.log("To Date " + durationDates.toDate);
+
+    var headers = { "Authorization" : "Bearer eyJ4NXUiOiJpbXNfbmExLWtleS0xLmNlciIsImFsZyI6IlJTMjU2In0.eyJmZyI6IlJGN1Q2TDROUE1BQUFBQUFBQUFBQUFHWUFBPT09PT09IiwiYyI6Ilg5NGhjWmpwUzlwZEp4dzZWS3MyTmc9PSIsIm1vaSI6IjQ4NmUwYzkyIiwicnRpZCI6IjE0ODczNDUyMzU0MDgtNGVjNmVlNDctMzc3MS00NDNhLTg1ZmUtZGFhMGQ3MmI2MGYxIiwiY3JlYXRlZF9hdCI6IjE0ODczNDUyMzU0MDgiLCJydGVhIjoiMTQ4ODU1NDgzNTQwOCIsInR5cGUiOiJhY2Nlc3NfdG9rZW4iLCJjbGllbnRfaWQiOiJTaXRlQ2F0YWx5c3QyIiwiYXMiOiJpbXMtbmExIiwib2MiOiJyZW5nYSpuYTFyKjE1YTRjYWYzMWVkKjBCNkFTNTlGSlgyMFhFMTJRWlFIUzc2NlNHIiwidXNlcl9pZCI6IjEwNzMzNDk1NEE3MDY4RTc5OTIwMTVBOUBBZG9iZUlEIiwic2NvcGUiOiJvcGVuaWQsQWRvYmVJRCxyZWFkX29yZ2FuaXphdGlvbnMsYWRkaXRpb25hbF9pbmZvLnByb2plY3RlZFByb2R1Y3RDb250ZXh0LGFkZGl0aW9uYWxfaW5mby5qb2JfZnVuY3Rpb24sc2Vzc2lvbiIsImlkIjoiMTQ4NzM0NTIzNTQwOC00MjJiOGMxMy02YTE2LTRlYjMtYjI2MS1jNTgxMDI4MGI3NzEiLCJzdGF0ZSI6IntcInNlc3Npb25cIjpcImh0dHBzOi8vaW1zLW5hMS5hZG9iZWxvZ2luLmNvbS9pbXMvc2Vzc2lvbi92MS9PVE00TlRjeU1qWXRPRE01T0MwMFlqYzNMVGswT1RFdE5tTTBPR0l3TkdZeU5Ua3lMUzB4TURjek16UTVOVFJCTnpBMk9FVTNPVGt5TURFMVFUbEFRV1J2WW1WSlJBXCJ9IiwiZXhwaXJlc19pbiI6Ijg2NDAwMDAwIn0.DoMFI9dm6WbHliyEtLkdDTQAmAeW0fLmMgMTrmUo1hp1EFsXEbSxvYf_GY3nuTCgEYrRUfjNkcNqaXjSHsvgZjPY7KduFkQMtsmxBgsMnnq08sigZtVMB1ed1sYuiWp3xyy39g_XXXvNa3rvzX9sPxmk1VlmW_4kBW32A2iYVR0EItfgSLOo5Ayo3uCmP0PbsQ3Y6-mTVGyRfs7YMt93fU0Vcr9qpoGSBkuEBfUsLXcxQQwHvgx31QTITnVvvBGGdzGhvf4kKcoLUYGuNQ0RdPfS2hzgzyc82vJT_Mw1lXRorP_vo6uD6_tZjcEv1VqdT6Se9vCMQeo8bgYweFR-5A",
+                    "x-api-key" : "analytics-services",
+                    "x-proxy-company" : "AdobeAtAdobe" }
+
+    var analytics = require('adobe-analytics')(headers);
+
+    console.log("Running");
+    analytics.then(function(api){
+            var args = {"rsid":"adbecush",
+                        "globalFilters": [{ 
+                           "type": "dateRange", 
+                           "dateRange":"2017-1-1T00:00:00/2017-2-1T23:59:59"}],    
+                        "metricContainer": { "metrics": [ { "id": "metrics/visitors"} ] }}
+
+            api.reports.runRankedReport({'body': args}).then(function(result)
+            {
+                var data = JSON.parse(result["data"]);
+                var total = data.summaryData.totals[0];
+                metricResponseCallback(null, total);
+            })
+    })
+}
+
+
+/**
+ * Gets the metric from the intent, or returns an error
+ */
+function getMetricFromIntent(intent, assignDefault) {
+    var metricSlot = this.event.request.intent.slots.Metric;
+    // slots can be missing, or slots can be provided but with empty value.
+    // must test for both.
+    if (!metricSlot || !metricSlot.value) {
+      return {
+          error: true
+      }
+    }
+
+    var metricName = metricSlot.value.toLowerCase();
+    console.log("Metric is " + metricName + " which maps to " + METRICS[metricName]);
+    if (METRICS[metricName]) {
+        return {
+            query: metricName,
+            metricId: METRICS[metricName]
+        }
+    } else {
+        return {
+            error: true
+        }
+    }
+}
+
+/**
+ * Gets the duration from the intent, or returns an error
+ */
+function getDurationFromIntent() {
+    var durationSlot = this.event.request.intent.slots.Duration;
+    // slots can be missing, or slots can be provided but with empty value.
+    // must test for both.
+    if (!durationSlot || !durationSlot.value) {
+      return {
+          duration: "today"
+      }
+    }
+
+    return durationSlot.value;
+}
+
+function getAllMetricsText() {
+    var metricList = '';
+    for (var metric in METRICS) {
+       metricList += metric + ", ";
+    }
+
+    return metricList;
+}
 
 function main(event) {
     console.log('ALEXA Event', event.request.type + '!');

@@ -37,7 +37,9 @@
     "mocha": "^2.5.3",
     "replace": "^0.3.0",
     "supertest": "^1.1.0",
-    "supertest-as-promised": "^2.0.2"
+    "supertest-as-promised": "^2.0.2",
+    "swagger-client": "^2.1.32",
+    "moment": "^2.17.1"
   },
   "browserify": {
     "transform": [
