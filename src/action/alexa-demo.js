@@ -30,6 +30,9 @@
 
 var AlexaSDK = require('alexa-sdk');
 var handlers = {
+    'onLaunch': function () {
+        this.emit(':tell', 'Welcome to Adobe Analytics.. Which report suite would you like to use?');
+    },    
     'HelloWorldIntent': function () {
         this.emit(':tell', 'Hello World!');
     },
