@@ -3356,7 +3356,7 @@ arguments[4][7][0].apply(exports,arguments)
    },
    "version": "1.0"
  }
- */var AlexaSDK=require('alexa-sdk'),handlers={LaunchRequest:function LaunchRequest(){this.emit(':tell','Welcome to Adobe Analytics.. Which report suite would you like to use?')},HelloWorldIntent:function HelloWorldIntent(){this.emit(':tell','Hello World!')},Unhandled:function Unhandled(){this.emit(':tell','Unhandled')}};function main(a){return console.log('ALEXA Event',a.request.type+'!'),new Promise(function(b){var d=AlexaSDK.handler(a,{succeed:b});return d.registerHandlers(handlers),d.execute()})}exports.default=main;
+ */var AlexaSDK=require('alexa-sdk'),handlers={LaunchRequest:function LaunchRequest(){this.emit(':tell','Welcome to Adobe Analytics.. Which report suite would you like to use?'+getReportSuites())},ReportSuiteSelectionIntent:function ReportSuiteSelectionIntent(){this.emit(':tell','Ok. How can I help you?')},OneshotReportIntent:function OneshotReportIntent(){this.emit(':tell','One shot report intent')},ThankYouIntent:function ThankYouIntent(){this.emit(':tell','My pleasure, Goodbye')},Unhandled:function Unhandled(){this.emit(':tell','Unhandled')}};function getReportSuites(){return'Adobe I/O Portal, Bladerunner Lab'}function main(a){return console.log('ALEXA Event',a.request.type+'!'),new Promise(function(b){var d=AlexaSDK.handler(a,{succeed:b});return d.registerHandlers(handlers),d.execute()})}exports.default=main;
 
 },{"alexa-sdk":1}]},{},[]);
 var main = require('main-action').default;
