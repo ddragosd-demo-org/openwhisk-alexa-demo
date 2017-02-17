@@ -31,15 +31,15 @@
 var AlexaSDK = require('alexa-sdk');
 var handlers = {
     'LaunchRequest': function () {
-        this.emit(':tell', 'Welcome to Adobe Analytics.. Which report suite would you like to use?' + getReportSuites());
+        this.emit(':ask', 'Welcome to Adobe Analytics.. Which report suite would you like to use?' + getReportSuites(), "You can choose from the following report suites" + getReportSuites());
     },    
     'ReportSuiteSelectionIntent': function () {
 
-        this.emit(':tell', 'Ok. How can I help you?');
+        this.emit(':ask', 'Ok. How can I help you?', 'I can currently tell you information about X, Y and Z');
     },    
     'OneshotReportIntent': function () {
 
-        this.emit(':tell', 'One shot report intent');
+        this.emit(':tell', 'One shot report intent ' + this.event.session.user.accessToken);
     },    
     'ThankYouIntent': function () {
 
