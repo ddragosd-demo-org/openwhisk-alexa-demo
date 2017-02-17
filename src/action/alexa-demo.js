@@ -39,7 +39,7 @@ var handlers = {
     },    
     'OneshotReportIntent': function () {
 
-        this.emit(':tell', 'One shot report intent ' + this.event.session.user.accessToken);
+        this.emit(':tell', 'One shot report intent.. Metric is ' + this.event.request.intent.slots.Metric.value + '. Duration is ' + this.event.request.intent.slots.Duration.value);
     },    
     'ThankYouIntent': function () {
 
@@ -53,6 +53,30 @@ var handlers = {
 function getReportSuites(){
   return "Adobe I/O Portal, Bladerunner Lab";
 }
+
+function handleOneshotReportRequest(intent, session, response) {
+    // Determine metric, using default if none provided
+    var metric = getMetricFromIntent(intent, true),
+        repromptText,
+        speechOutput;
+    if (metric.error) {
+        // invalid metric. move to the dialog
+        repromptText = "Currently, I can tell you information about the following metrics: " + getAllMetricsText()
+            + "Which metric would you like to load?";
+        // if we received a value for the incorrect city, repeat it to the user, otherwise we received an empty slot
+        speechOutput = "I'm sorry, I don't have any data for that metric.";
+
+        response.ask(speechOutput, repromptText);
+        return;
+    }
+
+    // Determine custom date
+    var duration = getDurationFromIntent(intent);
+
+    // all slots filled, either from the user or by default values. Move to final request
+    getFinalReportResponse(intent, metric, duration, response);
+}
+
 
 function main(event) {
     console.log('ALEXA Event', event.request.type + '!');
