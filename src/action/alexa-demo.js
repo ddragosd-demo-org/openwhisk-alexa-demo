@@ -116,7 +116,7 @@ function getMetric(metric, duration, metricResponseCallback) {
                     "x-api-key" : "analytics-services",
                     "x-proxy-company" : "AdobeAtAdobe" }
 
-    var analytics = require('adobe-analytics')(headers);
+    var analytics = require('./aa-lib/adobe-analytics')(headers);
 
     console.log("Running");
     analytics.then(function(api){
