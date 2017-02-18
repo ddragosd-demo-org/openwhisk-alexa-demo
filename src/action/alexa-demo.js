@@ -51,7 +51,32 @@ var handlers = {
     },    
     'OneshotReportIntent': function () {
         handleOneshotReportRequest(this.event.request.intent, this.event.session.user.accessToken);
-    },    
+    },
+    'PageViewsToday': function() {
+        getMetric("metrics/pageviews", "today", function metricResponseCallback(err, reportResponse) {
+            var speechOutput;
+
+            if (err) {
+                speechOutput = "Sorry, Adobe Analytics experienced an error. Please try again later";
+            } else {
+                var verb;
+                if(duration == "today" || duration == "this week" || duration == "this month" || duration == "this year"){
+                    verb = "is";
+                }else{
+                    verb = "was";
+                }
+
+                var measurement = getMeasurementFromIntent(intent);
+                if(metric.query.indexOf("average") > -1){
+                    speechOutput = "The " + metric.query + " " + duration + " " + verb + " " + parseFloat(reportResponse).toFixed(2) + " " + measurement + ".";
+                }else{
+                    speechOutput = "The total number of " + metric.query + " " + duration + " " + verb + " " + reportResponse;
+                }
+            }
+
+            this.emit(':tell', speechOutput, false);
+        });
+    },
     'ThankYouIntent': function () {
 
         this.emit(':tell', 'My pleasure, Goodbye');
