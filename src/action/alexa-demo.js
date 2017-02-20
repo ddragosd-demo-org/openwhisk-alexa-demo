@@ -44,7 +44,7 @@ var util = require('util');
 
 var handlers = {
     'LaunchRequest': function () {
-        this.emit(':ask', 'Welcome to Adobe Analytics.. Which report suite would you like to use? ' + getReportSuites(), "You can choose from the following report suites" + getReportSuites());
+        this.emit(':ask', 'Welcome to Adobe Analytics.. Which report suite would you like to use working? ' + getReportSuites(), "You can choose from the following report suites" + getReportSuites());
     },
     'ReportSuiteSelectionIntent': function () {
 
