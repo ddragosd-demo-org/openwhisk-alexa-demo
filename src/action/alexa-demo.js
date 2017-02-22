@@ -1,167 +1,317 @@
-/**
- * Handler for Amazon Alexa.
- * SAMPLE EVENT:
- *
- {
-   "session": {
-     "sessionId": "SessionId.baae4592-3194-463d-a1bf-a4cea0622913",
-     "application": {
-       "applicationId": "amzn1.ask.skill.647acd60-f1e7-4f77-9d5e-90c4a4cdfd76"
-     },
-     "attributes": {},
-     "user": {
-       "userId": "amzn1.ask.account.AFP3ZWPOS2BGJR7OWJZ3DHPKMOMCKURC2K6A2PLLNCMHBXRN7PSIZJIGE5Y2WGEAVZLBLUK4ZLWURQ2ZOW6WPFLWKVH6XC24ADTVXQULVDJ25JA6T2KU2S6CCJKBMMBDJWB7B5PILJABBQCW6R4X5NRHBVTDGYSLXJWZ3ICZROKXBOPFJBFLUDGLPGBITLPFBXI4UYMSGV6IWYY"
-     },
-     "new": true
-   },
-   "request": {
-     "type": "IntentRequest",
-     "requestId": "EdwRequestId.55f5f621-00a1-46fe-a0bb-130a58ff94a7",
-     "locale": "en-US",
-     "timestamp": "2016-10-20T04:56:11Z",
-     "intent": {
-       "name": "AMAZON.HelpIntent",
-       "slots": {}
-     }
-   },
-   "version": "1.0"
- }
- */
+//
+//  alexa-demo.js
+//
+//  Created by Dylan Depass & Dragos Dascalita Haut on 2017-02-22.
+//  Copyright (c) 2017 Adobe. All rights reserved.
+//
 
- var METRICS = {
+'use strict';
+var Alexa = require('alexa-sdk');                                                   //Alexa SDK
+var DateUtil = require('./alexa-date-util');                                        //Date helper library
+
+//API Configuration
+var APP_ID              = "amzn1.ask.skill.c0102154-7090-4f99-9034-9fc86df7ed59";   //App ID, this can be found in the Alexa Developer portal.
+var API_KEY             = "analytics-services";                                     //Analytics API key
+var ANALYTICS_COMPANY   = "AdobeAtAdobe";                                           //Analytics Company
+
+var states = {
+    STATE_RSID_SELECTION: '_STATE_RSID_SELECTION', 
+    STATE_QUERY         : '_STATE_QUERY'  
+};
+
+//Supported Metrics
+var METRICS = {
     'pageviews': "metrics/pageviews",
+    'page views': "metrics/pageviews",
     'visitors': "metrics/visitors",
+    'visits':"metrics/visits",
+    'bounces':"metrics/bounces",
+    'bounce rate': "metrics/bouncerate",
+    'average page depth':'metrics/averagepagedepth',
 };
 
+//Measurements of Metrics
 var MEASUREMENT = {
-    'averagetimespentonsite': "minutes",
-    'averagevisitdepth': "pages per visit"
+    'metrics/bouncerate': "percent",
+    'metrics/averagepagedepth': "pages"
 };
 
-var AlexaSDK = require('alexa-sdk');
-var DateUtil = require('./alexa-date-util');
-var util = require('util');
+//Speech strings
+var languageStrings = {
+    "en-US": {
+        "translation": {
+            "WELCOME" : "Welcome to Adobe Analytics.. Which report suite would you like to use? %s.",
+            "WELCOME_REPROMPT" : "You can choose from the following report suites %s.",
+            "REPORT_SUITE_SELECTED" : "Ok, using the %s report suite. How can I help you?.",
+            "REPORT_SUITE_SELECTED_REPROMPT" : "Currently, I can tell you information about the following metrics: %s. For example, you can ask me, how many page views this month?",
+            "UNKNOWN_COMMAND_RSID_SELECTION" : "I'm sorry, I could not find that report suite. Which report suite would you like to use? %s.",
+            "UNKNOWN_COMMAND_REPROMPT_RSID_SELECTION" : "Which report suite would you like to use? %s.",
+            "UNKNOWN_COMMAND_QUERY" : "I'm sorry, I did not understand that request?",            
+            "UNKNOWN_COMMAND_REPROMPT_QUERY" : "Currently, I can tell you information about the following metrics: %s. For example, you can ask me, how many page views this month?",
+            "QUERY_REPROMPT" : "You can ask for another report or say stop to end the session.",
+            "API_ERROR" : "Sorry, Adobe Analytics experienced an error. Please try again later.",
+            "HELP_MESSAGE_RSID_SELECTION" : "I am able to answer questions about metrics from your Adobe Analytics report suites. First we must select a report suite. Which report suite would you like to use? %s.",
+            "HELP_REPROMPT_RSID_SELECTION" : "Which report suite would you like to use? %s.",
+            "HELP_MESSAGE_QUERY" : "I am able to answer questions about metrics from your Adobe Analytics report suites, For example, you can ask me, how many page views this month?",
+            "HELP_REPROMPT_QUERY" : "Currently, I can tell you information about the following metrics: %s.",
+            "YOU_ARE_WELCOME" : "My pleasure, have a fantastic day!",
+            "STOP_MESSAGE" : "Goodbye!"
+        }
+    }
+};
 
-var handlers = {
+// Create default handlers
+var newSessionHandlers = {
     'LaunchRequest': function () {
-        this.emit(':ask', 'Welcome to Adobe Analytics.. Which report suite would you like to use working? ' + getReportSuites(), "You can choose from the following report suites" + getReportSuites());
+        //Skill was launched
+
+        //Set RSID selection state
+        this.handler.state = states.STATE_RSID_SELECTION;
+
+        //Store local scope
+        var that = this;
+
+        //Get a list of report suites
+        getReportSuites(this.event.session.user.accessToken, function reportSuitesResponseCallback(err, reportSuites) {
+            //Get a comma separated list of the report suites
+            var reportSuiteList = getReportsSuitesListFromObject(reportSuites);
+            console.log("Reportsuite list " + reportSuiteList);
+
+            that.attributes['reportSuites'] = reportSuites;
+            that.attributes['speechOutput'] = that.t("WELCOME", reportSuiteList);
+            that.attributes['repromptSpeech'] = that.t("WELCOME_REPROMPT", reportSuiteList);
+            that.emit(':ask', that.attributes['speechOutput'], that.attributes['repromptSpeech']);
+        });
+
+    }
+};
+
+// Create a new handler for the report suite selection state
+var rsidSelectionHandlers = Alexa.CreateStateHandler(states.STATE_RSID_SELECTION, {
+    'LaunchRequest': function () {
+        this.emit('LaunchRequest'); // Uses the handler in newSessionHandlers
     },
     'ReportSuiteSelectionIntent': function () {
+        console.log("ReportSuiteSelectionIntent Started");
 
-        this.emit(':ask', 'Ok. How can I help you?', 'I can currently tell you information about X, Y and Z');
+        //Get all the reports suites loaded during this session
+        var reportSuites = this.event.session.attributes.reportSuites;
+
+        //Try and match the spoken report suite to one in our list
+        var matchingReportSuite = matchReportSuite(this.event.request.intent.slots.ReportSuite.value, reportSuites);
+        if(!matchingReportSuite.error){
+            //We found a match!
+
+            //Enter the query state
+            this.handler.state = states.STATE_QUERY;
+
+            //Store the selected report suite in session
+            this.attributes['selectedReportSuite'] = matchingReportSuite;
+
+            //Tell use they can now ask for data
+            var speechOutput = this.t("REPORT_SUITE_SELECTED", matchingReportSuite.name);
+            var reprompt = this.t("REPORT_SUITE_SELECTED_REPROMPT", getAllMetricsText());
+            this.emit(':ask', speechOutput, reprompt);
+        }else{
+            //We were unable to match the spoken word to a report suite
+            var reportSuiteList = getReportsSuitesListFromObject(reportSuites);
+            var speechOutput = this.t("UNKNOWN_COMMAND_RSID_SELECTION", reportSuiteList);
+            var reprompt = this.t("UNKNOWN_COMMAND_REPROMPT_RSID_SELECTION", reportSuiteList);
+            this.emit(':ask', speechOutput, reprompt);
+        }
+    },
+    'ThankYouIntent': function () {
+        //User ask for something we are unable to answer
+        var speechOutput = this.t("YOU_ARE_WELCOME");
+        this.emit(':tell', speechOutput);
+    },
+    'Unhandled': function () {
+        //Get a comma separated list of the report suites
+        var reportSuites = this.event.session.attributes.reportSuites;
+        var reportSuiteList = getReportsSuitesListFromObject(reportSuites);
+
+        //User ask for something we are unable to answer
+        var speechOutput = this.t("UNKNOWN_COMMAND_RSID_SELECTION", reportSuiteList);
+        var reprompt = this.t("UNKNOWN_COMMAND_REPROMPT_RSID_SELECTION", reportSuiteList);
+        this.emit(':ask', speechOutput, reprompt);
+    },
+    'AMAZON.HelpIntent': function () {
+        //Get a comma separated list of the report suites
+        var reportSuites = this.event.session.attributes.reportSuites;
+        var reportSuiteList = getReportsSuitesListFromObject(reportSuites);
+
+        //User asked for help
+        var speechOutput = this.t("HELP_MESSAGE_RSID_SELECTION", reportSuiteList);
+        var reprompt = this.t("HELP_REPROMPT_RSID_SELECTION", reportSuiteList);
+        this.emit(':ask', speechOutput, reprompt);
+    },
+    "AMAZON.StopIntent": function() {
+        //User stopped the skill
+        this.emit(':tell', this.t("STOP_MESSAGE"));
+    },
+    "AMAZON.CancelIntent": function() {
+        //User cancelled the skill
+        this.emit(':tell', this.t("STOP_MESSAGE"));
+    }
+});
+
+// Create a new handler for the Query state
+var querySelectionHandlers = Alexa.CreateStateHandler(states.STATE_QUERY, {
+    'PageViewsTodayIntent': function() {
+        //Oneshot Report Started
+        console.log("PageViewsTodayIntent Started");
+
+        //Set duration to today
+        var duration = "today";
+
+        //Set metric to page views
+        var metric = "metrics/pageviews";
+        
+        //Based on the duration get the start and end dates
+        var durationDates = DateUtil.getDurationFromToDates(duration);
+
+        //Store local scope
+        var that = this;
+
+        //Get selected report suite
+        var reportSuiteId = this.event.session.attributes.selectedReportSuite.rsid;
+        
+        //Call get metric using the information from the intent
+        getMetric(this.event.session.user.accessToken, reportSuiteId, metric, durationDates, function metricResponseCallback(err, reportResponse) {
+            var speechOutput;
+            console.log("in response");
+            if (err) {
+                //An error occured while trying to query metric
+                speechOutput = that.t("API_ERROR");
+                console.log("error" + JSON.stringify(err));
+            } else {
+                console.log("report response:" + reportResponse);
+
+                //Verb used to describe the metric based on duration. Past or present
+                var verb = getDurationVerb(duration);
+
+                speechOutput = "The total number of page views " + verb + " " + reportResponse;
+            }
+
+            that.emit(':ask', speechOutput, that.t("QUERY_REPROMPT"));
+        });
     },
     'OneshotReportIntent': function () {
-        handleOneshotReportRequest(this.event.request.intent, this.event.session.user.accessToken);
-    },
-    'PageViewsToday': function() {
-        var duration = "today";
-        var emit = this.emit;
-        getMetric("metrics/pageviews", duration, function metricResponseCallback(err, reportResponse) {
+        //Oneshot Report Started
+        console.log("OneshotReportIntent Started");
+        
+        //Get the intent object
+        var intent = this.event.request.intent;
+        
+        //Pull out the duration from the oneshot report intent
+        var duration = getDurationFromIntent(intent);
+        
+        //Pull out the metric from the oneshot report intent
+        var metric = getMetricFromIntent(intent);
+        
+        //Based on the duration get the start and end dates
+        var durationDates = DateUtil.getDurationFromToDates(duration);
+
+        //Store local scope
+        var that = this;
+
+        //Get selected report suite
+        var reportSuiteId = this.event.session.attributes.selectedReportSuite.rsid;
+
+        console.log("Active report suite is " + reportSuiteId);
+
+        //Call get metric using the information from the intent
+        getMetric(this.event.session.user.accessToken, reportSuiteId, metric.metricId, durationDates, function metricResponseCallback(err, reportResponse) {
+            //Response text
             var speechOutput;
 
             if (err) {
-                speechOutput = "Sorry, Adobe Analytics experienced an error. Please try again later";
-                console.log("error:" + err.toString());
+                //An error occured while trying to query metric
+                speechOutput = that.t("API_ERROR");
+                console.log("error" + JSON.stringify(err));
             } else {
+                //A valid value for metric was returned
                 console.log("report response:" + reportResponse);
-                var verb;
-                if(duration == "today" || duration == "this week" || duration == "this month" || duration == "this year"){
-                    verb = "is";
-                }else{
-                    verb = "was";
-                }
 
-                /*var measurement = getMeasurementFromIntent(intent);
-                if(metric.query.indexOf("average") > -1){
+                //Verb used to describe the metric based on duration. Past or present
+                var verb = getDurationVerb(duration);
+
+                //Get the measurement from the intent
+                var measurement = getMeasurementFromIntent(intent);
+                if(measurement == "percent"){
+                    //The measurement is a percent, round to 2 decimal places and multiply by 100
+                    speechOutput = "The " + metric.query + " " + duration + " " + verb + " " + (parseFloat(reportResponse).toFixed(2) * 100) + " " + measurement + ".";
+                }else if(measurement.indexOf("pages") > -1){
+                    //The measurement is pages, round to 2 decimal places
                     speechOutput = "The " + metric.query + " " + duration + " " + verb + " " + parseFloat(reportResponse).toFixed(2) + " " + measurement + ".";
                 }else{
+                    //All other metrics
                     speechOutput = "The total number of " + metric.query + " " + duration + " " + verb + " " + reportResponse;
-                }*/
-
-                speechOutput = "The total number is " + reportResponse;
+                }
             }
 
-            emit(':tell', speechOutput, false);
+            that.emit(':ask', speechOutput, that.t("QUERY_REPROMPT"));
         });
     },
     'ThankYouIntent': function () {
-
-        this.emit(':tell', 'My pleasure, Goodbye');
+        //User ask for something we are unable to answer
+        var speechOutput = this.t("YOU_ARE_WELCOME");
+        this.emit(':tell', speechOutput);
     },
     'Unhandled': function () {
-        this.emit(':tell', 'Unhandled');
+        //User ask for something we are unable to answer
+        var speechOutput = this.t("UNKNOWN_COMMAND_QUERY");
+        var reprompt = this.t("UNKNOWN_COMMAND_REPROMPT_QUERY", getAllMetricsText());
+        this.emit(':ask', speechOutput, reprompt);
+    },
+    'AMAZON.HelpIntent': function () {
+        //User asked for help
+        var speechOutput = this.t("HELP_MESSAGE_QUERY");
+        var reprompt = this.t("HELP_REPROMPT_QUERY", getAllMetricsText());
+        this.emit(':ask', speechOutput, reprompt);
+    },
+    "AMAZON.StopIntent": function() {
+        //User stopped the skill
+        this.emit(':tell', this.t("STOP_MESSAGE"));
+    },
+    "AMAZON.CancelIntent": function() {
+        //User cancelled the skill
+        this.emit(':tell', this.t("STOP_MESSAGE"));
     }
-};
+});
 
-function getReportSuites(){
-  return "Adobe I/O Portal, Bladerunner Lab";
-}
+/**
+ * Queries a metric based from the Analytics API
+ */
+function getMetric(token, rsid, metric, durationDates, metricResponseCallback) {
+    //Debug call
+    console.log("Getting metric: " + metric);
+    console.log("Start Date: " + durationDates.fromDate);
+    console.log("End Date: " + durationDates.toDate);
 
-function handleOneshotReportRequest(intent, accessToken) {
-    // Determine metric
-    var metric = getMetricFromIntent(intent)
-    if (metric.error) {
-        var repromptText = "Currently, I can tell you information about the following metrics: " + getAllMetricsText()
-            + "Which metric would you like to load?";
-        var speechOutput = "I'm sorry, I don't have any data for that metric.";
+    //Format dateRange string
+    var dateRange = durationDates.fromDate + "/" + durationDates.toDate;
 
-        response.ask(speechOutput, repromptText);
-        return;
-    }
-
-    // Determine custom date
-    var duration = getDurationFromIntent(intent);
-
-    getMetric(metric, duration, function metricResponseCallback(err, reportResponse) {
-        var speechOutput;
-
-        if (err) {
-            speechOutput = "Sorry, Adobe Analytics experienced an error. Please try again later";
-        } else {
-            var verb;
-            if(duration == "today" || duration == "this week" || duration == "this month" || duration == "this year"){
-                verb = "is";
-            }else{
-                verb = "was";
-            }
-
-            var measurement = getMeasurementFromIntent(intent);
-            if(metric.query.indexOf("average") > -1){
-                speechOutput = "The " + metric.query + " " + duration + " " + verb + " " + parseFloat(reportResponse).toFixed(2) + " " + measurement + ".";
-            }else{
-                speechOutput = "The total number of " + metric.query + " " + duration + " " + verb + " " + reportResponse;
-            }
-        }
-
-        response.tell(speechOutput, false);
-    });
-}
-
-function getMetric(metric, duration, metricResponseCallback) {
-    console.log("Calling make report");
-
-    var durationDates = DateUtil.getDurationFromToDates(duration);
-    console.log("From Date " + durationDates.fromDate);
-    console.log("To Date " + durationDates.toDate);
-
+    //Create API headers
     var headers = {
-        "Authorization": "Bearer eyJ4NXUiOiJpbXNfbmExLWtleS0xLmNlciIsImFsZyI6IlJTMjU2In0.eyJmZyI6IlJGN1Q2TDROUE1BQUFBQUFBQUFBQUFHWUFBPT09PT09IiwiYyI6Ilg5NGhjWmpwUzlwZEp4dzZWS3MyTmc9PSIsIm1vaSI6IjQ4NmUwYzkyIiwicnRpZCI6IjE0ODczNDUyMzU0MDgtNGVjNmVlNDctMzc3MS00NDNhLTg1ZmUtZGFhMGQ3MmI2MGYxIiwiY3JlYXRlZF9hdCI6IjE0ODczNDUyMzU0MDgiLCJydGVhIjoiMTQ4ODU1NDgzNTQwOCIsInR5cGUiOiJhY2Nlc3NfdG9rZW4iLCJjbGllbnRfaWQiOiJTaXRlQ2F0YWx5c3QyIiwiYXMiOiJpbXMtbmExIiwib2MiOiJyZW5nYSpuYTFyKjE1YTRjYWYzMWVkKjBCNkFTNTlGSlgyMFhFMTJRWlFIUzc2NlNHIiwidXNlcl9pZCI6IjEwNzMzNDk1NEE3MDY4RTc5OTIwMTVBOUBBZG9iZUlEIiwic2NvcGUiOiJvcGVuaWQsQWRvYmVJRCxyZWFkX29yZ2FuaXphdGlvbnMsYWRkaXRpb25hbF9pbmZvLnByb2plY3RlZFByb2R1Y3RDb250ZXh0LGFkZGl0aW9uYWxfaW5mby5qb2JfZnVuY3Rpb24sc2Vzc2lvbiIsImlkIjoiMTQ4NzM0NTIzNTQwOC00MjJiOGMxMy02YTE2LTRlYjMtYjI2MS1jNTgxMDI4MGI3NzEiLCJzdGF0ZSI6IntcInNlc3Npb25cIjpcImh0dHBzOi8vaW1zLW5hMS5hZG9iZWxvZ2luLmNvbS9pbXMvc2Vzc2lvbi92MS9PVE00TlRjeU1qWXRPRE01T0MwMFlqYzNMVGswT1RFdE5tTTBPR0l3TkdZeU5Ua3lMUzB4TURjek16UTVOVFJCTnpBMk9FVTNPVGt5TURFMVFUbEFRV1J2WW1WSlJBXCJ9IiwiZXhwaXJlc19pbiI6Ijg2NDAwMDAwIn0.DoMFI9dm6WbHliyEtLkdDTQAmAeW0fLmMgMTrmUo1hp1EFsXEbSxvYf_GY3nuTCgEYrRUfjNkcNqaXjSHsvgZjPY7KduFkQMtsmxBgsMnnq08sigZtVMB1ed1sYuiWp3xyy39g_XXXvNa3rvzX9sPxmk1VlmW_4kBW32A2iYVR0EItfgSLOo5Ayo3uCmP0PbsQ3Y6-mTVGyRfs7YMt93fU0Vcr9qpoGSBkuEBfUsLXcxQQwHvgx31QTITnVvvBGGdzGhvf4kKcoLUYGuNQ0RdPfS2hzgzyc82vJT_Mw1lXRorP_vo6uD6_tZjcEv1VqdT6Se9vCMQeo8bgYweFR-5A",
-        "x-api-key": "analytics-services",
-        "x-proxy-company": "AdobeAtAdobe"
+        "Authorization": "Bearer " + token,
+        "x-api-key": API_KEY,
+        "x-proxy-company": ANALYTICS_COMPANY
     }
 
+    //Instantiate Analytics API helper 
     var analytics = require('./aa-lib/adobe-analytics')(headers);
 
+    //Query metric
     analytics.then(function (api) {
         var args = {
-            "rsid": "adbecush",
+            "rsid": rsid,
             "globalFilters": [{
                 "type": "dateRange",
-                "dateRange": "2017-1-1T00:00:00/2017-2-1T23:59:59"
+                "dateRange": dateRange,
             }],
-            "metricContainer": {"metrics": [{"id": "metrics/visitors"}]}
+            "metricContainer": {"metrics": [{"id": metric}]}
         }
-        console.log("Running analytics API with args:" + util.inspect(args, {depth:4}));
 
         api.reports.runRankedReport({'body': args})
             .then(function (result) {
@@ -175,20 +325,11 @@ function getMetric(metric, duration, metricResponseCallback) {
     })
 }
 
-
 /**
- * Gets the metric from the intent, or returns an error
+ * Gets the metric from the intent
  */
 function getMetricFromIntent(intent) {
     var metricSlot = intent.slots.Metric;
-    // slots can be missing, or slots can be provided but with empty value.
-    // must test for both.
-    if (!metricSlot || !metricSlot.value) {
-      return {
-          error: true
-      }
-    }
-
     var metricName = metricSlot.value.toLowerCase();
     console.log("Metric is " + metricName + " which maps to " + METRICS[metricName]);
     if (METRICS[metricName]) {
@@ -204,12 +345,10 @@ function getMetricFromIntent(intent) {
 }
 
 /**
- * Gets the duration from the intent, or returns an error
+ * Gets the duration from the intent
  */
 function getDurationFromIntent(intent) {
     var durationSlot = intent.slots.Duration;
-    // slots can be missing, or slots can be provided but with empty value.
-    // must test for both.
     if (!durationSlot || !durationSlot.value) {
       return {
           duration: "today"
@@ -220,7 +359,7 @@ function getDurationFromIntent(intent) {
 }
 
 /**
- * Gets the report from the intent, or returns an error
+ * Gets the measurement for the intent
  */
 function getMeasurementFromIntent(intent) {
     console.log("Determining Intent Measurement");
@@ -229,6 +368,7 @@ function getMeasurementFromIntent(intent) {
 
     var metricValue = METRICS[metricName.toLowerCase()];
     var measurement = MEASUREMENT[metricValue];
+    console.log("Measurement for " + metricValue + " is " + measurement);
     if (measurement) {
         return measurement;
     } else {
@@ -236,27 +376,111 @@ function getMeasurementFromIntent(intent) {
     }
 }
 
+/**
+ * Returns a comma separated list of supported metrics 
+ */
 function getAllMetricsText() {
     var metricList = '';
     for (var metric in METRICS) {
-       metricList += metric + ", ";
+        //pageviews and page views is listed as metrics.. Don't say them twice.
+        if(metric != "page views"){
+           metricList += metric + ", ";
+        }
     }
 
     return metricList;
 }
 
-function main(event) {
-    console.log('ALEXA Event', event.request.type + '!');
+/**
+ * Tries to match a report suite with the spoken name
+ */
+function matchReportSuite(spokenLiteral, reportSuites) {
+    var reportSuiteList = '';
+    for (var key in reportSuites) {
+        var reportSuite = reportSuites[key];
+        var re = new RegExp(spokenLiteral.toLowerCase(),"g");
+        var match = reportSuite.name.toLowerCase().match(re);
+        if(match != null){
+            console.log("Found report suite match " + reportSuite);
+            return reportSuite;
+        }
+    }
 
-    return new Promise(
-        (resolve, reject) => {
-            var alexaSDK = AlexaSDK.handler(event,
-                {
-                    succeed: resolve
-                });
-            alexaSDK.registerHandlers(handlers);
-            return alexaSDK.execute();
-        });
+    console.log("No match found");
+    return {
+        error: true
+    }
 }
 
-export default main;
+/**
+ * Returns a comma separated list of report suites loaded.. 
+ */
+function getReportsSuitesListFromObject(reportSuites) {
+    var reportSuiteList = '';
+    for (var key in reportSuites) {
+        var reportSuite = reportSuites[key];
+        reportSuiteList += reportSuite.name + ", ";
+    }
+
+    return reportSuiteList;
+}
+
+/**
+ * Get the list of report suites
+ */
+function getReportSuites(token, reportSuitesResponseCallback){
+    //Create API headers
+    var headers = { "Authorization" : "Bearer " + token,
+                "x-api-key" : API_KEY,
+                "x-proxy-company" : ANALYTICS_COMPANY }
+
+    var analytics = require('./aa-lib/adobe-analytics')(headers);
+
+    analytics.then(function(api){
+        api.collections.findAll({expansion:"name", limit:"50"}).then(function(result)
+        {
+            var data = JSON.parse(result["data"]);
+            var reportSuites = data.content;
+            console.log(JSON.stringify(reportSuites));
+            reportSuitesResponseCallback(null, reportSuites);
+        })
+    })
+}
+
+/**
+ * Get a verb to describe the duration
+ */
+function getDurationVerb(duration){
+    var verb = "was";
+    if(duration == "today" || duration == "this week" || duration == "this month" || duration == "this year"){
+        verb = "is";
+    }
+    return verb;
+}
+
+exports.handler = function(event, context, callback) {
+    var alexa = Alexa.handler(event, context);
+    alexa.appId = APP_ID;
+    // To enable string internationalization (i18n) features, set a resources object.
+    alexa.resources = languageStrings;
+    alexa.registerHandlers(newSessionHandlers, rsidSelectionHandlers, querySelectionHandlers);
+    alexa.execute();
+};
+
+// function main(event) {
+//     console.log('ALEXA Event', event.request.type + '!');
+
+//     return new Promise(
+//         (resolve, reject) => {
+//             var alexaSDK = AlexaSDK.handler(event,
+//                 {
+//                     succeed: resolve
+//                 });
+//             alexaSDK.APP_ID = APP_ID;
+//             alexaSDK.resources = languageStrings;
+//             alexaSDK.registerHandlers(handlers);
+//             return alexaSDK.execute();
+//         });
+// }
+
+// export default main;

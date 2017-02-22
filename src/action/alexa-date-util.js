@@ -12,7 +12,7 @@
  * Provides date and time utilities to format responses in
  * a manner appropriate for speech output.
  */
-var alexaDateUtil = (function () {
+var DateUtil = (function () {
 
     var DAYS_OF_MONTH = [
         '1st',
@@ -140,61 +140,61 @@ var alexaDateUtil = (function () {
             {
                 case "today":
                     console.log("Today duration detected");
-                    from = moment().format('YYYY-MM-DD');
-                    to = moment().format('YYYY-MM-DD');
+                    from = moment().startOf('day').format('YYYY-MM-DTHH:mm:ss');
+                    to = moment().endOf('day').format('YYYY-MM-DDTHH:mm:ss');
                     break;
                 case "yesterday":
                     console.log("Yesterday duration detected");
-                    from = moment().subtract(1, 'days').format('YYYY-MM-DD');
-                    to = moment().subtract(1, 'days').format('YYYY-MM-DD');
+                    from = moment().subtract(1, 'days').format('YYYY-MM-DDTHH:mm:ss');
+                    to = moment().subtract(1, 'days').format('YYYY-MM-DDTHH:mm:ss');
                     break;
                 case "this week":
                     console.log("This week duration detected");
-                    from = moment().startOf('week').format('YYYY-MM-DD');
-                    to = moment().endOf('week').format('YYYY-MM-DD');
+                    from = moment().startOf('week').format('YYYY-MM-DDTHH:mm:ss');
+                    to = moment().endOf('week').format('YYYY-MM-DDTHH:mm:ss');
                     break;
 
                 case "last week":
                     console.log("Last week duration detected");
                     var today = moment().subtract(8, 'days');
-                    from = today.startOf('week').format('YYYY-MM-DD');
-                    to = today.endOf('week').format('YYYY-MM-DD');
+                    from = today.startOf('week').format('YYYY-MM-DDTHH:mm:ss');
+                    to = today.endOf('week').format('YYYY-MM-DDTHH:mm:ss');
                     break;
 
                 case "this month":
                     console.log("This month duration detected");
                     var today = moment();
                     var startDate = moment([today.year(), today.month()]);
-                    from = startDate.format('YYYY-MM-DD');
-                    to = moment(startDate).endOf('month').format('YYYY-MM-DD');
+                    from = startDate.format('YYYY-MM-DDTHH:mm:ss');
+                    to = moment(startDate).endOf('month').format('YYYY-MM-DDTHH:mm:ss');
                     break;
 
                 case "last month":
                     console.log("Last month duration detected");
                     var startDate = moment().startOf('month');
-                    from = startDate.format('YYYY-MM-DD');
-                    to = moment(startDate).endOf('month').format('YYYY-MM-DD');
+                    from = startDate.format('YYYY-MM-DDTHH:mm:ss');
+                    to = moment(startDate).endOf('month').format('YYYY-MM-DDTHH:mm:ss');
                     break;
 
                 case "this year":
                     console.log("This year duration detected");
                     var today = moment();
                     var startDate = moment([today.year(), 0, 1]);
-                    from = startDate.format('YYYY-MM-DD');
-                    to = moment(startDate).endOf('year').format('YYYY-MM-DD');
+                    from = startDate.format('YYYY-MM-DDTHH:mm:ss');
+                    to = moment(startDate).endOf('year').format('YYYY-MM-DDTHH:mm:ss');
                     break;
 
                 case "last year":
                     console.log("Last year duration detected");
                     var today = moment().subtract(365, 'days');
                     var startDate = moment([today.year(), 0, 1]);
-                    from = startDate.format('YYYY-MM-DD');
-                    to = moment(from).endOf('year').format('YYYY-MM-DD');
+                    from = startDate.format('YYYY-MM-DDTHH:mm:ss');
+                    to = moment(from).endOf('year').format('YYYY-MM-DDTHH:mm:ss');
                     break;
                 default:
                     console.log("Could not identify duration.. Falling back to today.")
-                    from = moment().format('YYYY-MM-DD');
-                    to = moment().format('YYYY-MM-DD');
+                    from = moment().format('YYYY-MM-DDTHH:mm:ss');
+                    to = moment().format('YYYY-MM-DDTHH:mm:ss');
             }
             return {
                 fromDate: from,
@@ -262,14 +262,14 @@ var alexaDateUtil = (function () {
                     endDate3 = moment().subtract(366, 'days');
             }
             return {
-                fromDate1: startDate1.format('YYYY-MM-DD'),
-                toDate1: endDate1.format('YYYY-MM-DD'),
-                fromDate2: startDate2.format('YYYY-MM-DD'),
-                toDate2: endDate2.format('YYYY-MM-DD'),
-                fromDate3: startDate3.format('YYYY-MM-DD'),
-                toDate3: endDate3.format('YYYY-MM-DD')
+                fromDate1: startDate1.format('YYYY-MM-DDTHH:mm:ss'),
+                toDate1: endDate1.format('YYYY-MM-DDTHH:mm:ss'),
+                fromDate2: startDate2.format('YYYY-MM-DDTHH:mm:ss'),
+                toDate2: endDate2.format('YYYY-MM-DDTHH:mm:ss'),
+                fromDate3: startDate3.format('YYYY-MM-DDTHH:mm:ss'),
+                toDate3: endDate3.format('YYYY-MM-DDTHH:mm:ss')
             };
         }
     };
 })();
-module.exports = alexaDateUtil;
+module.exports = DateUtil;
