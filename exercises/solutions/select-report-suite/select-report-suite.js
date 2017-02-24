@@ -5,7 +5,7 @@
 //  Copyright (c) 2017 Adobe. All rights reserved.
 //
 
-'use strict';
+// 'use strict';
 var Alexa = require('alexa-sdk');                                                   //Alexa SDK
 
 var states = {
@@ -111,4 +111,4 @@ var main = function(event) {
                 reject(err.toString());
             }
         });
-}
+};
