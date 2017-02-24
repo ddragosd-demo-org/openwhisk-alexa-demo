@@ -7,3 +7,10 @@ package:
       version: 1.0
       location: exercises/solutions/select-report-suite/select-report-suite.js
       runtime: nodejs@6
+      inputs:
+        analytics_api_key:
+          type: String
+          description: Adobe Analytics API Key.
+        analytics_company:
+          type: String
+          description: Adobe Analytics Company Name.
