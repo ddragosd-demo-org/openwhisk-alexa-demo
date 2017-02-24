@@ -24,7 +24,7 @@ var ANALYTICS_COMPANY = '';
 var languageStrings = {
     "en-US": {
         "translation": {
-            "WELCOME": "Welcome to Adobe Analytics.. Which report suite would you like to use? %s.",
+            "WELCOME": "Welcome to Adobe Analytics test.. Which report suite would you like to use? %s.",
             "WELCOME_REPROMPT": "You can choose from the following report suites %s.",
             "YOU_ARE_WELCOME" : "My pleasure, have a fantastic day!",
             "UNKNOWN_COMMAND_RSID_SELECTION" : "I'm sorry, I could not find that report suite. Which report suite would you like to use? %s.",
