@@ -28,7 +28,6 @@ var languageStrings = {
             "WELCOME_REPROMPT": "You can choose from the following report suites %s.",
             "YOU_ARE_WELCOME" : "My pleasure, have a fantastic day!",
             "REPORT_SUITE_SELECTED" : "Ok, using the %s report suite.",
-            "REPORT_SUITE_SELECTED_REPROMPT" : "You will need to program me to perform queries using this report suite?",
             "UNKNOWN_COMMAND_RSID_SELECTION" : "I'm sorry, I could not find that report suite. Which report suite would you like to use? %s.",
             "UNKNOWN_COMMAND_REPROMPT_RSID_SELECTION" : "Which report suite would you like to use? %s.",
             "HELP_MESSAGE_RSID_SELECTION" : "I am able to answer questions about metrics from your Adobe Analytics report suites. First we must select a report suite. Which report suite would you like to use? %s.",
@@ -74,28 +73,7 @@ var rsidSelectionHandlers = Alexa.CreateStateHandler(states.STATE_RSID_SELECTION
         //Get all the reports suites loaded during this session
         var reportSuites = this.event.session.attributes.reportSuites;
 
-        //Try and match the spoken report suite to one in our list
-        var matchingReportSuite = matchReportSuite(this.event.request.intent.slots.ReportSuite.value, reportSuites);
-        if(!matchingReportSuite.error){
-            //We found a match!
-
-            //Enter the query state
-            this.handler.state = states.STATE_QUERY;
-
-            //Store the selected report suite in session
-            this.attributes['selectedReportSuite'] = matchingReportSuite;
-
-            //Tell use they can now ask for data
-            var speechOutput = this.t("REPORT_SUITE_SELECTED", matchingReportSuite.name);
-            var reprompt = this.t("REPORT_SUITE_SELECTED_REPROMPT", getAllMetricsText());
-            this.emit(':ask', speechOutput, reprompt);
-        }else{
-            //We were unable to match the spoken word to a report suite
-            var reportSuiteList = getReportsSuitesListFromObject(reportSuites);
-            var speechOutput = this.t("UNKNOWN_COMMAND_RSID_SELECTION", reportSuiteList);
-            var reprompt = this.t("UNKNOWN_COMMAND_REPROMPT_RSID_SELECTION", reportSuiteList);
-            this.emit(':ask', speechOutput, reprompt);
-        }
+        this.emit(':tell', "You will have to program me to select a report suite.");
     },
     'ThankYouIntent': function () {
         //User ask for something we are unable to answer
@@ -166,27 +144,6 @@ function getReportSuites(token, reportSuitesResponseCallback) {
             reportSuitesResponseCallback(null, reportSuites);
         })
     })
-}
-
-/**
- * Tries to match a report suite with the spoken name
- */
-function matchReportSuite(spokenLiteral, reportSuites) {
-    var reportSuiteList = '';
-    for (var key in reportSuites) {
-        var reportSuite = reportSuites[key];
-        var re = new RegExp(spokenLiteral.toLowerCase(),"g");
-        var match = reportSuite.name.toLowerCase().match(re);
-        if(match != null){
-            console.log("Found report suite match " + reportSuite);
-            return reportSuite;
-        }
-    }
-
-    console.log("No match found");
-    return {
-        error: true
-    }
 }
 
 var main = function (event) {
