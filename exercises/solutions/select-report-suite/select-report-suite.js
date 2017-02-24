@@ -89,7 +89,7 @@ function getReportSuites(token, reportSuitesResponseCallback){
     })
 }
 
-function main(event) {
+var main = function(event) {
     console.log('ALEXA Event', event.request.type + '!');
     
     API_KEY = event.analytics_api_key; /* default parameter for the action */
