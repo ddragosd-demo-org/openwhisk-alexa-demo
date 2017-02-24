@@ -112,5 +112,3 @@ function main(event) {
             }
         });
 }
-
-exports.default=main;
