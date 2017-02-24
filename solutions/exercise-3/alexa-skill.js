@@ -1,60 +1,47 @@
-//
-//  alexa-demo.js
-//
-//  Created by Dylan Depass & Dragos Dascalita Haut on 2017-02-22.
-//  Copyright (c) 2017 Adobe. All rights reserved.
-//
+/*
+ * Copyright 2017 Adobe Systems Incorporated. All rights reserved.
+ *
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND,
+ * either express or implied.  See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-'use strict';
-var Alexa = require('alexa-sdk');                                                   //Alexa SDK
-var DateUtil = require('./alexa-date-util');                                        //Date helper library
-
-//API Configuration
-var APP_ID              = "amzn1.ask.skill.c0102154-7090-4f99-9034-9fc86df7ed59";   //App ID, this can be found in the Alexa Developer portal.
-var API_KEY             = "analytics-services";                                     //Analytics API key
-var ANALYTICS_COMPANY   = "AdobeAtAdobe";                                           //Analytics Company
+var Alexa = require('alexa-sdk');   //Alexa SDK
 
 var states = {
-    STATE_RSID_SELECTION: '_STATE_RSID_SELECTION', 
-    STATE_QUERY         : '_STATE_QUERY'  
+    STATE_RSID_SELECTION: '_STATE_RSID_SELECTION',
+    STATE_QUERY: '_STATE_QUERY'
 };
 
-//Supported Metrics
-var METRICS = {
-    'pageviews': "metrics/pageviews",
-    'page views': "metrics/pageviews",
-    'visitors': "metrics/visitors",
-    'visits':"metrics/visits",
-    'bounces':"metrics/bounces",
-    'bounce rate': "metrics/bouncerate",
-    'average page depth':'metrics/averagepagedepth',
-};
+var APP_ID = null;
+/* ignored in this demo */
 
-//Measurements of Metrics
-var MEASUREMENT = {
-    'metrics/bouncerate': "percent",
-    'metrics/averagepagedepth': "pages"
-};
+var API_KEY = '';
+/* provided */
+var ANALYTICS_COMPANY = '';
+/* provided */
 
 //Speech strings
 var languageStrings = {
     "en-US": {
         "translation": {
-            "WELCOME" : "Welcome to Adobe Analytics.. Which report suite would you like to use? %s.",
-            "WELCOME_REPROMPT" : "You can choose from the following report suites %s.",
-            "REPORT_SUITE_SELECTED" : "Ok, using the %s report suite. How can I help you?.",
-            "REPORT_SUITE_SELECTED_REPROMPT" : "Currently, I can tell you information about the following metrics: %s. For example, you can ask me, how many page views this month?",
+            "WELCOME": "Welcome to Adobe Analytics.. Which report suite would you like to use? %s.",
+            "WELCOME_REPROMPT": "You can choose from the following report suites %s.",
+            "YOU_ARE_WELCOME" : "My pleasure, have a fantastic day!",
+            "REPORT_SUITE_SELECTED" : "Ok, using the %s report suite.",
+            "REPORT_SUITE_SELECTED_REPROMPT" : "You will need to program me to perform queries using this report suite?",
             "UNKNOWN_COMMAND_RSID_SELECTION" : "I'm sorry, I could not find that report suite. Which report suite would you like to use? %s.",
             "UNKNOWN_COMMAND_REPROMPT_RSID_SELECTION" : "Which report suite would you like to use? %s.",
-            "UNKNOWN_COMMAND_QUERY" : "I'm sorry, I did not understand that request?",            
-            "UNKNOWN_COMMAND_REPROMPT_QUERY" : "Currently, I can tell you information about the following metrics: %s. For example, you can ask me, how many page views this month?",
-            "QUERY_REPROMPT" : "You can ask for another report or say stop to end the session.",
-            "API_ERROR" : "Sorry, Adobe Analytics experienced an error. Please try again later.",
             "HELP_MESSAGE_RSID_SELECTION" : "I am able to answer questions about metrics from your Adobe Analytics report suites. First we must select a report suite. Which report suite would you like to use? %s.",
             "HELP_REPROMPT_RSID_SELECTION" : "Which report suite would you like to use? %s.",
-            "HELP_MESSAGE_QUERY" : "I am able to answer questions about metrics from your Adobe Analytics report suites, For example, you can ask me, how many page views this month?",
-            "HELP_REPROMPT_QUERY" : "Currently, I can tell you information about the following metrics: %s.",
-            "YOU_ARE_WELCOME" : "My pleasure, have a fantastic day!",
+            "QUERY_REPROMPT" : "You can ask for another report or say stop to end the session.",
+            "API_ERROR" : "Sorry, Adobe Analytics experienced an error. Please try again later.",
             "STOP_MESSAGE" : "Goodbye!"
         }
     }
@@ -82,7 +69,6 @@ var newSessionHandlers = {
             that.attributes['repromptSpeech'] = that.t("WELCOME_REPROMPT", reportSuiteList);
             that.emit(':ask', that.attributes['speechOutput'], that.attributes['repromptSpeech']);
         });
-
     }
 };
 
@@ -145,15 +131,16 @@ var rsidSelectionHandlers = Alexa.CreateStateHandler(states.STATE_RSID_SELECTION
         var reprompt = this.t("HELP_REPROMPT_RSID_SELECTION", reportSuiteList);
         this.emit(':ask', speechOutput, reprompt);
     },
-    "AMAZON.StopIntent": function() {
+    "AMAZON.StopIntent": function () {
         //User stopped the skill
         this.emit(':tell', this.t("STOP_MESSAGE"));
     },
-    "AMAZON.CancelIntent": function() {
+    "AMAZON.CancelIntent": function () {
         //User cancelled the skill
         this.emit(':tell', this.t("STOP_MESSAGE"));
     }
 });
+
 
 // Create a new handler for the Query state
 var querySelectionHandlers = Alexa.CreateStateHandler(states.STATE_QUERY, {
@@ -196,63 +183,6 @@ var querySelectionHandlers = Alexa.CreateStateHandler(states.STATE_QUERY, {
             that.emit(':ask', speechOutput, that.t("QUERY_REPROMPT"));
         });
     },
-    'OneshotReportIntent': function () {
-        //Oneshot Report Started
-        console.log("OneshotReportIntent Started");
-        
-        //Get the intent object
-        var intent = this.event.request.intent;
-        
-        //Pull out the duration from the oneshot report intent
-        var duration = getDurationFromIntent(intent);
-        
-        //Pull out the metric from the oneshot report intent
-        var metric = getMetricFromIntent(intent);
-        
-        //Based on the duration get the start and end dates
-        var durationDates = DateUtil.getDurationFromToDates(duration);
-
-        //Store local scope
-        var that = this;
-
-        //Get selected report suite
-        var reportSuiteId = this.event.session.attributes.selectedReportSuite.rsid;
-
-        console.log("Active report suite is " + reportSuiteId);
-
-        //Call get metric using the information from the intent
-        getMetric(this.event.session.user.accessToken, reportSuiteId, metric.metricId, durationDates, function metricResponseCallback(err, reportResponse) {
-            //Response text
-            var speechOutput;
-
-            if (err) {
-                //An error occured while trying to query metric
-                speechOutput = that.t("API_ERROR");
-                console.log("error" + JSON.stringify(err));
-            } else {
-                //A valid value for metric was returned
-                console.log("report response:" + reportResponse);
-
-                //Verb used to describe the metric based on duration. Past or present
-                var verb = getDurationVerb(duration);
-
-                //Get the measurement from the intent
-                var measurement = getMeasurementFromIntent(intent);
-                if(measurement == "percent"){
-                    //The measurement is a percent, round to 2 decimal places and multiply by 100
-                    speechOutput = "The " + metric.query + " " + duration + " " + verb + " " + (parseFloat(reportResponse).toFixed(2) * 100) + " " + measurement + ".";
-                }else if(measurement.indexOf("pages") > -1){
-                    //The measurement is pages, round to 2 decimal places
-                    speechOutput = "The " + metric.query + " " + duration + " " + verb + " " + parseFloat(reportResponse).toFixed(2) + " " + measurement + ".";
-                }else{
-                    //All other metrics
-                    speechOutput = "The total number of " + metric.query + " " + duration + " " + verb + " " + reportResponse;
-                }
-            }
-
-            that.emit(':ask', speechOutput, that.t("QUERY_REPROMPT"));
-        });
-    },
     'ThankYouIntent': function () {
         //User ask for something we are unable to answer
         var speechOutput = this.t("YOU_ARE_WELCOME");
@@ -279,6 +209,42 @@ var querySelectionHandlers = Alexa.CreateStateHandler(states.STATE_QUERY, {
         this.emit(':tell', this.t("STOP_MESSAGE"));
     }
 });
+
+/**
+ * Returns a comma separated list of report suites loaded..
+ */
+function getReportsSuitesListFromObject(reportSuites) {
+    var reportSuiteList = '';
+    for (var key in reportSuites) {
+        var reportSuite = reportSuites[key];
+        reportSuiteList += reportSuite.name + ", ";
+    }
+
+    return reportSuiteList;
+}
+
+/**
+ * Get the list of report suites
+ */
+function getReportSuites(token, reportSuitesResponseCallback) {
+    //Create API headers
+    var headers = {
+        "Authorization": "Bearer " + token,
+        "x-api-key": API_KEY,
+        "x-proxy-company": ANALYTICS_COMPANY
+    };
+
+    var analytics = require('adobe-analytics');
+
+    analytics.config(headers).then(function (api) {
+        api.collections.findAll({expansion: "name", limit: "50"}).then(function (result) {
+            var data = JSON.parse(result["data"]);
+            var reportSuites = data.content;
+            console.log(JSON.stringify(reportSuites));
+            reportSuitesResponseCallback(null, reportSuites);
+        })
+    })
+}
 
 /**
  * Queries a metric based from the Analytics API
@@ -325,71 +291,6 @@ function getMetric(token, rsid, metric, durationDates, metricResponseCallback) {
     })
 }
 
-/**
- * Gets the metric from the intent
- */
-function getMetricFromIntent(intent) {
-    var metricSlot = intent.slots.Metric;
-    var metricName = metricSlot.value.toLowerCase();
-    console.log("Metric is " + metricName + " which maps to " + METRICS[metricName]);
-    if (METRICS[metricName]) {
-        return {
-            query: metricName,
-            metricId: METRICS[metricName]
-        }
-    } else {
-        return {
-            error: true
-        }
-    }
-}
-
-/**
- * Gets the duration from the intent
- */
-function getDurationFromIntent(intent) {
-    var durationSlot = intent.slots.Duration;
-    if (!durationSlot || !durationSlot.value) {
-      return {
-          duration: "today"
-      }
-    }
-
-    return durationSlot.value;
-}
-
-/**
- * Gets the measurement for the intent
- */
-function getMeasurementFromIntent(intent) {
-    console.log("Determining Intent Measurement");
-    var metricSlot = intent.slots.Metric;
-    var metricName = metricSlot.value;
-
-    var metricValue = METRICS[metricName.toLowerCase()];
-    var measurement = MEASUREMENT[metricValue];
-    console.log("Measurement for " + metricValue + " is " + measurement);
-    if (measurement) {
-        return measurement;
-    } else {
-        return "";
-    }
-}
-
-/**
- * Returns a comma separated list of supported metrics 
- */
-function getAllMetricsText() {
-    var metricList = '';
-    for (var metric in METRICS) {
-        //pageviews and page views is listed as metrics.. Don't say them twice.
-        if(metric != "page views"){
-           metricList += metric + ", ";
-        }
-    }
-
-    return metricList;
-}
 
 /**
  * Tries to match a report suite with the spoken name
@@ -412,64 +313,6 @@ function matchReportSuite(spokenLiteral, reportSuites) {
     }
 }
 
-/**
- * Returns a comma separated list of report suites loaded.. 
- */
-function getReportsSuitesListFromObject(reportSuites) {
-    var reportSuiteList = '';
-    for (var key in reportSuites) {
-        var reportSuite = reportSuites[key];
-        reportSuiteList += reportSuite.name + ", ";
-    }
-
-    return reportSuiteList;
-}
-
-/**
- * Get the list of report suites
- */
-function getReportSuites(token, reportSuitesResponseCallback){
-    //Create API headers
-    var headers = { "Authorization" : "Bearer " + token,
-                "x-api-key" : API_KEY,
-                "x-proxy-company" : ANALYTICS_COMPANY }
-
-    var analytics = require('./aa-lib/adobe-analytics')(headers);
-
-    analytics.then(function(api){
-        api.collections.findAll({expansion:"name", limit:"50"}).then(function(result)
-        {
-            var data = JSON.parse(result["data"]);
-            var reportSuites = data.content;
-            console.log(JSON.stringify(reportSuites));
-            reportSuitesResponseCallback(null, reportSuites);
-        })
-    })
-}
-
-/**
- * Get a verb to describe the duration
- */
-function getDurationVerb(duration){
-    var verb = "was";
-    if(duration == "today" || duration == "this week" || duration == "this month" || duration == "this year"){
-        verb = "is";
-    }
-    return verb;
-}
-
-//AWS Lambda
-// exports.handler = function(event, context, callback) {
-//     var alexa = Alexa.handler(event, context);
-//     alexa.appId = APP_ID;
-//     // To enable string internationalization (i18n) features, set a resources object.
-//     alexa.resources = languageStrings;
-//     alexa.registerHandlers(newSessionHandlers, rsidSelectionHandlers, querySelectionHandlers);
-//     alexa.execute();
-// };
-
-
-//Adobe I/O Runtime 
 var main = function (event) {
     console.log('ALEXA Event', event.request.type + '!');
 
@@ -488,7 +331,7 @@ var main = function (event) {
                     });
                 alexaSDK.APP_ID = APP_ID;
                 alexaSDK.resources = languageStrings;
-                alexaSDK.registerHandlers(newSessionHandlers, rsidSelectionHandlers, querySelectionHandlers);
+                alexaSDK.registerHandlers(newSessionHandlers, rsidSelectionHandlers);
                 return alexaSDK.execute();
             } catch (err) {
                 console.log(err);

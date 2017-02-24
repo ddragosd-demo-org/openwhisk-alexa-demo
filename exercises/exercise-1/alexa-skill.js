@@ -56,15 +56,9 @@ var newSessionHandlers = {
     'LaunchRequest': function () {
         //Skill was launched
 
-        this.emit(':tell', "Hello, please help me find your report suites to continue.");
+        //TODO: Say Hello!
     }
 };
-
-// Create a new handler for the report suite selection state
-var rsidSelectionHandlers = Alexa.CreateStateHandler(states.STATE_RSID_SELECTION, {
-
-});
-
 
 var main = function (event) {
     console.log('ALEXA Event', event.request.type + '!');
@@ -84,7 +78,7 @@ var main = function (event) {
                     });
                 alexaSDK.APP_ID = APP_ID;
                 alexaSDK.resources = languageStrings;
-                alexaSDK.registerHandlers(newSessionHandlers, rsidSelectionHandlers);
+                alexaSDK.registerHandlers(newSessionHandlers);
                 return alexaSDK.execute();
             } catch (err) {
                 console.log(err);

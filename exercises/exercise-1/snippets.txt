@@ -1,0 +1,5 @@
+In this exercise we will configure Alexa to Respond back with "Hello" followed by your name after the skill is launched. 
+
+1. Say Hello using the emit function, this should be copied into the LaunchRequest function
+
+this.emit(':tell', "Hello Dylan");

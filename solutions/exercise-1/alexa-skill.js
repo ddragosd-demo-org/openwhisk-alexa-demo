@@ -11,7 +11,7 @@
  * either express or implied.  See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+ 
 var Alexa = require('alexa-sdk');   //Alexa SDK
 
 var states = {
@@ -56,15 +56,10 @@ var newSessionHandlers = {
     'LaunchRequest': function () {
         //Skill was launched
 
-        this.emit(':tell', "Hello, please help me find your report suites to continue.");
+        //TODO: Say Hello!
+        this.emit(':tell', "Hello NAME");
     }
 };
-
-// Create a new handler for the report suite selection state
-var rsidSelectionHandlers = Alexa.CreateStateHandler(states.STATE_RSID_SELECTION, {
-
-});
-
 
 var main = function (event) {
     console.log('ALEXA Event', event.request.type + '!');
@@ -84,7 +79,7 @@ var main = function (event) {
                     });
                 alexaSDK.APP_ID = APP_ID;
                 alexaSDK.resources = languageStrings;
-                alexaSDK.registerHandlers(newSessionHandlers, rsidSelectionHandlers);
+                alexaSDK.registerHandlers(newSessionHandlers);
                 return alexaSDK.execute();
             } catch (err) {
                 console.log(err);
