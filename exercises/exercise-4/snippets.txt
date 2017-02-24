@@ -16,7 +16,7 @@ In this exercise we will configure Alexa to handle requests for different metric
         var metric = getMetricFromIntent(intent);
         
         //Based on the duration get the start and end dates
-        var durationDates = DateUtil.getDurationFromToDates(duration);
+        var durationDates = analytics.dateUtil.getDurationFromToDates(duration);
 
         //Store local scope
         var that = this;

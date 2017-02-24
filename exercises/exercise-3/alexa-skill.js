@@ -27,6 +27,9 @@ var API_KEY = '';
 var ANALYTICS_COMPANY = '';
 /* provided */
 
+// Analytics SDK        
+var analytics = require("adobe-analytics")
+
 //Speech strings
 var languageStrings = {
     "en-US": {

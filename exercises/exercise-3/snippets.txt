@@ -15,7 +15,7 @@ var querySelectionHandlers = Alexa.CreateStateHandler(states.STATE_QUERY, {
         var metric = "metrics/pageviews";
         
         //Based on the duration get the start and end dates
-        var durationDates = DateUtil.getDurationFromToDates(duration);
+        var durationDates = analytics.dateUtil.getDurationFromToDates(duration);
 
         //Store local scope
         var that = this;

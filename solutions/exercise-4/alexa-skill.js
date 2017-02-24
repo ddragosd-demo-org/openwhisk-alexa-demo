@@ -27,6 +27,9 @@ var API_KEY = '';
 var ANALYTICS_COMPANY = '';
 /* provided */
 
+// Analytics SDK        
+var analytics = require("adobe-analytics")
+
 //Supported Metrics
 var METRICS = {
     'pageviews': "metrics/pageviews",
@@ -172,7 +175,7 @@ var querySelectionHandlers = Alexa.CreateStateHandler(states.STATE_QUERY, {
         var metric = "metrics/pageviews";
         
         //Based on the duration get the start and end dates
-        var durationDates = DateUtil.getDurationFromToDates(duration);
+        var durationDates = analytics.dateUtil.getDurationFromToDates(duration);
 
         //Store local scope
         var that = this;
@@ -214,7 +217,7 @@ var querySelectionHandlers = Alexa.CreateStateHandler(states.STATE_QUERY, {
         var metric = getMetricFromIntent(intent);
         
         //Based on the duration get the start and end dates
-        var durationDates = DateUtil.getDurationFromToDates(duration);
+        var durationDates = analytics.dateUtil.getDurationFromToDates(duration);
 
         //Store local scope
         var that = this;
