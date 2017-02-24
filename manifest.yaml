@@ -3,7 +3,7 @@ package:
   version: 1.0
   license: Apache-2.0
   actions:
-    demo:
+    adobe-analytics-skill:
       version: 1.0
-      location: openwhisk-alexa-demo-0.0.2.js
+      location: exercises/solutions/select-report-suite/select-report-suite.js
       runtime: nodejs@6
