@@ -113,4 +113,4 @@ function main(event) {
         });
 }
 
-export default main;
+exports.default=main;
