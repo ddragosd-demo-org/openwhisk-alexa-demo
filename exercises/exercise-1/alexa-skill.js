@@ -51,16 +51,6 @@ var languageStrings = {
     }
 };
 
-// Create default handlers
-var newSessionHandlers = {
-    'LaunchRequest': function () {
-        //Skill was launched
-
-        //TODO: Say Hello!
-        this.emit(':tell', "Hello Dylan");
-    }
-};
-
 var main = function (event) {
     console.log('ALEXA Event', event.request.type + '!');
 
@@ -79,7 +69,7 @@ var main = function (event) {
                     });
                 alexaSDK.APP_ID = APP_ID;
                 alexaSDK.resources = languageStrings;
-                alexaSDK.registerHandlers(newSessionHandlers);
+
                 return alexaSDK.execute();
             } catch (err) {
                 console.log(err);
