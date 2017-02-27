@@ -412,6 +412,17 @@ function getAllMetricsText() {
 }
 
 /**
+ * Get a verb to describe the duration
+ */
+function getDurationVerb(duration){
+    var verb = "was";
+    if(duration == "today" || duration == "this week" || duration == "this month" || duration == "this year"){
+        verb = "is";
+    }
+    return verb;
+}
+
+/**
  * Gets the measurement for the intent
  */
 function getMeasurementFromIntent(intent) {

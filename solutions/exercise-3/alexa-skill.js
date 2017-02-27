@@ -338,6 +338,17 @@ function matchReportSuite(spokenLiteral, reportSuites) {
 }
 
 /**
+ * Get a verb to describe the duration
+ */
+function getDurationVerb(duration){
+    var verb = "was";
+    if(duration == "today" || duration == "this week" || duration == "this month" || duration == "this year"){
+        verb = "is";
+    }
+    return verb;
+}
+
+/**
  * Returns a comma separated list of supported metrics 
  */
 function getAllMetricsText() {
