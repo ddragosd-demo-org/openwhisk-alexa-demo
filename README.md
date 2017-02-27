@@ -11,7 +11,8 @@ An OpenWhisk action as an Amazon Alexa Skill.
 
 TBD...
 
-
+# Alexa Developer Portal Prelab Setup
+[Setup Instructions](./speechAssets)
 
 # Lab Exercises
 
@@ -28,7 +29,7 @@ var newSessionHandlers = {
         //Skill was launched
 
         //TODO: Say Hello!
-        this.emit(':tell', "Hello Dylan");
+        this.emit(':tell', "Hello NAME");
     }
 };
 ```
