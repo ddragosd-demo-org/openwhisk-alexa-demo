@@ -33,8 +33,8 @@ var languageStrings = {
         "translation": {
             "WELCOME" : "Welcome to Adobe Analytics.. Which report suite would you like to use? %s.",
             "WELCOME_REPROMPT" : "You can choose from the following report suites %s.",
-            "REPORT_SUITE_SELECTED" : "Ok, using the %s report suite. How can I help you?.",
-            "REPORT_SUITE_SELECTED_REPROMPT" : "Currently, I can tell you information about the following metrics: %s. For example, you can ask me, how many page views this month?",
+            "REPORT_SUITE_SELECTED" : "Ok, using the %s report suite. You will now need to program me to handle a report request.",
+            "REPORT_SUITE_SELECTED_REPROMPT" : " You will now need to program me to handle a report request.",
             "UNKNOWN_COMMAND_RSID_SELECTION" : "I'm sorry, I could not find that report suite. Which report suite would you like to use? %s.",
             "UNKNOWN_COMMAND_REPROMPT_RSID_SELECTION" : "Which report suite would you like to use? %s.",
             "UNKNOWN_COMMAND_QUERY" : "I'm sorry, I did not understand that request?",            
@@ -124,7 +124,7 @@ var rsidSelectionHandlers = Alexa.CreateStateHandler(states.STATE_RSID_SELECTION
 
             //Tell use they can now ask for data
             var speechOutput = this.t("REPORT_SUITE_SELECTED", matchingReportSuite.name);
-            var reprompt = this.t("REPORT_SUITE_SELECTED_REPROMPT", getAllMetricsText());
+            var reprompt = this.t("REPORT_SUITE_SELECTED_REPROMPT");
             this.emit(':ask', speechOutput, reprompt);
         }else{
             //We were unable to match the spoken word to a report suite
@@ -201,21 +201,6 @@ function getReportsSuitesListFromObject(reportSuites) {
     }
 
     return reportSuiteList;
-}
-
-/**
- * Returns a comma separated list of supported metrics 
- */
-function getAllMetricsText() {
-    var metricList = '';
-    for (var metric in METRICS) {
-        //pageviews and page views is listed as metrics.. Don't say them twice.
-        if(metric != "page views"){
-           metricList += metric + ", ";
-        }
-    }
-
-    return metricList;
 }
 
 var main = function (event) {

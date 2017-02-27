@@ -30,6 +30,23 @@ var ANALYTICS_COMPANY = '';
 // Analytics SDK        
 var analytics = require("adobe-analytics")
 
+//Supported Metrics
+var METRICS = {
+    'pageviews': "metrics/pageviews",
+    'page views': "metrics/pageviews",
+    'visitors': "metrics/visitors",
+    'visits':"metrics/visits",
+    'bounces':"metrics/bounces",
+    'bounce rate': "metrics/bouncerate",
+    'average page depth':'metrics/averagepagedepth',
+};
+
+//Measurements of Metrics
+var MEASUREMENT = {
+    'metrics/bouncerate': "percent",
+    'metrics/averagepagedepth': "pages"
+};
+
 //Speech strings
 var languageStrings = {
     "en-US": {

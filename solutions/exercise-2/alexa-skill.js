@@ -27,19 +27,42 @@ var API_KEY = '';
 var ANALYTICS_COMPANY = '';
 /* provided */
 
+//Supported Metrics
+var METRICS = {
+    'pageviews': "metrics/pageviews",
+    'page views': "metrics/pageviews",
+    'visitors': "metrics/visitors",
+    'visits':"metrics/visits",
+    'bounces':"metrics/bounces",
+    'bounce rate': "metrics/bouncerate",
+    'average page depth':'metrics/averagepagedepth',
+};
+
+//Measurements of Metrics
+var MEASUREMENT = {
+    'metrics/bouncerate': "percent",
+    'metrics/averagepagedepth': "pages"
+};
+
 //Speech strings
 var languageStrings = {
     "en-US": {
         "translation": {
-            "WELCOME": "Welcome to Adobe Analytics.. Which report suite would you like to use? %s.",
-            "WELCOME_REPROMPT": "You can choose from the following report suites %s.",
-            "YOU_ARE_WELCOME" : "My pleasure, have a fantastic day!",
-            "REPORT_SUITE_SELECTED" : "Ok, using the %s report suite.",
-            "REPORT_SUITE_SELECTED_REPROMPT" : "You will need to program me to perform queries using this report suite?",
+            "WELCOME" : "Welcome to Adobe Analytics.. Which report suite would you like to use? %s.",
+            "WELCOME_REPROMPT" : "You can choose from the following report suites %s.",
+            "REPORT_SUITE_SELECTED" : "Ok, using the %s report suite. You will now need to program me to handle a report request.",
+            "REPORT_SUITE_SELECTED_REPROMPT" : " You will now need to program me to handle a report request.",
             "UNKNOWN_COMMAND_RSID_SELECTION" : "I'm sorry, I could not find that report suite. Which report suite would you like to use? %s.",
             "UNKNOWN_COMMAND_REPROMPT_RSID_SELECTION" : "Which report suite would you like to use? %s.",
+            "UNKNOWN_COMMAND_QUERY" : "I'm sorry, I did not understand that request?",            
+            "UNKNOWN_COMMAND_REPROMPT_QUERY" : "Currently, I can tell you information about the following metrics: %s. For example, you can ask me, how many page views this month?",
+            "QUERY_REPROMPT" : "You can ask for another report or say stop to end the session.",
+            "API_ERROR" : "Sorry, Adobe Analytics experienced an error. Please try again later.",
             "HELP_MESSAGE_RSID_SELECTION" : "I am able to answer questions about metrics from your Adobe Analytics report suites. First we must select a report suite. Which report suite would you like to use? %s.",
             "HELP_REPROMPT_RSID_SELECTION" : "Which report suite would you like to use? %s.",
+            "HELP_MESSAGE_QUERY" : "I am able to answer questions about metrics from your Adobe Analytics report suites, For example, you can ask me, how many page views this month?",
+            "HELP_REPROMPT_QUERY" : "Currently, I can tell you information about the following metrics: %s.",
+            "YOU_ARE_WELCOME" : "My pleasure, have a fantastic day!",
             "STOP_MESSAGE" : "Goodbye!"
         }
     }
@@ -94,7 +117,7 @@ var rsidSelectionHandlers = Alexa.CreateStateHandler(states.STATE_RSID_SELECTION
 
             //Tell user they can now ask for data
             var speechOutput = this.t("REPORT_SUITE_SELECTED", matchingReportSuite.name);
-            var reprompt = this.t("REPORT_SUITE_SELECTED_REPROMPT", getAllMetricsText());
+            var reprompt = this.t("REPORT_SUITE_SELECTED_REPROMPT");
             this.emit(':ask', speechOutput, reprompt);
         }else{
             //We were unable to match the spoken word to a report suite
