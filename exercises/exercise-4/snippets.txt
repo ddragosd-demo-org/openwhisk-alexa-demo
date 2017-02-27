@@ -117,3 +117,7 @@ function getMetricFromIntent(intent) {
         }
     }
 }
+
+5. Change the location manifest.yaml to point to
+
+exercises/exercise-4/alexa-skill.js

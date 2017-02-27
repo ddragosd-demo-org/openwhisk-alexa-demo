@@ -220,6 +220,11 @@ alexaSDK.registerHandlers(newSessionHandlers, rsidSelectionHandlers);
 
 ```
 
+7. Change the location manifest.yaml to point to
+```
+exercises/exercise-2/alexa-skill.js
+```
+
 ## Exercise 3
 
 In this exercise we will configure Alexa to respond to requests for the page views metric for the day.
@@ -385,6 +390,10 @@ function getAllMetricsText() {
 }
 ```
 
+5. Change the location manifest.yaml to point to
+```
+exercises/exercise-3/alexa-skill.js
+```
 
 ## Exercise 4
 
@@ -513,4 +522,10 @@ function getMetricFromIntent(intent) {
         }
     }
 }
+```
+
+
+5. Change the location manifest.yaml to point to
+```
+exercises/exercise-4/alexa-skill.js
 ```

@@ -166,3 +166,8 @@ function getReportsSuitesListFromObject(reportSuites) {
 6. Register rsidSelectionHandlers with AlexaSDK in the main method.
 
 alexaSDK.registerHandlers(newSessionHandlers, rsidSelectionHandlers);
+
+
+7. Change the location manifest.yaml to point to
+
+exercises/exercise-2/alexa-skill.js
