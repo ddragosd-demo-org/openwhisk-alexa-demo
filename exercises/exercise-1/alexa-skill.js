@@ -57,6 +57,7 @@ var newSessionHandlers = {
         //Skill was launched
 
         //TODO: Say Hello!
+        this.emit(':tell', "Hello Dylan");
     }
 };
 
