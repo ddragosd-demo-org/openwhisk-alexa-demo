@@ -370,7 +370,7 @@ var main = function (event) {
                     });
                 alexaSDK.APP_ID = APP_ID;
                 alexaSDK.resources = languageStrings;
-                alexaSDK.registerHandlers(newSessionHandlers, rsidSelectionHandlers);
+                alexaSDK.registerHandlers(newSessionHandlers, rsidSelectionHandlers, querySelectionHandlers);
                 return alexaSDK.execute();
             } catch (err) {
                 console.log(err);
