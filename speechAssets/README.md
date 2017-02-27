@@ -1,9 +1,12 @@
 # Alexa Developer Portal Configuration
 
-[Skills Info]: https://github.com/ddragosd-demo-org/openwhisk-alexa-demo/raw/dyland-alexa/speechAssets/readmeAssets/skills_info.png "Skills Info"
+# Skills Info Setup
+![Skills Info](./readmeAssets/skills_info.png?raw=true )
 
-[Interaction Model]: https://github.com/ddragosd-demo-org/openwhisk-alexa-demo/raw/dyland-alexa/speechAssets/readmeAssets/interaction_model.png "Interaction Model"
+# Interaction Model Setup
+![Interaction Model Setup](./readmeAssets/interaction_model.png?raw=true )
 
-[Configuration]: https://github.com/ddragosd-demo-org/openwhisk-alexa-demo/raw/dyland-alexa/speechAssets/readmeAssets/configuration.png "Configuration"
+# Configuration Setup
+![Configuration](./readmeAssets/configuration.png?raw=true )
 
 
