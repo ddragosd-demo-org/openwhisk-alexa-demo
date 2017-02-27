@@ -1,28 +1,28 @@
 In this exercise we will configure Alexa to let the user select a report suite using the Analytics API.
 
-1. Implement LaunchRequest inside of newSessionHandlers to make call to get analytics
+1. Replace the LaunchRequest function inside of newSessionHandlers with the implementation below. This code will make a call to the Analytics API to get all available report suites and list them back to the user.
 
-'LaunchRequest': function () {
-    //Skill was launched
+    'LaunchRequest': function () {
+        //Skill was launched
 
-    //Set RSID selection state
-    this.handler.state = states.STATE_RSID_SELECTION;
+        //Set RSID selection state
+        this.handler.state = states.STATE_RSID_SELECTION;
 
-    //Store local scope
-    var that = this;
+        //Store local scope
+        var that = this;
 
-    //Get a list of report suites
-    getReportSuites(this.event.session.user.accessToken, function reportSuitesResponseCallback(err, reportSuites) {
-        //Get a comma separated list of the report suites
-        var reportSuiteList = getReportsSuitesListFromObject(reportSuites);
-        console.log("Reportsuite list " + reportSuiteList);
+        //Get a list of report suites
+        getReportSuites(this.event.session.user.accessToken, function reportSuitesResponseCallback(err, reportSuites) {
+            //Get a comma separated list of the report suites
+            var reportSuiteList = getReportsSuitesListFromObject(reportSuites);
+            console.log("Reportsuite list " + reportSuiteList);
 
-        that.attributes['reportSuites'] = reportSuites;
-        that.attributes['speechOutput'] = that.t("WELCOME", reportSuiteList);
-        that.attributes['repromptSpeech'] = that.t("WELCOME_REPROMPT", reportSuiteList);
-        that.emit(':ask', that.attributes['speechOutput'], that.attributes['repromptSpeech']);
-    });
-}
+            that.attributes['reportSuites'] = reportSuites;
+            that.attributes['speechOutput'] = that.t("WELCOME", reportSuiteList);
+            that.attributes['repromptSpeech'] = that.t("WELCOME_REPROMPT", reportSuiteList);
+            that.emit(':ask', that.attributes['speechOutput'], that.attributes['repromptSpeech']);
+        });
+    }
 
 
 2. Add function to handle get report suites call
@@ -163,3 +163,19 @@ function getReportsSuitesListFromObject(reportSuites) {
     return reportSuiteList;
 }
 
+6. Add method to return a comma seperated list of metrics.
+
+/**
+ * Returns a comma separated list of supported metrics 
+ */
+function getAllMetricsText() {
+    var metricList = '';
+    for (var metric in METRICS) {
+        //pageviews and page views is listed as metrics.. Don't say them twice.
+        if(metric != "page views"){
+           metricList += metric + ", ";
+        }
+    }
+
+    return metricList;
+}

@@ -74,6 +74,16 @@ var newSessionHandlers = {
             that.emit(':ask', that.attributes['speechOutput'], that.attributes['repromptSpeech']);
         });
     }
+    'Unhandled': function () {
+        //Get a comma separated list of the report suites
+        var reportSuites = this.event.session.attributes.reportSuites;
+        var reportSuiteList = getReportsSuitesListFromObject(reportSuites);
+
+        //User ask for something we are unable to answer
+        var speechOutput = this.t("UNKNOWN_COMMAND_RSID_SELECTION", reportSuiteList);
+        var reprompt = this.t("UNKNOWN_COMMAND_REPROMPT_RSID_SELECTION", reportSuiteList);
+        this.emit(':ask', speechOutput, reprompt);
+    }
 };
 
 /**
@@ -203,6 +213,20 @@ function getReportsSuitesListFromObject(reportSuites) {
     return reportSuiteList;
 }
 
+/**
+ * Returns a comma separated list of supported metrics 
+ */
+function getAllMetricsText() {
+    var metricList = '';
+    for (var metric in METRICS) {
+        //pageviews and page views is listed as metrics.. Don't say them twice.
+        if(metric != "page views"){
+           metricList += metric + ", ";
+        }
+    }
+
+    return metricList;
+}
 
 var main = function (event) {
     console.log('ALEXA Event', event.request.type + '!');

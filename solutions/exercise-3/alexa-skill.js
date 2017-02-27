@@ -316,6 +316,21 @@ function matchReportSuite(spokenLiteral, reportSuites) {
     }
 }
 
+/**
+ * Returns a comma separated list of supported metrics 
+ */
+function getAllMetricsText() {
+    var metricList = '';
+    for (var metric in METRICS) {
+        //pageviews and page views is listed as metrics.. Don't say them twice.
+        if(metric != "page views"){
+           metricList += metric + ", ";
+        }
+    }
+
+    return metricList;
+}
+
 var main = function (event) {
     console.log('ALEXA Event', event.request.type + '!');
 
