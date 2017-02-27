@@ -1,6 +1,6 @@
 In this exercise we will configure Alexa to handle requests for different metrics over any duration.
 
-1. Add OneshotReportIntent to querySelectionHandlers
+1. Add OneshotReportIntent to querySelectionHandlers, this intent handler supports adhoc queries for various metric's over multiple time periods
 
     'OneshotReportIntent': function () {
         //Oneshot Report Started
@@ -61,7 +61,7 @@ In this exercise we will configure Alexa to handle requests for different metric
     },
 
 
-2. Add getMeasurementFromIntent function
+2. Add getMeasurementFromIntent function, this function will take an intent and figure out the measurement. The measurement is used to describe the results. Result could be pages or percent for support metrics.
 
 /**
  * Gets the measurement for the intent
@@ -81,7 +81,7 @@ function getMeasurementFromIntent(intent) {
     }
 }
 
-3. Add getDurationFromIntent function
+3. Add getDurationFromIntent function, this function will return the duration for a given intent.
 
 /**
  * Gets the duration from the intent
@@ -97,7 +97,7 @@ function getDurationFromIntent(intent) {
     return durationSlot.value;
 }
 
-4. Add getMetricFromIntent function.
+4. Add getMetricFromIntent function, this function will return the metric and it's API counterpart for a given intent.
 
 /**
  * Gets the metric from the intent
