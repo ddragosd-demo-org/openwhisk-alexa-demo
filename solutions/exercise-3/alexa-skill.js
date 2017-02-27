@@ -197,7 +197,7 @@ var querySelectionHandlers = Alexa.CreateStateHandler(states.STATE_QUERY, {
                 //Verb used to describe the metric based on duration. Past or present
                 var verb = getDurationVerb(duration);
 
-                speechOutput = "The total number of page views " + verb + " " + reportResponse;
+                speechOutput = "The total number of page views today " + verb + " " + reportResponse;
             }
 
             that.emit(':ask', speechOutput, that.t("QUERY_REPROMPT"));
