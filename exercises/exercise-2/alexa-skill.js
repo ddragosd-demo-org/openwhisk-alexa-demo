@@ -74,16 +74,6 @@ var newSessionHandlers = {
             that.emit(':ask', that.attributes['speechOutput'], that.attributes['repromptSpeech']);
         });
     }
-    'Unhandled': function () {
-        //Get a comma separated list of the report suites
-        var reportSuites = this.event.session.attributes.reportSuites;
-        var reportSuiteList = getReportsSuitesListFromObject(reportSuites);
-
-        //User ask for something we are unable to answer
-        var speechOutput = this.t("UNKNOWN_COMMAND_RSID_SELECTION", reportSuiteList);
-        var reprompt = this.t("UNKNOWN_COMMAND_REPROMPT_RSID_SELECTION", reportSuiteList);
-        this.emit(':ask', speechOutput, reprompt);
-    }
 };
 
 /**
