@@ -51,17 +51,21 @@ var MEASUREMENT = {
 var languageStrings = {
     "en-US": {
         "translation": {
-            "WELCOME": "Welcome to Adobe Analytics.. Which report suite would you like to use? %s.",
-            "WELCOME_REPROMPT": "You can choose from the following report suites %s.",
-            "YOU_ARE_WELCOME" : "My pleasure, have a fantastic day!",
-            "REPORT_SUITE_SELECTED" : "Ok, using the %s report suite.",
-            "REPORT_SUITE_SELECTED_REPROMPT" : "You will need to program me to perform queries using this report suite?",
+            "WELCOME" : "Welcome to Adobe Analytics.. Which report suite would you like to use? %s.",
+            "WELCOME_REPROMPT" : "You can choose from the following report suites %s.",
+            "REPORT_SUITE_SELECTED" : "Ok, using the %s report suite. How can I help you?.",
+            "REPORT_SUITE_SELECTED_REPROMPT" : "Currently, I can tell you information about the following metrics: %s. For example, you can ask me, how many page views this month?",
             "UNKNOWN_COMMAND_RSID_SELECTION" : "I'm sorry, I could not find that report suite. Which report suite would you like to use? %s.",
             "UNKNOWN_COMMAND_REPROMPT_RSID_SELECTION" : "Which report suite would you like to use? %s.",
-            "HELP_MESSAGE_RSID_SELECTION" : "I am able to answer questions about metrics from your Adobe Analytics report suites. First we must select a report suite. Which report suite would you like to use? %s.",
-            "HELP_REPROMPT_RSID_SELECTION" : "Which report suite would you like to use? %s.",
+            "UNKNOWN_COMMAND_QUERY" : "I'm sorry, I did not understand that request?",            
+            "UNKNOWN_COMMAND_REPROMPT_QUERY" : "Currently, I can tell you information about the following metrics: %s. For example, you can ask me, how many page views this month?",
             "QUERY_REPROMPT" : "You can ask for another report or say stop to end the session.",
             "API_ERROR" : "Sorry, Adobe Analytics experienced an error. Please try again later.",
+            "HELP_MESSAGE_RSID_SELECTION" : "I am able to answer questions about metrics from your Adobe Analytics report suites. First we must select a report suite. Which report suite would you like to use? %s.",
+            "HELP_REPROMPT_RSID_SELECTION" : "Which report suite would you like to use? %s.",
+            "HELP_MESSAGE_QUERY" : "I am able to answer questions about metrics from your Adobe Analytics report suites, For example, you can ask me, how many page views this month?",
+            "HELP_REPROMPT_QUERY" : "Currently, I can tell you information about the following metrics: %s.",
+            "YOU_ARE_WELCOME" : "My pleasure, have a fantastic day!",
             "STOP_MESSAGE" : "Goodbye!"
         }
     }
