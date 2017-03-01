@@ -40,7 +40,7 @@ var newSessionHandlers = {
 alexaSDK.registerHandlers(newSessionHandlers);
 ```
 
-4. Commit changes back to github
+3. Commit changes back to github
 
 
 ## Exercise 2
