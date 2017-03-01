@@ -40,6 +40,9 @@ var newSessionHandlers = {
 alexaSDK.registerHandlers(newSessionHandlers);
 ```
 
+4. Commit changes back to github
+
+
 ## Exercise 2
 
 In this exercise we will configure Alexa to let the user select a report suite using the Analytics API.
@@ -225,6 +228,9 @@ alexaSDK.registerHandlers(newSessionHandlers, rsidSelectionHandlers);
 exercises/exercise-2/alexa-skill.js
 ```
 
+9. Commit changes back to github
+
+
 ## Exercise 3
 
 In this exercise we will configure Alexa to respond to requests for the page views metric for the day.
@@ -395,6 +401,9 @@ function getAllMetricsText() {
 exercises/exercise-3/alexa-skill.js
 ```
 
+7. Commit changes back to github
+
+
 ## Exercise 4
 
 In this exercise we will configure Alexa to handle requests for different metrics over any duration.
@@ -524,8 +533,9 @@ function getMetricFromIntent(intent) {
 }
 ```
 
+6. Change manafest.yaml to point to exercise 4
+```
+    exercises/exercise-4/alexa-skill.js
+```
 
-5. Change the location manifest.yaml to point to
-```
-exercises/exercise-4/alexa-skill.js
-```
+7. Commit changes back to github
