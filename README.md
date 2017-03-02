@@ -20,7 +20,8 @@ TBD...
 
 In this exercise we will configure Alexa to Respond back with "Hello" followed by your name after the skill is launched. 
 
-1. Add code to handle new sessions requests. A LaunchRequest is an object that represents that a user made a request to an Alexa skill, but did not provide a specific intent.
+### Step 1 
+Add code to handle new sessions requests. A LaunchRequest is an object that represents that a user made a request to an Alexa skill, but did not provide a specific intent.
 
 ```javascript
 // Create default handlers
@@ -34,13 +35,15 @@ var newSessionHandlers = {
 };
 ```
 
-2. In the main function register the newSessionHandlers with the Alexa SDK 
+### Step 2 
+In the main function register the newSessionHandlers with the Alexa SDK 
 
 ```javascript
 alexaSDK.registerHandlers(newSessionHandlers);
 ```
 
-3. Commit changes back to github
+### Step 3
+Commit changes back to github
 
 
 ## Exercise 2
