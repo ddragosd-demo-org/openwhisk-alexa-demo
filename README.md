@@ -43,14 +43,15 @@ alexaSDK.registerHandlers(newSessionHandlers);
 ```
 
 ### Step 3
-Commit changes back to github
+Commit changes back to github, either using the browser or the git CLI.
 
 
 ## Exercise 2
 
 In this exercise we will configure Alexa to let the user select a report suite using the Analytics API.
 
-1. Replace the LaunchRequest function inside of newSessionHandlers with the implementation below. This code will make a call to the Analytics API to get all available report suites and list them back to the user.
+### Step 1 
+Replace the LaunchRequest function inside of newSessionHandlers with the implementation below. This code will make a call to the Analytics API to get all available report suites and list them back to the user.
 
 ```javascript
     'LaunchRequest': function () {
@@ -76,7 +77,8 @@ In this exercise we will configure Alexa to let the user select a report suite u
     }
 ```
 
-2. Add function to handle get report suites call
+### Step 2 
+Add function to handle get report suites call
 
 ```javascript
 /**
@@ -104,7 +106,8 @@ function getReportSuites(token, reportSuitesResponseCallback) {
 }
 ```
 
-3. Add rsidSelectionHandlers to handle rsid selection state requests
+### Step 3 
+Add rsidSelectionHandlers to handle rsid selection state requests
 
 ```javascript
 // Create a new handler for the report suite selection state
@@ -177,7 +180,8 @@ var rsidSelectionHandlers = Alexa.CreateStateHandler(states.STATE_RSID_SELECTION
 });
 ```    
     
-4. Add function to match spoken word to report suite
+### Step 4
+Add function to match spoken word to report suite
 
 ```javascript    
 /**
@@ -202,7 +206,8 @@ function matchReportSuite(spokenLiteral, reportSuites) {
 }
 ```
 
-5. Add function to turn an array of report suites into a comma separated string
+### Step 5
+Add function to turn an array of report suites into a comma separated string
 
 ```javascript
 /**
@@ -219,26 +224,31 @@ function getReportsSuitesListFromObject(reportSuites) {
 }
 ```
 
-6. Register rsidSelectionHandlers with AlexaSDK in the main method.
+### Step 6
+Register rsidSelectionHandlers with AlexaSDK in the main method.
 
 ```javascript
 alexaSDK.registerHandlers(newSessionHandlers, rsidSelectionHandlers);
 
 ```
 
-7. Change the location manifest.yaml to point to
+### Step 7
+ Change the location manifest.yaml to point to
+
 ```
 exercises/exercise-2/alexa-skill.js
 ```
 
-9. Commit changes back to github
+### Step 8 
+Commit changes back to github, either using the browser or the git CLI.
 
 
 ## Exercise 3
 
 In this exercise we will configure Alexa to respond to requests for the page views metric for the day.
 
-1. Add querySelectionHandlers to skill, these methods will handle requests while in the Query state. To start we will just handle request for page view today.
+### Step 1 
+Add querySelectionHandlers to skill, these methods will handle requests while in the Query state. To start we will just handle request for page view today.
 
 ```javascript
 // Create a new handler for the Query state
@@ -310,13 +320,15 @@ var querySelectionHandlers = Alexa.CreateStateHandler(states.STATE_QUERY, {
 });
 ```
 
-2. Register querySelectionHandlers with AlexaSDK in main
+### Step 2
+Register querySelectionHandlers with AlexaSDK in main
 
 ```javascript
 alexaSDK.registerHandlers(newSessionHandlers, rsidSelectionHandlers, querySelectionHandlers);
 ```
 
-3. Add getMetric method to handle report queries
+### Step 3 
+Add getMetric method to handle report queries
 
 ```javascript
 /**
@@ -365,7 +377,8 @@ function getMetric(token, rsid, metric, durationDates, metricResponseCallback) {
 }
 ```
 
-3. Add getDurationVerb function
+### Step 4
+Add getDurationVerb function
 
 ```javascript
 /**
@@ -380,7 +393,8 @@ function getDurationVerb(duration){
 }
 ```
 
-4. Add method to return a comma seperated list of metrics.
+### Step 5
+Add method to return a comma seperated list of metrics.
 
 ```javascript
 /**
@@ -399,19 +413,22 @@ function getAllMetricsText() {
 }
 ```
 
-5. Change the location manifest.yaml to point to
+### Step 6
+Change the location manifest.yaml to point to
 ```
 exercises/exercise-3/alexa-skill.js
 ```
 
-7. Commit changes back to github
+### Step 7
+Commit changes back to github, either using the browser or the git CLI.
 
 
 ## Exercise 4
 
 In this exercise we will configure Alexa to handle requests for different metrics over any duration.
 
-1. Add OneshotReportIntent to querySelectionHandlers, this intent handler supports adhoc queries for various metric's over multiple time periods
+### Step 1
+Add OneshotReportIntent to querySelectionHandlers, this intent handler supports adhoc queries for various metric's over multiple time periods
 
 ```javascript
     'OneshotReportIntent': function () {
@@ -473,7 +490,8 @@ In this exercise we will configure Alexa to handle requests for different metric
     },
 ```
 
-2. Add getMeasurementFromIntent function, this function will take an intent and figure out the measurement. The measurement is used to describe the results. Result could be pages or percent for support metrics.
+### Step 2
+Add getMeasurementFromIntent function, this function will take an intent and figure out the measurement. The measurement is used to describe the results. Result could be pages or percent for support metrics.
 
 ```javascript
 /**
@@ -495,7 +513,8 @@ function getMeasurementFromIntent(intent) {
 }
 ```
 
-3. Add getDurationFromIntent function, this function will return the duration for a given intent.
+### Step 3
+Add getDurationFromIntent function, this function will return the duration for a given intent.
 
 ```javascript
 /**
@@ -513,7 +532,8 @@ function getDurationFromIntent(intent) {
 }
 ```
 
-4. Add getMetricFromIntent function, this function will return the metric and it's API counterpart for a given intent.
+### Step 4
+Add getMetricFromIntent function, this function will return the metric and it's API counterpart for a given intent.
 
 ```javascript
 /**
@@ -536,9 +556,11 @@ function getMetricFromIntent(intent) {
 }
 ```
 
-6. Change manafest.yaml to point to exercise 4
+### Step 5
+Change manafest.yaml to point to exercise 4
 ```
     exercises/exercise-4/alexa-skill.js
 ```
 
-7. Commit changes back to github
+### Step 6
+Commit changes back to github, either using the browser or the git CLI.
