@@ -21,7 +21,7 @@ TBD...
 In this exercise we will configure Alexa to Respond back with "Hello" followed by your name after the skill is launched. 
 
 ### Step 1
-Using the browser open exercises/exercise-1/alexa-skill.js in your github fork and click the pencil icon to edit it.
+Using the browser open exercises/exercise-1/alexa-skill.js in your github fork and click the pencil icon to edit it. If you are using the CLI open this file in a text editor.
 
 ### Step 2
 Add code to handle new sessions requests. A LaunchRequest is an object that represents that a user made a request to an Alexa skill, but did not provide a specific intent.
@@ -54,7 +54,7 @@ Commit changes back to github, either using the browser or the git CLI.
 In this exercise we will configure Alexa to let the user select a report suite using the Analytics API.
 
 ### Step 1
-Using the browser open exercises/exercise-2/alexa-skill.js in your github fork and click the pencil icon to edit it.
+Using the browser open exercises/exercise-2/alexa-skill.js in your github fork and click the pencil icon to edit it. If you are using the CLI open this file in a text editor.
 
 ### Step 2 
 Replace the LaunchRequest function inside of newSessionHandlers with the implementation below. This code will make a call to the Analytics API to get all available report suites and list them back to the user.
@@ -256,7 +256,10 @@ Commit changes back to github, either using the browser or the git CLI.
 
 In this exercise we will configure Alexa to respond to requests for the page views metric for the day.
 
-### Step 1 
+### Step 1
+Using the browser open exercises/exercise-3/alexa-skill.js in your github fork and click the pencil icon to edit it. If you are using the CLI open this file in a text editor.
+
+### Step 2
 Add querySelectionHandlers to skill, these methods will handle requests while in the Query state. To start we will just handle request for page view today.
 
 ```javascript
@@ -329,14 +332,14 @@ var querySelectionHandlers = Alexa.CreateStateHandler(states.STATE_QUERY, {
 });
 ```
 
-### Step 2
+### Step 3
 Register querySelectionHandlers with AlexaSDK in main
 
 ```javascript
 alexaSDK.registerHandlers(newSessionHandlers, rsidSelectionHandlers, querySelectionHandlers);
 ```
 
-### Step 3 
+### Step 4
 Add getMetric method to handle report queries
 
 ```javascript
@@ -386,7 +389,7 @@ function getMetric(token, rsid, metric, durationDates, metricResponseCallback) {
 }
 ```
 
-### Step 4
+### Step 5
 Add getDurationVerb function
 
 ```javascript
@@ -402,7 +405,7 @@ function getDurationVerb(duration){
 }
 ```
 
-### Step 5
+### Step 6
 Add method to return a comma seperated list of metrics.
 
 ```javascript
@@ -422,16 +425,16 @@ function getAllMetricsText() {
 }
 ```
 
-### Step 6
+### Step 7
 If you are editing the code in the browser commit the changes to alexa-skill.js, ignore this step if you are using the CLI.
 
-### Step 7
+### Step 8
 Change the location manifest.yaml to point to
 ```
 exercises/exercise-3/alexa-skill.js
 ```
 
-### Step 7
+### Step 9
 Commit changes back to github, either using the browser or the git CLI.
 
 
@@ -440,6 +443,9 @@ Commit changes back to github, either using the browser or the git CLI.
 In this exercise we will configure Alexa to handle requests for different metrics over any duration.
 
 ### Step 1
+Using the browser open exercises/exercise-4/alexa-skill.js in your github fork and click the pencil icon to edit it. If you are using the CLI open this file in a text editor.
+
+### Step 2
 Add OneshotReportIntent to querySelectionHandlers, this intent handler supports adhoc queries for various metric's over multiple time periods
 
 ```javascript
@@ -502,7 +508,7 @@ Add OneshotReportIntent to querySelectionHandlers, this intent handler supports 
     },
 ```
 
-### Step 2
+### Step 3
 Add getMeasurementFromIntent function, this function will take an intent and figure out the measurement. The measurement is used to describe the results. Result could be pages or percent for support metrics.
 
 ```javascript
@@ -525,7 +531,7 @@ function getMeasurementFromIntent(intent) {
 }
 ```
 
-### Step 3
+### Step 4
 Add getDurationFromIntent function, this function will return the duration for a given intent.
 
 ```javascript
@@ -544,7 +550,7 @@ function getDurationFromIntent(intent) {
 }
 ```
 
-### Step 4
+### Step 5
 Add getMetricFromIntent function, this function will return the metric and it's API counterpart for a given intent.
 
 ```javascript
@@ -568,14 +574,14 @@ function getMetricFromIntent(intent) {
 }
 ```
 
-### Step 5
+### Step 6
 If you are editing the code in the browser commit the changes to alexa-skill.js, ignore this step if you are using the CLI.
 
-### Step 6
+### Step 7
 Change manafest.yaml to point to exercise 4
 ```
     exercises/exercise-4/alexa-skill.js
 ```
 
-### Step 7
+### Step 8
 Commit changes back to github, either using the browser or the git CLI.
