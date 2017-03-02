@@ -20,7 +20,10 @@ TBD...
 
 In this exercise we will configure Alexa to Respond back with "Hello" followed by your name after the skill is launched. 
 
-### Step 1 
+### Step 1
+Using the browser open exercises/exercise-1/alexa-skill.js in your github fork and click the pencil icon to edit it.
+
+### Step 2
 Add code to handle new sessions requests. A LaunchRequest is an object that represents that a user made a request to an Alexa skill, but did not provide a specific intent.
 
 ```javascript
@@ -35,14 +38,14 @@ var newSessionHandlers = {
 };
 ```
 
-### Step 2 
+### Step 3
 In the main function register the newSessionHandlers with the Alexa SDK 
 
 ```javascript
 alexaSDK.registerHandlers(newSessionHandlers);
 ```
 
-### Step 3
+### Step 4
 Commit changes back to github, either using the browser or the git CLI.
 
 
@@ -50,7 +53,10 @@ Commit changes back to github, either using the browser or the git CLI.
 
 In this exercise we will configure Alexa to let the user select a report suite using the Analytics API.
 
-### Step 1 
+### Step 1
+Using the browser open exercises/exercise-2/alexa-skill.js in your github fork and click the pencil icon to edit it.
+
+### Step 2 
 Replace the LaunchRequest function inside of newSessionHandlers with the implementation below. This code will make a call to the Analytics API to get all available report suites and list them back to the user.
 
 ```javascript
@@ -77,7 +83,7 @@ Replace the LaunchRequest function inside of newSessionHandlers with the impleme
     }
 ```
 
-### Step 2 
+### Step 3
 Add function to handle get report suites call
 
 ```javascript
@@ -106,7 +112,7 @@ function getReportSuites(token, reportSuitesResponseCallback) {
 }
 ```
 
-### Step 3 
+### Step 4
 Add rsidSelectionHandlers to handle rsid selection state requests
 
 ```javascript
@@ -180,7 +186,7 @@ var rsidSelectionHandlers = Alexa.CreateStateHandler(states.STATE_RSID_SELECTION
 });
 ```    
     
-### Step 4
+### Step 5
 Add function to match spoken word to report suite
 
 ```javascript    
@@ -206,7 +212,7 @@ function matchReportSuite(spokenLiteral, reportSuites) {
 }
 ```
 
-### Step 5
+### Step 6
 Add function to turn an array of report suites into a comma separated string
 
 ```javascript
@@ -224,7 +230,7 @@ function getReportsSuitesListFromObject(reportSuites) {
 }
 ```
 
-### Step 6
+### Step 7
 Register rsidSelectionHandlers with AlexaSDK in the main method.
 
 ```javascript
@@ -232,14 +238,17 @@ alexaSDK.registerHandlers(newSessionHandlers, rsidSelectionHandlers);
 
 ```
 
-### Step 7
+### Step 8
+If you are editing the code in the browser commit the changes to alexa-skill.js, ignore this step if you are using the CLI.
+
+### Step 9
  Change the location manifest.yaml to point to
 
 ```
 exercises/exercise-2/alexa-skill.js
 ```
 
-### Step 8 
+### Step 10
 Commit changes back to github, either using the browser or the git CLI.
 
 
@@ -414,6 +423,9 @@ function getAllMetricsText() {
 ```
 
 ### Step 6
+If you are editing the code in the browser commit the changes to alexa-skill.js, ignore this step if you are using the CLI.
+
+### Step 7
 Change the location manifest.yaml to point to
 ```
 exercises/exercise-3/alexa-skill.js
@@ -557,10 +569,13 @@ function getMetricFromIntent(intent) {
 ```
 
 ### Step 5
+If you are editing the code in the browser commit the changes to alexa-skill.js, ignore this step if you are using the CLI.
+
+### Step 6
 Change manafest.yaml to point to exercise 4
 ```
     exercises/exercise-4/alexa-skill.js
 ```
 
-### Step 6
+### Step 7
 Commit changes back to github, either using the browser or the git CLI.
