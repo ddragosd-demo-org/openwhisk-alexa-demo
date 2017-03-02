@@ -1,7 +1,14 @@
+## Exercise 4
+
 In this exercise we will configure Alexa to handle requests for different metrics over any duration.
 
-1. Add OneshotReportIntent to querySelectionHandlers, this intent handler supports adhoc queries for various metric's over multiple time periods
+### Step 1
+Using the browser open exercises/exercise-4/alexa-skill.js in your github fork and click the pencil icon to edit it. If you are using the CLI open this file in a text editor.
 
+### Step 2
+Add OneshotReportIntent to querySelectionHandlers, this intent handler supports adhoc queries for various metric's over multiple time periods
+
+```javascript
     'OneshotReportIntent': function () {
         //Oneshot Report Started
         console.log("OneshotReportIntent Started");
@@ -59,10 +66,12 @@ In this exercise we will configure Alexa to handle requests for different metric
             that.emit(':ask', speechOutput, that.t("QUERY_REPROMPT"));
         });
     },
+```
 
+### Step 3
+Add getMeasurementFromIntent function, this function will take an intent and figure out the measurement. The measurement is used to describe the results. Result could be pages or percent for support metrics.
 
-2. Add getMeasurementFromIntent function, this function will take an intent and figure out the measurement. The measurement is used to describe the results. Result could be pages or percent for support metrics.
-
+```javascript
 /**
  * Gets the measurement for the intent
  */
@@ -80,9 +89,12 @@ function getMeasurementFromIntent(intent) {
         return "";
     }
 }
+```
 
-3. Add getDurationFromIntent function, this function will return the duration for a given intent.
+### Step 4
+Add getDurationFromIntent function, this function will return the duration for a given intent.
 
+```javascript
 /**
  * Gets the duration from the intent
  */
@@ -96,9 +108,12 @@ function getDurationFromIntent(intent) {
 
     return durationSlot.value;
 }
+```
 
-4. Add getMetricFromIntent function, this function will return the metric and it's API counterpart for a given intent.
+### Step 5
+Add getMetricFromIntent function, this function will return the metric and it's API counterpart for a given intent.
 
+```javascript
 /**
  * Gets the metric from the intent
  */
@@ -117,7 +132,16 @@ function getMetricFromIntent(intent) {
         }
     }
 }
+```
 
-5. Change the location manifest.yaml to point to
+### Step 6
+If you are editing the code in the browser commit the changes to alexa-skill.js, ignore this step if you are using the CLI.
 
-exercises/exercise-4/alexa-skill.js
+### Step 7
+Change manafest.yaml to point to exercise 4
+```
+    exercises/exercise-4/alexa-skill.js
+```
+
+### Step 8
+Commit changes back to github, either using the browser or the git CLI.

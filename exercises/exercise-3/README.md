@@ -1,7 +1,14 @@
+## Exercise 3
+
 In this exercise we will configure Alexa to respond to requests for the page views metric for the day.
 
-1. Add querySelectionHandlers to skill, these methods will handle requests while in the Query state. To start we will just handle request for page view today.
+### Step 1
+Using the browser open exercises/exercise-3/alexa-skill.js in your github fork and click the pencil icon to edit it. If you are using the CLI open this file in a text editor.
 
+### Step 2
+Add querySelectionHandlers to skill, these methods will handle requests while in the Query state. To start we will just handle request for page view today.
+
+```javascript
 // Create a new handler for the Query state
 var querySelectionHandlers = Alexa.CreateStateHandler(states.STATE_QUERY, {
     'PageViewsTodayIntent': function() {
@@ -69,15 +76,19 @@ var querySelectionHandlers = Alexa.CreateStateHandler(states.STATE_QUERY, {
         this.emit(':tell', this.t("STOP_MESSAGE"));
     }
 });
+```
 
+### Step 3
+Register querySelectionHandlers with AlexaSDK in main
 
-2. Register querySelectionHandlers with AlexaSDK in main
-
+```javascript
 alexaSDK.registerHandlers(newSessionHandlers, rsidSelectionHandlers, querySelectionHandlers);
+```
 
+### Step 4
+Add getMetric method to handle report queries
 
-3. Add getMetric method to handle report queries
-
+```javascript
 /**
  * Queries a metric based from the Analytics API
  */
@@ -122,9 +133,12 @@ function getMetric(token, rsid, metric, durationDates, metricResponseCallback) {
             });
     })
 }
+```
 
-3. Add getDurationVerb function
+### Step 5
+Add getDurationVerb function
 
+```javascript
 /**
  * Get a verb to describe the duration
  */
@@ -135,10 +149,12 @@ function getDurationVerb(duration){
     }
     return verb;
 }
+```
 
+### Step 6
+Add method to return a comma seperated list of metrics.
 
-4. Add method to return a comma seperated list of metrics.
-
+```javascript
 /**
  * Returns a comma separated list of supported metrics 
  */
@@ -153,7 +169,17 @@ function getAllMetricsText() {
 
     return metricList;
 }
+```
 
-5. Change the location manifest.yaml to point to
+### Step 7
+If you are editing the code in the browser commit the changes to alexa-skill.js, ignore this step if you are using the CLI.
 
+### Step 8
+Change the location manifest.yaml to point to
+```
 exercises/exercise-3/alexa-skill.js
+```
+
+### Step 9
+Commit changes back to github, either using the browser or the git CLI.
+
