@@ -51,11 +51,13 @@
 2. Select the `Alexa` tab and then click on `Get Started` in Alexa Skill Kit box.
     ![Alexa-selection-ui](./readmeAssets/amazon-alexa-selection.png/)
 3. Your Amazon developer account provided for the lab is most likely setup with the `Adobe Analytics Skill` under `You skills` tab.  In this case you can fast forward to step #6 or read bellow how to configure a new skill.
+
 4. ##### Setup general skill info
   ![Skills Info](./readmeAssets/skills_info.png?raw=true )
     * The `Name` field should contain something unique.
     * `Invocation name` is what Alexa uses to start the Skill; for example if the skill is named `Adobe Analytics` you would say _Use Adobe Analytics_ to activate the skill.
     * The global fields can be left with the default value
+
 5. ##### Setup an interaction model
     ![Interaction Model Setup](./readmeAssets/interaction_model.png?raw=true )
 
