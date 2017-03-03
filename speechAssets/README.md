@@ -78,10 +78,12 @@
     ![Configuration](./readmeAssets/amazon-alexa-setup-endpoint.png )
 
     * ##### Service Endpoint
+    
       Paste here the value you got after setting up the GitHub webhook to [ Retrieve the URL for your action](#Retrieve-the-URL-for-your-action)
       ```
       https://runtime-preview.adobe.io/<...>
       ```
+      
       > Alexa will invoke this URL on each interaction with an end-user.
 
 7. ##### :id: Link the Alexa skill with Adobe ID
