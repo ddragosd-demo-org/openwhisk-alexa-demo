@@ -86,7 +86,7 @@
       
       > Alexa will invoke this URL on each interaction with an end-user.
 
-7. ##### :id: Link the Alexa skill with Adobe ID
+7. ##### :id:  Link the Alexa skill with Adobe ID
     This step configures how users identify in Alexa, particularely how to let them identify with an Adobe ID. This Adobe ID will be used to extract data from Adobe Analytics on user's behalf.
     ![Alexa-setup-account-linking](./readmeAssets/amazon-alexa-link-account.png)
 
@@ -112,3 +112,4 @@
 
     * Set Authorization Grant type to Implicit
      
+### :clap: You are now ready to test this skill.
