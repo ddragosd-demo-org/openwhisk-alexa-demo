@@ -1,3 +1,20 @@
+# Setting up
+
+## Prepare a GitHub repo
+
+1. Login on Create an Account on [GitHub](https://github.com)
+2. For the repository used for the lab from https://github.com/adobe-apiplatform/adobeio-runtime-lab-analytics
+3. Configure a new webhook
+   Visit your new repo and go to `Settings` > `Webhooks` > `Add webhook`
+   
+   Configure the new webhook with the following information:
+   
+ | 
+------------ | -------------
+Payload URL | Content from cell 2
+Content type | application/json
+   
+ 
 # Alexa Developer Portal Configuration
 
 # Skills Info Setup
