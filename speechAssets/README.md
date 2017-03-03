@@ -1,23 +1,51 @@
+##### Table of Contents
+[Settings up](#setting-up)
+* [Prepare a GitHub repo](#prepare-a-github-repo)
+*
+
+
 # Setting up
 
-## Prepare a GitHub repo
+## Setup your GitHub repo
 
-1. Login on Create an Account on [GitHub](https://github.com)
-2. For the repository used for the lab from https://github.com/adobe-apiplatform/adobeio-runtime-lab-analytics
-3. Configure a new webhook
+1. ##### Login or Create an Account on [GitHub](https://github.com)
+2. ##### Fork the repository used for the lab from:
+https://github.com/adobe-apiplatform/adobeio-runtime-lab-analytics
+3. ##### Configure a new webhook
    Visit your new repo and go to `Settings` > `Webhooks` > `Add webhook`
-   
-   Configure the new webhook with the following information:
-   
- | 
------------- | -------------
-Payload URL | Content from cell 2
-Content type | application/json
-   
- 
-# Alexa Developer Portal Configuration
 
-# Skills Info Setup
+   Configure the new webhook with the following information:
+
+   Field | Value
+   ------------ | -------------
+   Payload URL | `https://runtime-preview.adobe.io/github/webhook`
+   Content type | application/json
+   Secret | _provided during the lab_
+   Which events would you like to trigger this webhook? | Just the push event.
+
+   ![Github webhook setup](./readmeAssets/github-webhook-setup.png)
+
+   When done click the `Add webhook` button.
+
+   ![Github webhooks view](./readmeAssets/github-webhooks-view.png)
+
+   Once the webhook is saved you should see it listed.
+
+
+4. ##### Retrieve the URL for your action.
+    Click the `Edit` button to go back into the webhook edit screen in order to get the URL to your function.
+  Scroll down to see the `Recent deliveries`.
+  ![Github recent delivery](./readmeAssets/github-recent-delivery.png) and click on the `...` button or the UID to open the details.
+  ![Github recent delivery expanded](./readmeAssets/github-recent-delivery-open.png)
+  The `Response` Tab should indicate a `200` Response with a Body containing the  `action_endpoint`.
+
+:boom: Congratulations ! At this point your code runs in the Adobe I/O Runtime.
+
+## Setup an Amazon Alexa Skill 
+
+
+
+### Skills Info Setup
 ![Skills Info](./readmeAssets/skills_info.png?raw=true )
 
 1. In the name field pick something unique
@@ -44,12 +72,12 @@ Content type | application/json
 
 2. Enable Account Linking
 
-3. Set authorization URL to 
+3. Set authorization URL to
 ```
 https://ims-na1.adobelogin.com/ims/authorize/v1
 ```
 
-4. Client ID should be 
+4. Client ID should be
 ```
 alexa_analytics_demo_prod
 ```
