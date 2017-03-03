@@ -49,11 +49,11 @@
 1. Login to Amazon Developer Portal at https://developer.amazon.com/
 
    > The lab should have provided you with access credentials.
-   
+
 2. Select the `Alexa` tab and then click on `Get Started` in Alexa Skill Kit box.
     ![Alexa-selection-ui](./readmeAssets/amazon-alexa-selection.png/)
 
-3. Your Amazon developer account provided for the lab is most likely setup with the `Adobe Analytics Skill` under `You skills` tab.  In this case you can fast forward to step #6 or read bellow how to configure a new skill.
+3. Your Amazon developer account provided for the lab is most likely setup with the `Adobe Analytics Skill` under `You skills` tab.  In this case you can fast forward to step #6 or read below how to configure a new skill.
 
 4. ##### Setup general skill info
   ![Skills Info](./readmeAssets/skills_info.png?raw=true )
@@ -74,16 +74,16 @@
     > To learn more about Alexa's interaction model see https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-interaction-model-reference
 
 6. ##### Link the Alexa skill with your GitHub code deployed in the Adobe I/O Runtime
-   Click the `Configuration` option on the left side menu to see something similar to the screenshot bellow:
+   Click the `Configuration` option on the left side menu to see something similar to the screenshot below:
     ![Configuration](./readmeAssets/amazon-alexa-setup-endpoint.png )
 
     * ##### Service Endpoint
-    
+
       Paste here the value you got after setting up the GitHub webhook to [ Retrieve the URL for your action](#Retrieve-the-URL-for-your-action)
       ```
       https://runtime-preview.adobe.io/<...>
       ```
-      
+
       > Alexa will invoke this URL on each interaction with an end-user.
 
 7. ##### :id: Link the Alexa skill with Adobe ID
@@ -111,4 +111,3 @@
       These scopes are needed to pull data out from Marketing Cloud, Adobe Analytics.
 
     * Set Authorization Grant type to Implicit
-     
