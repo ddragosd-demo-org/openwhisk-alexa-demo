@@ -47,9 +47,12 @@
 ## Setup an Amazon Alexa Skill 
 
 1. Login to Amazon Developer Portal at https://developer.amazon.com/
+
    > The lab should have provided you with access credentials.
+   
 2. Select the `Alexa` tab and then click on `Get Started` in Alexa Skill Kit box.
     ![Alexa-selection-ui](./readmeAssets/amazon-alexa-selection.png/)
+
 3. Your Amazon developer account provided for the lab is most likely setup with the `Adobe Analytics Skill` under `You skills` tab.  In this case you can fast forward to step #6 or read bellow how to configure a new skill.
 
 4. ##### Setup general skill info
@@ -75,7 +78,7 @@
     ![Configuration](./readmeAssets/amazon-alexa-setup-endpoint.png )
 
     * ##### Service Endpoint
-      Paste here the value you got after setting up the GitHub webhook to [ Retrieve the URL for your action](Retrieve-the-URL-for-your-action)
+      Paste here the value you got after setting up the GitHub webhook to [ Retrieve the URL for your action](#Retrieve-the-URL-for-your-action)
       ```
       https://runtime-preview.adobe.io/<...>
       ```
@@ -106,6 +109,4 @@
       These scopes are needed to pull data out from Marketing Cloud, Adobe Analytics.
 
     * Set Authorization Grant type to Implicit
-      ```
-      NOTE: This should be __Auth Code Grant__. Ran into a problem using the __Auth Code Grant__ so using implicit for the lab. Using Implicit means that the use must re-link their account with the skill every 24 hours.
-      ```
+     
