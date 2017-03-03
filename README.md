@@ -1,11 +1,11 @@
-# openwhisk-alexa-demo
+# Adobe Analytics Skill
 
 An OpenWhisk action as an Amazon Alexa Skill.
 
 ## Lab Setup
 [Setup Instructions](./speechAssets)
 
-# Lab Exercises
+## Lab Exercises
 
 ## Exercise 1
 [Instructions](./exercises/exercise-1)
