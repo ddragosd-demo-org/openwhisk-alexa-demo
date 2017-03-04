@@ -13,7 +13,9 @@
 1. Login or Create an Account on [GitHub](https://github.com)
 2. Fork the repository used for the lab from:
     https://github.com/adobe-apiplatform/adobeio-runtime-lab-analytics
+    
     > :bulb: Make sure the repository is public
+    
 3. ##### Configure a new webhook
    Visit your new repo and go to `Settings` > `Webhooks` > `Add webhook`
 
