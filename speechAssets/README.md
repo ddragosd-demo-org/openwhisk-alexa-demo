@@ -1,17 +1,19 @@
 ##### Table of Contents
-[Settings up](#setting-up)
-* [Prepare a GitHub repo](#prepare-a-github-repo)
-* [Setup an Amazon Alexa skill](#Setup-an-Amazon-Alexa-Skill)
+[Setting up](#setting-up)
+* [Set up an action in Adobe I/O Runtime](#Set-up-an-action-in-Adobe-I-O-Runtime)
+* [Connect the action with an Amazon Alexa skill](#Setup-an-Amazon-Alexa-Skill)
 
 
 # Setting up
 
-## Setup your GitHub repo
+:clock3: `15 minutes`
+
+## Set up an action in Adobe I/O Runtime
 
 1. Login or Create an Account on [GitHub](https://github.com)
 2. Fork the repository used for the lab from:
     https://github.com/adobe-apiplatform/adobeio-runtime-lab-analytics
-    > Make sure the repository is public
+    > :bulb: Make sure the repository is public
 3. ##### Configure a new webhook
    Visit your new repo and go to `Settings` > `Webhooks` > `Add webhook`
 
@@ -34,15 +36,16 @@
 
 
 4. ##### Retrieve the URL for your action.
-    Click the `Edit` button to go back into the webhook edit screen in order to get the URL to your function.
+    Click the `Edit` button to go back into the webhook edit screen in order to get the URL to your action.
   Scroll down to see the `Recent deliveries`.
   ![Github recent delivery](./readmeAssets/github-recent-delivery.png) and click on the `...` button or the UID to open the details.
   ![Github recent delivery expanded](./readmeAssets/github-recent-delivery-open.png)
   The `Response` Tab should indicate a `200` Response with a Body containing the  `action_endpoint`.
 
-:boom: Congratulations ! At this point your code is deployed in the Adobe I/O Runtime.
+:boom: Congratulations ! At this point your code is deployed in the Adobe I/O Runtime. Let's go ahead and invoke this action with Amazon Alexa.
 
-> Make a note of the `action_endpoint` value as you need it in the next step.
+> :bulb: Make a note of the `action_endpoint` value as you need it in the next step.
+
 
 ## Setup an Amazon Alexa Skill 
 
@@ -86,8 +89,9 @@
 
       > Alexa will invoke this URL on each interaction with an end-user.
 
-7. ##### :id:  Link the Alexa skill with Adobe ID
-    This step configures how users identify in Alexa, particularely how to let them identify with an Adobe ID. This Adobe ID will be used to extract data from Adobe Analytics on user's behalf.
+7. ##### :id: Allow users to authenticate with their Adobe ID
+    This step connects an Alexa user with a user in Adobe's Marketing Cloud. This Adobe ID will be used to extract data from Adobe Analytics. For this the skill needs to be instructed how to authenticate users.
+
     ![Alexa-setup-account-linking](./readmeAssets/amazon-alexa-link-account.png)
 
     * Set the Authorization URL to:
@@ -111,5 +115,34 @@
       These scopes are needed to pull data out from Marketing Cloud, Adobe Analytics.
 
     * Set Authorization Grant type to Implicit
-     
-### :clap: You are now ready to test this skill.
+
+:clap: You are now ready to use this skill. In the next chapter you will learn how to test it and enhance it.
+
+# Send the first voice command to your skill
+
+You're almost ready to make the first voice command. At this stage you're acting as any end users that would install the skill and use it. To test your skill you'll be following their experience.
+
+Open the browser to: https://alexa.amazon.com .
+> Use the same credentials used to setup the Amazon Alexa skill.
+
+On the left side menu click on `Skills`, then click `Your skills` link on top of the page. You should see a list with your skills:
+
+![Amazon Alexa Your Skills](./readmeAssets/amazon-alexa-your-skills.png)
+
+Click on `Adobe Analytics skill` to open it.
+
+
+## Link Amazon Alexa with Adobe
+
+The first thing end users should see after installing this skill is a screen telling them that Account Linking is required.
+
+![Amazon Alexa Link Account](./readmeAssets/amazon-alexa-skill-link-account.png)
+
+Click on `Enable` button and login using an Adobe ID.The browser should redirect you now to Adobe's login page.
+> You should use the Adobe ID provided during the lab.
+
+![Adobe login page](./readmeAssets/adobe-login-screen.png)
+
+Once you login Alexa should confirm that the accounts is now linked with your skill.
+
+![Adobe login success](./readmeAssets/adobe-login-success.png)
