@@ -1,21 +1,23 @@
 ##### Table of Contents
 [Setting up](#setting-up)
-* [Set up an action in Adobe I/O Runtime](#Set-up-an-action-in-Adobe-I-O-Runtime)
-* [Connect the action with an Amazon Alexa skill](#Setup-an-Amazon-Alexa-Skill)
+  * [Set up an action in Adobe I/O Runtime](#set-up-an-action-in-adobe-io-runtime)
+  * [Connect the action with an Amazon Alexa skill](#setup-an-amazon-alexa-skill)
+
+[Send the first voice command to your skill](#send-the-first-voice-command-to-your skill)
 
 
 # Setting up
 
-:clock3: `15 minutes`
+:clock3:  ~ `15 minutes`
 
 ## Set up an action in Adobe I/O Runtime
 
 1. Login or Create an Account on [GitHub](https://github.com)
 2. Fork the repository used for the lab from:
     https://github.com/adobe-apiplatform/adobeio-runtime-lab-analytics
-    
+
     > :bulb: Make sure the repository is public
-    
+
 3. ##### Configure a new webhook
    Visit your new repo and go to `Settings` > `Webhooks` > `Add webhook`
 
@@ -36,7 +38,6 @@
 
    Once the webhook is saved you should see it listed.
 
-
 4. ##### Retrieve the URL for your action.
     Click the `Edit` button to go back into the webhook edit screen in order to get the URL to your action.
   Scroll down to see the `Recent deliveries`.
@@ -48,12 +49,11 @@
 
 > :bulb: Make a note of the `action_endpoint` value as you need it in the next step.
 
-
 ## Setup an Amazon Alexa Skill 
 
 1. Login to Amazon Developer Portal at https://developer.amazon.com/
 
-   > The lab should have provided you with access credentials.
+   > :bulb: The lab should have provided you with access credentials.
 
 2. Select the `Alexa` tab and then click on `Get Started` in Alexa Skill Kit box.
     ![Alexa-selection-ui](./readmeAssets/amazon-alexa-selection.png/)
@@ -89,7 +89,7 @@
       https://runtime-preview.adobe.io/<...>
       ```
 
-      > Alexa will invoke this URL on each interaction with an end-user.
+      > :bulb: Alexa will invoke this URL on each interaction with an end-user.
 
 7. ##### :id: Allow users to authenticate with their Adobe ID
     This step connects an Alexa user with a user in Adobe's Marketing Cloud. This Adobe ID will be used to extract data from Adobe Analytics. For this the skill needs to be instructed how to authenticate users.
@@ -122,7 +122,27 @@
 
 # Send the first voice command to your skill
 
-You're almost ready to make the first voice command. At this stage you're acting as any end users that would install the skill and use it. To test your skill you'll be following their experience.
+:clock3:  ~ `15 minutes`
+
+You're almost ready to make the first voice command. At this stage you're acting as any end user that is installing the skill. You'll be going through the same experience.
+
+### Decide how you want to interact with Alexa
+
+There are several ways to interact with Alexa:
+
+1. ##### Using the Browser
+  * Using the `Test` tab on the page you set up the Amazon Alexa Skill.
+
+2. ##### Using a Mobile app
+    * iOS  - Install [Reverb for Amazon Alexa](https://itunes.apple.com/bt/app/reverb.ai/id1144695621?mt=8)
+    * Android - Install [Reverb for Amazon Alexa](https://play.google.com/store/apps/details?id=agency.rain.android.alexa&hl=en)
+
+    > Once you open the mobile app use the access credentials provided during the lab to login.
+
+3. ##### Using an Amazon Alexa device
+    This is out of scope for this lab.
+
+### Enable the skill
 
 Open the browser to: https://alexa.amazon.com .
 > Use the same credentials used to setup the Amazon Alexa skill.
@@ -143,8 +163,10 @@ The first thing end users should see after installing this skill is a screen tel
 Click on `Enable` button and login using an Adobe ID.The browser should redirect you now to Adobe's login page.
 > You should use the Adobe ID provided during the lab.
 
-![Adobe login page](./readmeAssets/adobe-login-screen.png)
+<img src="./readmeAssets/adobe-login-screen.png" height="250">
 
-Once you login Alexa should confirm that the accounts is now linked with your skill.
+Once login is successful with Adobe Alexa should confirm that with a message similar to the one in the screenshot below.
 
-![Adobe login success](./readmeAssets/adobe-login-success.png)
+<img src="./readmeAssets/adobe-login-success.png" height="150">
+
+To complete this section move on to Exercise 1.
