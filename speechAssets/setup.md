@@ -4,7 +4,7 @@
 In this section you'll complete 2 steps:
 
   * [Set up an action in Adobe I/O Runtime](#set-up-an-action-in-adobe-io-runtime)
-  * [Retrieve the URL for your action](#retrieve-the-URL-for-your-action)
+  * [Retrieve the URL for your action](#retrieve-the-url-for-your-action)
   * [Connect the action with an Amazon Alexa skill](#setup-an-amazon-alexa-skill)
   
 
