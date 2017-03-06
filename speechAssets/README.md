@@ -27,16 +27,16 @@
 
    Configure the new webhook with the following information:
 
-   Field        |    Value
-   ------------ | -------------
-   Payload URL  | `https://runtime-preview.adobe.io/github/webhook`
-   Content type | _application/json_
-   Secret       | _( provided during the lab )_
-   Which events would you like to trigger this webhook? | _Just the push event._
+Field        |    Value
+------------ | -------------
+Payload URL  | `https://runtime-preview.adobe.io/github/webhook`
+Content type | _application/json_
+Secret       | _( provided during the lab )_
+Which events would you like to trigger this webhook? | _Just the push event._
 
    When done, click the `Add webhook` button. Once the webhook is saved, you should see it listed.
 
-   ![Github webhook setup](./readmeAssets/github-webhook-setup.png)
+   ![Github webhook setup](https://github.com/ddragosd-demo-org/openwhisk-alexa-demo/blob/gitprint-sandbox/speechAssets/readmeAssets/github-webhook-setup.png)
 
 4. ##### Retrieve the URL for your action.
     Click the `Edit` button to go back into the webhook edit screen in order to get the URL to your action.
