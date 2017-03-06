@@ -79,9 +79,29 @@ Which events would you like to trigger this webhook? | _Just the push event._
 5. ##### Setup an interaction model
    * Paste in the intent schema from [IntentSchema.json](./IntentSchema.json)
 
+  ```json
+{
+  "intents": [{
+      "intent": "OneshotReportIntent",
+      "slots": [
+        {          "name": "Metric",     "type": "LIST_OF_METRICS"    },
+        {          "name": "Duration",   "type": "LIST_OF_DURATIONS"  }
+      ]
+    },{
+      "intent": "ReportSuiteSelectionIntent",
+      "slots": [
+        {          "name": "ReportSuite",  "type": "AMAZON.LITERAL"   }
+      ]
+    },
+    {      "intent": "PageViewsTodayIntent" },
+    {      "intent": "ThankYouIntent"       },
+    {      "intent": "AMAZON.HelpIntent"    },
+    {      "intent": "AMAZON.StopIntent"    },
+    {      "intent": "AMAZON.CancelIntent"  }
+  ]
+}
+  ```
     <img src="./readmeAssets/interaction_model.png?raw=true" height="470">
-
-
 
 
 Click on `Enable` button and login using an Adobe ID.The browser should redirect you now to Adobe's login page.
