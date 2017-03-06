@@ -23,7 +23,8 @@
    In this step you'll deploy your own code into Adobe I/O Runtime so that you can respond to Alexa voice commands and extract data from Adobe Analytics in response.
 
    Visit your new repo and go to `Settings` > `Webhooks` > `Add webhook`
-   <img src="https://raw.githubusercontent.com/ddragosd-demo-org/openwhisk-alexa-demo/dyland-alexa/speechAssets/readmeAssets/github-webhooks-view.png" height="160">
+   
+   <img src="https://raw.githubusercontent.com/ddragosd-demo-org/openwhisk-alexa-demo/dyland-alexa/speechAssets/readmeAssets/github-webhooks-view.png" height="180">
 
    Configure the new webhook with the following information:
 
@@ -36,6 +37,8 @@ Which events would you like to trigger this webhook? | _Just the push event._
 
    When done, click the `Add webhook` button. Once the webhook is saved, you should see it listed.
 
+   <img src="./readmeAssets/github-webhook-setup.png" height="400">
+   
 
 Click on `Enable` button and login using an Adobe ID.The browser should redirect you now to Adobe's login page.
 > You should use the Adobe ID provided during the lab.
