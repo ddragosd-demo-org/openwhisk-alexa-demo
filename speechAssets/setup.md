@@ -4,6 +4,7 @@
 In this section you'll complete 2 steps:
 
   * [Set up an action in Adobe I/O Runtime](#set-up-an-action-in-adobe-io-runtime)
+  * [Retrieve the URL for your action](#retrieve-the-URL-for-your-action)
   * [Connect the action with an Amazon Alexa skill](#setup-an-amazon-alexa-skill)
   
 
@@ -27,19 +28,20 @@ In this section you'll complete 2 steps:
 
    Configure the new webhook with the following information:
 
- Field        |    Value
- ------------ | -------------
- Payload URL  | `https://runtime-preview.adobe.io/github/webhook`
- Content type | _application/json_
- Secret       | _( provided during the lab )_
- Which events would you like to trigger this webhook? | _Just the push event._
+Field        |    Value
+------------ | -------------
+Payload URL  | `https://runtime-preview.adobe.io/github/webhook`
+Content type | _application/json_
+Secret       | _( provided during the lab )_
+Which events would you like to trigger this webhook? | _Just the push event._
 
    When done, click the `Add webhook` button. Once the webhook is saved, you should see it listed.
 
    <img src="./readmeAssets/github-webhook-setup.png" height="400">
    
-4. ##### Retrieve the URL for your action.
-    Click the `Edit` button to go back into the webhook edit screen in order to get the URL to your action.
+## Retrieve the URL for your action.
+
+  Click the `Edit` button to go back into the webhook edit screen in order to get the URL to your action.
 
   Scroll down to see the `Recent deliveries` and click on the `...` button or the UID to open the details.
 
@@ -55,7 +57,8 @@ In this section you'll complete 2 steps:
 :boom: Congratulations ! At this point your code is deployed in the Adobe I/O Runtime. Let's go ahead and invoke this action with Amazon Alexa.
 
 
-:boom: Congratulations ! At this point your code is deployed in the Adobe I/O Runtime. Let's go ahead and invoke this action with Amazon Alexa.
+
+
 Click on `Enable` button and login using an Adobe ID.The browser should redirect you now to Adobe's login page.
 > You should use the Adobe ID provided during the lab.
 
