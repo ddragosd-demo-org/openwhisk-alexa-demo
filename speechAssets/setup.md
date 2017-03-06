@@ -1,14 +1,13 @@
-:clock3:  ~ `15 minutes`
-
-##### Table of Contents
-[Setting up](#setting-up)
-  * [Set up an action in Adobe I/O Runtime](#set-up-an-action-in-adobe-io-runtime)
-  * [Connect the action with an Amazon Alexa skill](#setup-an-amazon-alexa-skill)
-[Send the first voice command to your skill](#send-the-first-voice-command-to-your skill)
 
 # Setting up
 
-:clock3:  ~ `15 minutes`
+In this section you'll complete 2 steps:
+
+  * [Set up an action in Adobe I/O Runtime](#set-up-an-action-in-adobe-io-runtime)
+  * [Connect the action with an Amazon Alexa skill](#setup-an-amazon-alexa-skill)
+  
+
+~ `15 minutes`
 
 ## Set up an action in Adobe I/O Runtime
 
@@ -39,7 +38,24 @@ Which events would you like to trigger this webhook? | _Just the push event._
 
    <img src="./readmeAssets/github-webhook-setup.png" height="400">
    
+4. ##### Retrieve the URL for your action.
+    Click the `Edit` button to go back into the webhook edit screen in order to get the URL to your action.
 
+  Scroll down to see the `Recent deliveries` and click on the `...` button or the UID to open the details.
+
+  <img src="./readmeAssets/github-recent-delivery.png" height="80">
+
+  The `Response` Tab should indicate a `200` Response with a Body containing the  `action_endpoint`.
+
+  > :bulb: Save the value of the `action_endpoint` field as you need it in the next step.
+
+  <img src="./readmeAssets/github-recent-delivery-open.png" height="350">
+
+
+:boom: Congratulations ! At this point your code is deployed in the Adobe I/O Runtime. Let's go ahead and invoke this action with Amazon Alexa.
+
+
+:boom: Congratulations ! At this point your code is deployed in the Adobe I/O Runtime. Let's go ahead and invoke this action with Amazon Alexa.
 Click on `Enable` button and login using an Adobe ID.The browser should redirect you now to Adobe's login page.
 > You should use the Adobe ID provided during the lab.
 
