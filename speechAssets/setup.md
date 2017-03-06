@@ -1,3 +1,5 @@
+:clock3:  ~ `15 minutes`
+
 Click on `Enable` button and login using an Adobe ID.The browser should redirect you now to Adobe's login page.
 > You should use the Adobe ID provided during the lab.
 
