@@ -1,7 +1,7 @@
 
 # Setting up
 
-In this section you'll complete 2 steps:
+In this section you'll complete 3 steps:
 
   * [Set up an action in Adobe I/O Runtime](#set-up-an-action-in-adobe-io-runtime)
   * [Retrieve the URL for your action](#retrieve-the-url-for-your-action)
