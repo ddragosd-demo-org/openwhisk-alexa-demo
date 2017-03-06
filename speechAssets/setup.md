@@ -1,10 +1,11 @@
 
 # Setting up
 
-In this section you'll complete 3 steps:
+In this section you'll complete a few steps:
 
   * [Set up an action in Adobe I/O Runtime](#set-up-an-action-in-adobe-io-runtime)
   * [Retrieve the URL for your action](#retrieve-the-url-for-your-action)
+  * [Setup an Amazon Alexa Skill](#setup-an-amazon-alexa-skill)
   * [Connect the action with an Amazon Alexa skill](#setup-an-amazon-alexa-skill)
   
 
@@ -55,6 +56,30 @@ Which events would you like to trigger this webhook? | _Just the push event._
 
 
 :boom: Congratulations ! At this point your code is deployed in the Adobe I/O Runtime. Let's go ahead and invoke this action with Amazon Alexa.
+
+## Setup an Amazon Alexa Skill 
+
+1. Login to Amazon Developer Portal at https://developer.amazon.com/
+
+   > :bulb: The lab should have provided you with access credentials.
+
+2. Select the `Alexa` tab and then click on `Get Started` in Alexa Skill Kit box.
+
+  <img src="./readmeAssets/amazon-alexa-selection.png" height="220">
+
+3. Your Amazon developer account provided for the lab is most likely setup with the `Adobe Analytics Skill` under `You skills` tab.  In this case you can fast forward to step #6 or read below for on overview on how to configure a new skill.
+
+4. ##### Setup general skill info
+  * The `Name` field should contain something unique.
+  * `Invocation name` is what Alexa uses to start the Skill; for example if the invocation name is `Adobe Analytics` you should say _Use Adobe Analytics_ to activate the skill.
+  * The global fields can be left with the default value
+
+  <img src="./readmeAssets/skills_info.png?raw=true" height="360">
+
+5. ##### Setup an interaction model
+   * Paste in the intent schema from [IntentSchema.json](./IntentSchema.json)
+
+    <img src="./readmeAssets/interaction_model.png?raw=true" height="470">
 
 
 
