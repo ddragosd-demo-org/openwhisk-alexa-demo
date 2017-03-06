@@ -27,12 +27,12 @@ In this section you'll complete 2 steps:
 
    Configure the new webhook with the following information:
 
-Field        |    Value
------------- | -------------
-Payload URL  | `https://runtime-preview.adobe.io/github/webhook`
-Content type | _application/json_
-Secret       | _( provided during the lab )_
-Which events would you like to trigger this webhook? | _Just the push event._
+ Field        |    Value
+ ------------ | -------------
+ Payload URL  | `https://runtime-preview.adobe.io/github/webhook`
+ Content type | _application/json_
+ Secret       | _( provided during the lab )_
+ Which events would you like to trigger this webhook? | _Just the push event._
 
    When done, click the `Add webhook` button. Once the webhook is saved, you should see it listed.
 
