@@ -34,14 +34,12 @@
    Secret       | _( provided during the lab )_
    Which events would you like to trigger this webhook? | _Just the push event._
 
-   When done, click the `Add webhook` button.
+   When done, click the `Add webhook` button. Once the webhook is saved, you should see it listed.
 
    ![Github webhook setup](./readmeAssets/github-webhook-setup.png)
 
-   Once the webhook is saved, you should see it listed.
-
 4. ##### Retrieve the URL for your action.
-    Click the `Edit` button to go back into the webhook edit screen, in order to get the URL to your action.
+    Click the `Edit` button to go back into the webhook edit screen in order to get the URL to your action.
 
   Scroll down to see the `Recent deliveries` and click on the `...` button or the UID to open the details.
   ![Github recent delivery](./readmeAssets/github-recent-delivery.png)
@@ -65,7 +63,7 @@
 2. Select the `Alexa` tab and then click on `Get Started` in Alexa Skill Kit box.
     ![Alexa-selection-ui](./readmeAssets/amazon-alexa-selection.png/)
 
-3. Your Amazon developer account provided for the lab is most likely setup with the `Adobe Analytics Skill` under `You skills` tab.  In this case you can fast forward to step #6 or read below how to configure a new skill.
+3. Your Amazon developer account provided for the lab is most likely setup with the `Adobe Analytics Skill` under `You skills` tab.  In this case you can fast forward to step #6 or read below for on overview on how to configure a new skill.
 
 4. ##### Setup general skill info
   * The `Name` field should contain something unique.
@@ -80,9 +78,9 @@
     ![Interaction Model Setup](./readmeAssets/interaction_model.png?raw=true )
 
   * Create a custom slot for each of the items in [./customSlotTypes](./customSlotTypes).
-      * Click `Add Slot Type` and enter a `Type` and the associated `Values` similar to the screenshot bellow:
+      * Click `Add Slot Type` and enter a `Type` and the associated `Values` similar to the screenshot bellow with `LIST_OF_DURATIONS` Type.
+      * Then add another slot type called `LIST_OF_METRICS` from [./customSlotTypes](./customSlotTypes).
       ![Edit Slot Type](./readmeAssets/amazon-alexa-custom-slot-type-edit.png)
-      * Add another slot type called `LIST_OF_METRICS` from [./customSlotTypes](./customSlotTypes).
 
   * In `Sample utterances` text area paste the sample utterances from [SampleUtterances.txt](./SampleUtterances.txt).
 
@@ -90,7 +88,6 @@
 
 6. ##### Link the Alexa skill with your GitHub code deployed in the Adobe I/O Runtime
    Click the `Configuration` option on the left side menu to see something similar to the screenshot below:
-    ![Configuration](./readmeAssets/amazon-alexa-setup-endpoint.png )
 
     * ##### Service Endpoint
       Select the `HTTPS` option for `Service Endpoint Type`.
@@ -102,12 +99,12 @@
 
       > :bulb: Alexa will invoke this URL on each interaction with an end-user.
 
+      ![Configuration](./readmeAssets/amazon-alexa-setup-endpoint.png )
+
 7. ##### :id: Allow users to authenticate with their Adobe ID
     This step connects an Alexa user with a user in Adobe's Marketing Cloud. This Adobe ID will be used to extract data from Adobe Analytics. For this the skill needs to be instructed how to authenticate users.
 
     Answer `Yes` to the question `Do you want to allow users to create an account or link to an existing account with you`
-
-    ![Alexa-setup-account-linking](./readmeAssets/amazon-alexa-link-account.png)
 
     * Set the Authorization URL to:
       ```
@@ -131,6 +128,8 @@
 
     * Set Authorization Grant type to
     * Click `Next`
+    
+    ![Alexa-setup-account-linking](./readmeAssets/amazon-alexa-link-account.png)
 
 8. #####  Configure an SSL Certificate
   In this step you have to select the second option `My development endpoint is a sub-domain of a domain that has a wildcard certificate` .
