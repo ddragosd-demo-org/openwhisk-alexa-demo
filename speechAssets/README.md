@@ -19,35 +19,42 @@
     > :bulb: Make sure the repository is public
 
 3. ##### Configure a new webhook
+
+   In this step you'll deploy your own code into Adobe I/O Runtime so that you can respond to Alexa voice commands and extract data from Adobe Analytics in response.
+
    Visit your new repo and go to `Settings` > `Webhooks` > `Add webhook`
+   ![Github webhooks view](./readmeAssets/github-webhooks-view.png)
 
    Configure the new webhook with the following information:
 
-   Field | Value
+   Field        |    Value
    ------------ | -------------
-   Payload URL | `https://runtime-preview.adobe.io/github/webhook`
+   Payload URL  | `https://runtime-preview.adobe.io/github/webhook`
    Content type | _application/json_
-   Secret | _( provided during the lab )_
+   Secret       | _( provided during the lab )_
    Which events would you like to trigger this webhook? | _Just the push event._
+
+   When done, click the `Add webhook` button.
 
    ![Github webhook setup](./readmeAssets/github-webhook-setup.png)
 
-   When done click the `Add webhook` button.
-
-   ![Github webhooks view](./readmeAssets/github-webhooks-view.png)
-
-   Once the webhook is saved you should see it listed.
+   Once the webhook is saved, you should see it listed.
 
 4. ##### Retrieve the URL for your action.
-    Click the `Edit` button to go back into the webhook edit screen in order to get the URL to your action.
-  Scroll down to see the `Recent deliveries`.
-  ![Github recent delivery](./readmeAssets/github-recent-delivery.png) and click on the `...` button or the UID to open the details.
-  ![Github recent delivery expanded](./readmeAssets/github-recent-delivery-open.png)
+    Click the `Edit` button to go back into the webhook edit screen, in order to get the URL to your action.
+
+  Scroll down to see the `Recent deliveries` and click on the `...` button or the UID to open the details.
+  ![Github recent delivery](./readmeAssets/github-recent-delivery.png)
+
   The `Response` Tab should indicate a `200` Response with a Body containing the  `action_endpoint`.
+
+  > :bulb: Save the value of the `action_endpoint` field as you need it in the next step.
+
+  ![Github recent delivery expanded](./readmeAssets/github-recent-delivery-open.png)
+
 
 :boom: Congratulations ! At this point your code is deployed in the Adobe I/O Runtime. Let's go ahead and invoke this action with Amazon Alexa.
 
-> :bulb: Make a note of the `action_endpoint` value as you need it in the next step.
 
 ## Setup an Amazon Alexa Skill 
 
@@ -61,38 +68,44 @@
 3. Your Amazon developer account provided for the lab is most likely setup with the `Adobe Analytics Skill` under `You skills` tab.  In this case you can fast forward to step #6 or read below how to configure a new skill.
 
 4. ##### Setup general skill info
+  * The `Name` field should contain something unique.
+  * `Invocation name` is what Alexa uses to start the Skill; for example if the invocation name is `Adobe Analytics` you should say _Use Adobe Analytics_ to activate the skill.
+  * The global fields can be left with the default value
+
   ![Skills Info](./readmeAssets/skills_info.png?raw=true )
-    * The `Name` field should contain something unique.
-    * `Invocation name` is what Alexa uses to start the Skill; for example if the skill is named `Adobe Analytics` you would say _Use Adobe Analytics_ to activate the skill.
-    * The global fields can be left with the default value
 
 5. ##### Setup an interaction model
+   * Paste in the intent schema from [IntentSchema.json](./IntentSchema.json)
+
     ![Interaction Model Setup](./readmeAssets/interaction_model.png?raw=true )
 
-    * Paste in the intent schema from [IntentSchema.json](./IntentSchema.json)
+  * Create a custom slot for each of the items in [./customSlotTypes](./customSlotTypes).
+      * Click `Add Slot Type` and enter a `Type` and the associated `Values` similar to the screenshot bellow:
+      ![Edit Slot Type](./readmeAssets/amazon-alexa-custom-slot-type-edit.png)
+      * Add another slot type called `LIST_OF_METRICS` from [./customSlotTypes](./customSlotTypes).
 
-    * Create a custom slot for each of the items in [./customSlotTypes](./customSlotTypes). Click `Add Slot Type` and enter a `Type` and the associated `Values` similar to the screenshot bellow:
-    ![Edit Slot Type](./readmeAssets/amazon-alexa-custom-slot-type-edit.png)
+  * In `Sample utterances` text area paste the sample utterances from [SampleUtterances.txt](./SampleUtterances.txt).
 
-    * Paste in sample utterances from [SampleUtterances.txt](./SampleUtterances.txt) inside the `Sample utterances` text area.
-
-    > To learn more about Alexa's interaction model see https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-interaction-model-reference
+    > Optionally if you want to learn more about Alexa's interaction model see https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-interaction-model-reference
 
 6. ##### Link the Alexa skill with your GitHub code deployed in the Adobe I/O Runtime
    Click the `Configuration` option on the left side menu to see something similar to the screenshot below:
     ![Configuration](./readmeAssets/amazon-alexa-setup-endpoint.png )
 
     * ##### Service Endpoint
+      Select the `HTTPS` option for `Service Endpoint Type`.
 
-      Paste here the value you got after setting up the GitHub webhook to [ Retrieve the URL for your action](#Retrieve-the-URL-for-your-action)
+      Paste the value you saved after setting up the GitHub webhook. The value should the a URL like:
       ```
-      https://runtime-preview.adobe.io/<...>
+      https://runtime-preview.adobe.io/github.com/<...>
       ```
 
       > :bulb: Alexa will invoke this URL on each interaction with an end-user.
 
 7. ##### :id: Allow users to authenticate with their Adobe ID
     This step connects an Alexa user with a user in Adobe's Marketing Cloud. This Adobe ID will be used to extract data from Adobe Analytics. For this the skill needs to be instructed how to authenticate users.
+
+    Answer `Yes` to the question `Do you want to allow users to create an account or link to an existing account with you`
 
     ![Alexa-setup-account-linking](./readmeAssets/amazon-alexa-link-account.png)
 
@@ -116,7 +129,13 @@
       ```
       These scopes are needed to pull data out from Marketing Cloud, Adobe Analytics.
 
-    * Set Authorization Grant type to Implicit
+    * Set Authorization Grant type to
+    * Click `Next`
+
+8. #####  Configure an SSL Certificate
+  In this step you have to select the second option `My development endpoint is a sub-domain of a domain that has a wildcard certificate` .
+
+  Click  `Next`.
 
 :clap: You are now ready to use this skill. In the next chapter you will learn how to test it and enhance it.
 
@@ -147,11 +166,9 @@ There are several ways to interact with Alexa:
 Open the browser to: https://alexa.amazon.com .
 > Use the same credentials used to setup the Amazon Alexa skill.
 
-On the left side menu click on `Skills`, then click `Your skills` link on top of the page. You should see a list with your skills:
+On the left side menu click on `Skills`, then click `Your skills` link on top of the page. You should see a list with your skills. Click on `Adobe Analytics skill` to open it.
 
 ![Amazon Alexa Your Skills](./readmeAssets/amazon-alexa-your-skills.png)
-
-Click on `Adobe Analytics skill` to open it.
 
 
 ## Link Amazon Alexa with Adobe
@@ -165,7 +182,7 @@ Click on `Enable` button and login using an Adobe ID.The browser should redirect
 
 <img src="./readmeAssets/adobe-login-screen.png" height="250">
 
-Once login is successful with Adobe Alexa should confirm that with a message similar to the one in the screenshot below.
+Once login is successful with Adobe, Alexa should confirm it with a message similar to the one in the screenshot below.
 
 <img src="./readmeAssets/adobe-login-success.png" height="150">
 
