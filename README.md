@@ -3,7 +3,7 @@
 An OpenWhisk action as an Amazon Alexa Skill.
 
 ## Lab Setup
-[Setting up Instructions](/docs/setup.md#setting-up)
+[Instructions](/docs/setup.md#setting-up)
 
 ## Lab Exercises
 
