@@ -80,8 +80,7 @@ Which events would you like to trigger this webhook? | _Just the push event._
    * Paste in the intent schema from [IntentSchema.json](./IntentSchema.json)
 
   ```json
-{
-  "intents": [{
+{  "intents": [{
       "intent": "OneshotReportIntent",
       "slots": [
         {          "name": "Metric",     "type": "LIST_OF_METRICS"    },
@@ -98,11 +97,20 @@ Which events would you like to trigger this webhook? | _Just the push event._
     {      "intent": "AMAZON.HelpIntent"    },
     {      "intent": "AMAZON.StopIntent"    },
     {      "intent": "AMAZON.CancelIntent"  }
-  ]
-}
+  ]}
   ```
     <img src="./readmeAssets/interaction_model.png?raw=true" height="470">
 
+  * Create a custom slot for each of the items in [./customSlotTypes](./customSlotTypes) folder.
+      * Click `Add Slot Type` and enter a `Type` and the associated `Values` similar to the screenshot bellow with `LIST_OF_DURATIONS` Type.
+      * Then add another slot type called `LIST_OF_METRICS` from [./customSlotTypes](./customSlotTypes).
+
+      <img src="./readmeAssets/amazon-alexa-custom-slot-type-edit.png" height="300" >
+
+  * In `Sample utterances` text area paste the sample utterances from [SampleUtterances.txt](./SampleUtterances.txt) file.
+
+    > Optionally if you want to learn more about Alexa's interaction model see https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-interaction-model-reference
+    
 
 Click on `Enable` button and login using an Adobe ID.The browser should redirect you now to Adobe's login page.
 > You should use the Adobe ID provided during the lab.
