@@ -112,6 +112,51 @@ Which events would you like to trigger this webhook? | _Just the push event._
     > Optionally if you want to learn more about Alexa's interaction model see https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-interaction-model-reference
     
 
+6. ##### Link the Alexa skill with your GitHub code deployed in the Adobe I/O Runtime
+   Click the `Configuration` option on the left side menu to see something similar to the screenshot below:
+
+    * ##### Service Endpoint
+      Select the `HTTPS` option for `Service Endpoint Type`.
+
+      Paste the value you saved after setting up the GitHub webhook. The value should the a URL like:
+      ```
+      https://runtime-preview.adobe.io/github.com/<...>
+      ```
+
+      > :bulb: Alexa will invoke this URL on each interaction with an end-user.
+
+      <img src="./readmeAssets/amazon-alexa-setup-endpoint.png" height="250" >
+
+7. ##### :id: Allow users to authenticate with their Adobe ID
+    This step connects an Alexa user with a user in Adobe's Marketing Cloud. This Adobe ID will be used to extract data from Adobe Analytics. For this the skill needs to be instructed how to authenticate users.
+
+    Answer `Yes` to the question `Do you want to allow users to create an account or link to an existing account with you`
+
+    * Set the Authorization URL to:
+      ```
+      https://ims-na1.adobelogin.com/ims/authorize/v1
+      ```
+
+    * Set the Client ID to the value provided during the lab.
+
+    * Add the following domains to the list
+      ```
+      ims-na1.adobelogin.com
+
+      adobeid-na1.services.adobe.com
+      ```
+
+    * In the scopes field add:
+      ```
+      openid,AdobeID,read_organizations,additional_info.projectedProductContext,additional_info.job_function,session
+      ```
+      These scopes are needed to pull data out from Marketing Cloud, Adobe Analytics.
+
+    * Set Authorization Grant type to
+    * Click `Next`
+
+    <img src="./readmeAssets/amazon-alexa-link-account.png" height="420" >
+
 Click on `Enable` button and login using an Adobe ID.The browser should redirect you now to Adobe's login page.
 > You should use the Adobe ID provided during the lab.
 
