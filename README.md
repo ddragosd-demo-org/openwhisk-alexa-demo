@@ -8,9 +8,9 @@ In this lab we’re going to bring to life an important skill for digital assist
 
 Technologies and solutions used in this lab:
 
-* [Adobe Analytics](http://www.adobe.com/marketing-cloud/web-analytics.html) - the industry-leading solution for applying real-time analytics and detailed segmentation across all your marketing channels. Use it to discover high-value audiences and power customer intelligence for your business
+* [Adobe Analytics](http://www.adobe.com/marketing-cloud/web-analytics.html) - the industry-leading solution for applying real-time analytics and detailed segmentation across all your marketing channels. Use it to discover high-value audiences and power customer intelligence for your business.
 
-* [Adobe I/O Runtime](https://www.adobe.io/) - Adobe’s platform that allows you to easily extend Adobe’s Cloud Services and Products
+* [Adobe I/O Runtime](https://www.adobe.io/) - Adobe’s platform that allows you to easily extend Adobe’s cloud services and products.
 
 * [Amazon Alexa](https://alexa.amazon.com) - Alexa is an intelligent personal assistant developed by Amazon Lab126, made popular by the Amazon Echo.
 
