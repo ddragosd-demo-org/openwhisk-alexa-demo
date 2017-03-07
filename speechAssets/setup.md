@@ -6,7 +6,8 @@ In this section you'll complete a few steps:
   * [Set up an action in Adobe I/O Runtime](#set-up-an-action-in-adobe-io-runtime)
   * [Retrieve the URL for your action](#retrieve-the-url-for-your-action)
   * [Setup an Amazon Alexa Skill](#setup-an-amazon-alexa-skill)
-  * [Connect the action with an Amazon Alexa skill](#setup-an-amazon-alexa-skill)
+  * [Connect the action with an Amazon Alexa skill](#connect-the-action-with-an-amazon-alexa-skill)
+  * [Setup user authentication with Adobe](#setup-user-authentication-with-adobe)
   
 
 ~ `15 minutes`
@@ -112,7 +113,10 @@ Which events would you like to trigger this webhook? | _Just the push event._
     > Optionally if you want to learn more about Alexa's interaction model see https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-interaction-model-reference
     
 
-6. ##### Link the Alexa skill with your GitHub code deployed in the Adobe I/O Runtime
+## Connect the action with an Amazon Alexa skill
+   
+   Configure Alexa to invoke the action deployed in Adobe I/O Runtime each time a user makes a voice command.
+   
    Click the `Configuration` option on the left side menu to see something similar to the screenshot below:
 
     * ##### Service Endpoint
@@ -127,8 +131,9 @@ Which events would you like to trigger this webhook? | _Just the push event._
 
       <img src="./readmeAssets/amazon-alexa-setup-endpoint.png" height="250" >
 
-7. ##### :id: Allow users to authenticate with their Adobe ID
-    This step connects an Alexa user with a user in Adobe's Marketing Cloud. This Adobe ID will be used to extract data from Adobe Analytics. For this the skill needs to be instructed how to authenticate users.
+## Setup user authentication with Adobe
+
+   This step connects an Alexa user with a user in Adobe's Marketing Cloud. This Adobe ID will be used to extract data from Adobe Analytics.
 
     Answer `Yes` to the question `Do you want to allow users to create an account or link to an existing account with you`
 
@@ -157,13 +162,9 @@ Which events would you like to trigger this webhook? | _Just the push event._
 
     <img src="./readmeAssets/amazon-alexa-link-account.png" height="420" >
 
-Click on `Enable` button and login using an Adobe ID.The browser should redirect you now to Adobe's login page.
-> You should use the Adobe ID provided during the lab.
+* #####  Configure an SSL Certificate
+  Once you see the SSL Configuration screen select the second option `My development endpoint is a sub-domain of a domain that has a wildcard certificate` .
 
-<img src="./readmeAssets/adobe-login-screen.png" height="250">
+  Click  `Next`.
 
-Once login is successful with Adobe, Alexa should confirm it with a message similar to the one in the screenshot below.
-
-<img src="./readmeAssets/adobe-login-success.png" height="150">
-
-To complete this section move on to Exercise 1.
+:clap: You are now ready to use this skill. In the next chapter you will learn how to test it and enhance it.
