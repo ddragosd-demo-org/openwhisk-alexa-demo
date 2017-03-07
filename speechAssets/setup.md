@@ -26,7 +26,7 @@ This section goes through the steps that are needed to create an action in Adobe
 
    Visit your new repo and go to `Settings` > `Webhooks` > `Add webhook`
    
-   <img src="https://raw.githubusercontent.com/ddragosd-demo-org/openwhisk-alexa-demo/dyland-alexa/speechAssets/readmeAssets/github-webhooks-view.png" height="180">
+   <img src="./readmeAssets/github-webhooks-view.png" height="180">
 
    Configure the new webhook with the following information:
 
