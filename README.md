@@ -12,7 +12,7 @@ Technologies and solutions used in this lab:
 
 * [Adobe I/O Runtime](https://www.adobe.io/) - Adobe’s platform that allows you to easily extend Adobe’s cloud services and products.
 
-* [Amazon Alexa](https://alexa.amazon.com) - Alexa is an intelligent personal assistant developed by Amazon Lab126, made popular by the Amazon Echo.
+* [Amazon Alexa](https://alexa.amazon.com) - an intelligent personal assistant developed by Amazon Lab126, made popular by the Amazon Echo.
 
 
 ## Lab Setup
