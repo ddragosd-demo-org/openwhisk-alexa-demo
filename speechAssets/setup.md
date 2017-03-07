@@ -110,28 +110,28 @@ Which events would you like to trigger this webhook? | _Just the push event._
 
   * In `Sample utterances` text area paste the sample utterances from [SampleUtterances.txt](./SampleUtterances.txt) file.
 
-    > Optionally if you want to learn more about Alexa's interaction model see https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-interaction-model-reference
+> Optionally if you want to learn more about Alexa's interaction model see https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-interaction-model-reference
     
 
 ## Connect the action with an Amazon Alexa skill
    
-   Configure Alexa to invoke the action deployed in Adobe I/O Runtime each time a user makes a voice command.
+ Configure Alexa to invoke the action deployed in Adobe I/O Runtime each time a user makes a voice command.
    
-   Click the `Configuration` option on the left side menu to see something similar to the screenshot below:
+ Click the `Configuration` option on the left side menu to see something similar to the screenshot below:
 
-    * ##### Service Endpoint
+ * ##### Service Endpoint
     
-      Select the `HTTPS` option for `Service Endpoint Type`.
+   Select the `HTTPS` option for `Service Endpoint Type`.
 
-      Paste the value you saved after setting up the GitHub webhook. The value should the a URL like:
+   Paste the value you saved after setting up the GitHub webhook. The value should the a URL like:
       
-      ```
-      https://runtime-preview.adobe.io/github.com/<...>
-      ```
+   ```
+   https://runtime-preview.adobe.io/github.com/<...>
+   ```
 
-      > Alexa will invoke this URL on each interaction with an end-user.
+  > Alexa will invoke this URL on each interaction with an end-user.
 
-      <img src="./readmeAssets/amazon-alexa-setup-endpoint.png" height="250" >
+  <img src="./readmeAssets/amazon-alexa-setup-endpoint.png" height="250" >
 
 
 
