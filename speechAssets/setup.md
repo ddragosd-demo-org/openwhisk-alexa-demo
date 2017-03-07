@@ -131,38 +131,41 @@ Which events would you like to trigger this webhook? | _Just the push event._
 
       <img src="./readmeAssets/amazon-alexa-setup-endpoint.png" height="250" >
 
+
+
 ## Setup user authentication with Adobe
 
-   This step connects an Alexa user with a user in Adobe's Marketing Cloud. This Adobe ID will be used to extract data from Adobe Analytics.
+  This step connects an Alexa user with a user in Adobe's Marketing Cloud. This Adobe ID will be used to extract data from Adobe Analytics.
+ 
+  Answer `Yes` to the question `Do you want to allow users to create an account or link to an existing account with you`.
+ 
+  Then set the following:
 
-    Answer `Yes` to the question `Do you want to allow users to create an account or link to an existing account with you`
-
-    * Set the Authorization URL to:
+  * Set the Authorization URL to:
       ```
       https://ims-na1.adobelogin.com/ims/authorize/v1
       ```
 
-    * Set the Client ID to the value provided during the lab.
+  * Set the Client ID to the value provided during the lab.
 
-    * Add the following domains to the list
+  * Add the following domains to the list
       ```
       ims-na1.adobelogin.com
-
       adobeid-na1.services.adobe.com
       ```
 
-    * In the scopes field add:
+  * In the scopes field add:
       ```
       openid,AdobeID,read_organizations,additional_info.projectedProductContext,additional_info.job_function,session
       ```
       These scopes are needed to pull data out from Marketing Cloud, Adobe Analytics.
 
-    * Set Authorization Grant type to
-    * Click `Next`
+  * Set Authorization Grant type to
+  * Click `Next`
 
-    <img src="./readmeAssets/amazon-alexa-link-account.png" height="420" >
+  <img src="./readmeAssets/amazon-alexa-link-account.png" height="420" >
 
-* #####  Configure an SSL Certificate
+#####  Configure an SSL Certificate
   Once you see the SSL Configuration screen select the second option `My development endpoint is a sub-domain of a domain that has a wildcard certificate` .
 
   Click  `Next`.
