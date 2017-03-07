@@ -167,9 +167,9 @@ Which events would you like to trigger this webhook? | _Just the push event._
 
   <img src="./readmeAssets/amazon-alexa-link-account.png" height="420" >
 
-#####  Configure an SSL Certificate
+###  Configure an SSL Certificate
   Once you see the SSL Configuration screen select the second option `My development endpoint is a sub-domain of a domain that has a wildcard certificate` .
 
   Click  `Next`.
 
-You are now ready to use this skill. In the next chapter you will learn how to test it and enhance it.
+You are now ready to use this skill. In the next chapter you will learn how to test it and enhance it with new capabilities.
