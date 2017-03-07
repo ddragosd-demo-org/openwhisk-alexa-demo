@@ -1,5 +1,7 @@
 ## Exercise 3
 
+~ `20 minutes`
+
 In this exercise we will configure Alexa to respond to requests for the page views metric for the day.
 
 ### Step 1
@@ -20,7 +22,7 @@ var querySelectionHandlers = Alexa.CreateStateHandler(states.STATE_QUERY, {
 
         //Set metric to page views
         var metric = "metrics/pageviews";
-        
+
         //Based on the duration get the start and end dates
         var durationDates = analytics.dateUtil.getDurationFromToDates(duration);
 
@@ -29,7 +31,7 @@ var querySelectionHandlers = Alexa.CreateStateHandler(states.STATE_QUERY, {
 
         //Get selected report suite
         var reportSuiteId = this.event.session.attributes.selectedReportSuite.rsid;
-        
+
         //Call get metric using the information from the intent
         getMetric(this.event.session.user.accessToken, reportSuiteId, metric, durationDates, function metricResponseCallback(err, reportResponse) {
             var speechOutput;
@@ -108,7 +110,7 @@ function getMetric(token, rsid, metric, durationDates, metricResponseCallback) {
         "x-proxy-company": ANALYTICS_COMPANY
     }
 
-    //Instantiate Analytics API helper 
+    //Instantiate Analytics API helper
     var analytics = require('adobe-analytics');
 
     //Query metric
@@ -156,7 +158,7 @@ Add method to return a comma seperated list of metrics.
 
 ```javascript
 /**
- * Returns a comma separated list of supported metrics 
+ * Returns a comma separated list of supported metrics
  */
 function getAllMetricsText() {
     var metricList = '';
@@ -176,10 +178,27 @@ If you are editing the code in the browser commit the changes to alexa-skill.js,
 
 ### Step 8
 Change the location manifest.yaml to point to
-```
-exercises/exercise-3/alexa-skill.js
+```yaml
+    location: exercises/exercise-3/alexa-skill.js
 ```
 
 ### Step 9
 Commit changes back to github, either using the browser or the git CLI.
 
+### Step 10
+
+Invoke your skill.
+
+* `You:` _"Alexa, ask Adobe Analytics"_
+* `Alexa:` "_Welcome to Adobe Analytics.. Which report suite would you like to use? Summit Demo 2017, Template Report Suite_"
+
+* `You:` _"Summit"_
+* `Alexa`: _"Ok, using the Summit Demo 2017 report suite. How can I help you?"_
+
+* `You:`_"how many page views today ?"_
+* `Alexa`: _"The total number of page views today is ..."_
+
+* `You:` _"Thank you !"_
+* `Alexa:` _"My pleasure, have a fantastic day!"_
+
+> If you have any errors don't forget to check out the logs.
