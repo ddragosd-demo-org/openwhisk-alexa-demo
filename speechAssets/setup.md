@@ -1,7 +1,7 @@
 
 # Setting up
 
-In this section you'll complete a few steps:
+This section goes through the steps that are needed to create an action in Adobe I/O Runtime, connecting it with an Amazon Alexa skill.
 
   * [Set up an action in Adobe I/O Runtime](#set-up-an-action-in-adobe-io-runtime)
   * [Retrieve the URL for your action](#retrieve-the-url-for-your-action)
