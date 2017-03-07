@@ -35,7 +35,7 @@ Replace the `LaunchRequest` function inside of `newSessionHandlers` with the imp
 ```
 
 ### Step 3
-Add function to handle get report suites call
+Add function to handle get report suites call:
 
 ```javascript
 /**
@@ -64,7 +64,7 @@ function getReportSuites(token, reportSuitesResponseCallback) {
 ```
 
 ### Step 4
-Add rsidSelectionHandlers to handle rsid selection state requests
+Add `rsidSelectionHandlers` to handle rsid selection state requests:
 
 ```javascript
 // Create a new handler for the report suite selection state

@@ -137,7 +137,7 @@ function getMetricFromIntent(intent) {
 ```
 
 ### Step 6
-If you are editing the code in the browser commit the changes to alexa-skill.js, ignore this step if you are using the CLI.
+If you are editing the code in the browser commit the changes to `alexa-skill.js`, ignore this step if you are using the CLI.
 
 ### Step 7
 Change `manifest.yaml` to point to exercise 4

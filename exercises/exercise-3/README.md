@@ -5,10 +5,10 @@
 In this exercise we will configure Alexa to respond to requests for the page views metric for the day.
 
 ### Step 1
-Using the browser open exercises/exercise-3/alexa-skill.js in your github fork and click the pencil icon to edit it. If you are using the CLI open this file in a text editor.
+Using the browser open `exercises/exercise-3/alexa-skill.js` in your github fork and click the pencil icon to edit it. If you are using the CLI open this file in a text editor.
 
 ### Step 2
-Add querySelectionHandlers to skill, these methods will handle requests while in the Query state. To start we will just handle request for page view today.
+Add `querySelectionHandlers` to skill; these methods will handle requests while in the Query state. To start we will just handle request for page view today.
 
 ```javascript
 // Create a new handler for the Query state
@@ -138,7 +138,7 @@ function getMetric(token, rsid, metric, durationDates, metricResponseCallback) {
 ```
 
 ### Step 5
-Add getDurationVerb function
+Add `getDurationVerb` function
 
 ```javascript
 /**
@@ -154,7 +154,7 @@ function getDurationVerb(duration){
 ```
 
 ### Step 6
-Add method to return a comma seperated list of metrics.
+Add method to return a comma separated list of metrics.
 
 ```javascript
 /**
@@ -174,10 +174,10 @@ function getAllMetricsText() {
 ```
 
 ### Step 7
-If you are editing the code in the browser commit the changes to alexa-skill.js, ignore this step if you are using the CLI.
+If you are editing the code in the browser commit the changes to `alexa-skill.js`, ignore this step if you are using the CLI.
 
 ### Step 8
-Change the location manifest.yaml to point to
+Change the location `manifest.yaml` to point to
 ```yaml
     location: exercises/exercise-3/alexa-skill.js
 ```
