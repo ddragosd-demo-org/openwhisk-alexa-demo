@@ -67,7 +67,7 @@ Which events would you like to trigger this webhook? | _Just the push event._
 
   <img src="/docs/images/amazon-alexa-selection.png" height="220">
 
-3. Your Amazon developer account provided for the lab is most likely setup with the `Adobe Analytics Skill` under `You skills` tab.  In this case you can fast forward to step #6 or read below for on overview on how to configure a new skill.
+3. Your Amazon developer account provided for the lab is most likely setup with the `Adobe Analytics Skill` under `You skills` tab.  In this case you can fast forward to the next part, ["Connect the action with an Amazon Alexa skill"](connect-the-action-with-an-amazon-alexa-skill), or read below for on overview on how to configure a new skill.
 
 4. ##### Setup general skill info
   * The `Name` field should contain something unique.
