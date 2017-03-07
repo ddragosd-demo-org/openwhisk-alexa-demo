@@ -36,19 +36,20 @@
 
    When done, click the `Add webhook` button. Once the webhook is saved, you should see it listed.
 
-   ![Github webhook setup](./readmeAssets/github-webhook-setup.png)
+      <img src="./readmeAssets/github-webhook-setup.png?raw=true" height="400">
 
 4. ##### Retrieve the URL for your action.
     Click the `Edit` button to go back into the webhook edit screen in order to get the URL to your action.
 
   Scroll down to see the `Recent deliveries` and click on the `...` button or the UID to open the details.
-  ![Github recent delivery](./readmeAssets/github-recent-delivery.png)
+
+  <img src="./readmeAssets/github-recent-delivery.png?raw=true" height="80">
 
   The `Response` Tab should indicate a `200` Response with a Body containing the  `action_endpoint`.
 
   > :bulb: Save the value of the `action_endpoint` field as you need it in the next step.
 
-  ![Github recent delivery expanded](./readmeAssets/github-recent-delivery-open.png)
+  <img src="./readmeAssets/github-recent-delivery-open.png?raw=true" height="350">
 
 
 :boom: Congratulations ! At this point your code is deployed in the Adobe I/O Runtime. Let's go ahead and invoke this action with Amazon Alexa.
@@ -61,7 +62,8 @@
    > :bulb: The lab should have provided you with access credentials.
 
 2. Select the `Alexa` tab and then click on `Get Started` in Alexa Skill Kit box.
-    ![Alexa-selection-ui](./readmeAssets/amazon-alexa-selection.png/)
+
+  <img src="./readmeAssets/amazon-alexa-selection.png" height="220">
 
 3. Your Amazon developer account provided for the lab is most likely setup with the `Adobe Analytics Skill` under `You skills` tab.  In this case you can fast forward to step #6 or read below for on overview on how to configure a new skill.
 
@@ -70,19 +72,20 @@
   * `Invocation name` is what Alexa uses to start the Skill; for example if the invocation name is `Adobe Analytics` you should say _Use Adobe Analytics_ to activate the skill.
   * The global fields can be left with the default value
 
-  ![Skills Info](./readmeAssets/skills_info.png?raw=true )
+  <img src="./readmeAssets/skills_info.png?raw=true" height="360">
 
 5. ##### Setup an interaction model
    * Paste in the intent schema from [IntentSchema.json](./IntentSchema.json)
 
-    ![Interaction Model Setup](./readmeAssets/interaction_model.png?raw=true )
+    <img src="./readmeAssets/interaction_model.png?raw=true" height="470">
 
-  * Create a custom slot for each of the items in [./customSlotTypes](./customSlotTypes).
+  * Create a custom slot for each of the items in [./customSlotTypes](./customSlotTypes) folder.
       * Click `Add Slot Type` and enter a `Type` and the associated `Values` similar to the screenshot bellow with `LIST_OF_DURATIONS` Type.
       * Then add another slot type called `LIST_OF_METRICS` from [./customSlotTypes](./customSlotTypes).
-      ![Edit Slot Type](./readmeAssets/amazon-alexa-custom-slot-type-edit.png)
 
-  * In `Sample utterances` text area paste the sample utterances from [SampleUtterances.txt](./SampleUtterances.txt).
+      <img src="./readmeAssets/amazon-alexa-custom-slot-type-edit.png" height="300" >
+
+  * In `Sample utterances` text area paste the sample utterances from [SampleUtterances.txt](./SampleUtterances.txt) file.
 
     > Optionally if you want to learn more about Alexa's interaction model see https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-interaction-model-reference
 
@@ -99,7 +102,7 @@
 
       > :bulb: Alexa will invoke this URL on each interaction with an end-user.
 
-      ![Configuration](./readmeAssets/amazon-alexa-setup-endpoint.png )
+      <img src="./readmeAssets/amazon-alexa-setup-endpoint.png" height="250" >
 
 7. ##### :id: Allow users to authenticate with their Adobe ID
     This step connects an Alexa user with a user in Adobe's Marketing Cloud. This Adobe ID will be used to extract data from Adobe Analytics. For this the skill needs to be instructed how to authenticate users.
@@ -128,11 +131,11 @@
 
     * Set Authorization Grant type to
     * Click `Next`
-    
-    ![Alexa-setup-account-linking](./readmeAssets/amazon-alexa-link-account.png)
 
-8. #####  Configure an SSL Certificate
-  In this step you have to select the second option `My development endpoint is a sub-domain of a domain that has a wildcard certificate` .
+    <img src="./readmeAssets/amazon-alexa-link-account.png" height="420" >
+
+* #####  Configure an SSL Certificate
+  Once you see the SSL Configuration screen select the second option `My development endpoint is a sub-domain of a domain that has a wildcard certificate` .
 
   Click  `Next`.
 
