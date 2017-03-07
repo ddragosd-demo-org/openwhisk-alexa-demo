@@ -35,8 +35,8 @@ Secret       | _( provided during the lab )_
 Which events would you like to trigger this webhook? | _Just the push event._
 
    When done, click the `Add webhook` button. Once the webhook is saved, you should see it listed.
-
-      <img src="./readmeAssets/github-webhook-setup.png?raw=true" height="400">
+   
+   <img src="./readmeAssets/github-webhook-setup.png?raw=true" height="400">
 
 4. ##### Retrieve the URL for your action.
     Click the `Edit` button to go back into the webhook edit screen in order to get the URL to your action.
