@@ -18,7 +18,7 @@ In this section you'll complete a few steps:
 2. Fork the repository used for the lab from:
     https://github.com/adobe-apiplatform/adobeio-runtime-lab-analytics
 
-    > :bulb: Make sure the repository is public
+    > Make sure the repository is public
 
 3. ##### Configure a new webhook
 
@@ -120,14 +120,16 @@ Which events would you like to trigger this webhook? | _Just the push event._
    Click the `Configuration` option on the left side menu to see something similar to the screenshot below:
 
     * ##### Service Endpoint
+    
       Select the `HTTPS` option for `Service Endpoint Type`.
 
       Paste the value you saved after setting up the GitHub webhook. The value should the a URL like:
+      
       ```
       https://runtime-preview.adobe.io/github.com/<...>
       ```
 
-      > :bulb: Alexa will invoke this URL on each interaction with an end-user.
+      > Alexa will invoke this URL on each interaction with an end-user.
 
       <img src="./readmeAssets/amazon-alexa-setup-endpoint.png" height="250" >
 
@@ -170,4 +172,4 @@ Which events would you like to trigger this webhook? | _Just the push event._
 
   Click  `Next`.
 
-:clap: You are now ready to use this skill. In the next chapter you will learn how to test it and enhance it.
+You are now ready to use this skill. In the next chapter you will learn how to test it and enhance it.
