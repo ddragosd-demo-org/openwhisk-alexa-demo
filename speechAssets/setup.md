@@ -10,7 +10,7 @@ This section goes through the steps that are needed to create an action in Adobe
   * [Setup user authentication with Adobe](#setup-user-authentication-with-adobe)
   
 
-~ `25 minutes`
+~ `15 minutes`
 
 ## Set up an action in Adobe I/O Runtime
 
