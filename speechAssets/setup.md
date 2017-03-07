@@ -10,7 +10,7 @@ In this section you'll complete a few steps:
   * [Setup user authentication with Adobe](#setup-user-authentication-with-adobe)
   
 
-~ `15 minutes`
+~ `25 minutes`
 
 ## Set up an action in Adobe I/O Runtime
 
