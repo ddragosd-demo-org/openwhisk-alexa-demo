@@ -31,10 +31,12 @@ This section goes through the steps that are needed to create an action in Adobe
 
 Field        |    Value
 ------------ | -------------
-Payload URL  | `https://runtime-preview.adobe.io/github/webhook`
+Payload URL  | `https://runtime-preview.adobe.io/github/webhook?api_key=...&analytics_company=...`
 Content type | _application/json_
 Secret       | _( provided during the lab )_
 Which events would you like to trigger this webhook? | _Just the push event._
+
+   > `api_key`, `analytics_company`, and `Secret` are provided during the lab.
 
    When done, click the `Add webhook` button. Once the webhook is saved, you should see it listed.
 
@@ -77,7 +79,7 @@ Which events would you like to trigger this webhook? | _Just the push event._
   <img src="/docs/images/skills_info.png?raw=true" height="360">
 
 5. ##### Setup an interaction model
-   * Paste in the intent schema from [IntentSchema.json](./IntentSchema.json)
+   * Paste in the intent schema from [IntentSchema.json](/speechAssets/IntentSchema.json)
 
   ```json
 {  "intents": [{
