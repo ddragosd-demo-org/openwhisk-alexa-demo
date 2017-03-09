@@ -29,12 +29,12 @@ This section goes through the steps that are needed to create an action in Adobe
 
    Configure the new webhook with the following information:
 
-Field        |    Value
------------- | -------------
-Payload URL  | `https://runtime-preview.adobe.io/github/webhook?api_key=...&analytics_company=...`
-Content type | _application/json_
-Secret       | _( provided during the lab )_
-Which events would you like to trigger this webhook? | _Just the push event._
+   Field        |    Value
+   ------------ | -------------
+   Payload URL  | `https://runtime-preview.adobe.io/github/webhook?api_key=...&analytics_company=...`
+   Content type | _application/json_
+   Secret       | _( provided during the lab )_
+   Which events would you like to trigger this webhook? | _Just the push event._
 
    > `api_key`, `analytics_company`, and `Secret` are provided during the lab.
 
@@ -52,12 +52,12 @@ Which events would you like to trigger this webhook? | _Just the push event._
 
   The `Response` Tab should indicate a `200` Response with a Body containing the  `action_endpoint`.
 
-  > :bulb: Save the value of the `action_endpoint` field as you need it in the next step.
+  > Save the value of the `action_endpoint` field as you need it in the next step.
 
   <img src="/docs/images/github-recent-delivery-open.png" height="350">
 
 
-:boom: Congratulations ! At this point your code is deployed in the Adobe I/O Runtime. Let's go ahead and invoke this action with Amazon Alexa.
+Congratulations ! At this point your code is deployed in the Adobe I/O Runtime. Let's go ahead and invoke this action with Amazon Alexa.
 
 ## Setup an Amazon Alexa Skill 
 
@@ -67,7 +67,7 @@ Which events would you like to trigger this webhook? | _Just the push event._
 
 2. Select the `Alexa` tab and then click on `Get Started` in Alexa Skill Kit box.
 
-  <img src="/docs/images/amazon-alexa-selection.png" height="220">
+    <img src="/docs/images/amazon-alexa-selection.png" height="220">
 
 3. Your Amazon developer account provided for the lab is most likely setup with the `Adobe Analytics Skill` under `You skills` tab.  In this case you can fast forward to the next part, ["Connect the action with an Amazon Alexa skill"](connect-the-action-with-an-amazon-alexa-skill), or read below for on overview on how to configure a new skill.
 
@@ -76,32 +76,32 @@ Which events would you like to trigger this webhook? | _Just the push event._
   * `Invocation name` is what Alexa uses to start the Skill; for example if the invocation name is `Adobe Analytics` you should say _Use Adobe Analytics_ to activate the skill.
   * The global fields can be left with the default value
 
-  <img src="/docs/images/skills_info.png?raw=true" height="360">
+    <img src="/docs/images/skills_info.png?raw=true" height="360">
 
 5. ##### Setup an interaction model
    * Paste in the intent schema from [IntentSchema.json](/speechAssets/IntentSchema.json)
 
-  ```json
-{  "intents": [{
-      "intent": "OneshotReportIntent",
-      "slots": [
-        {          "name": "Metric",     "type": "LIST_OF_METRICS"    },
-        {          "name": "Duration",   "type": "LIST_OF_DURATIONS"  }
-      ]
-    },{
-      "intent": "ReportSuiteSelectionIntent",
-      "slots": [
-        {          "name": "ReportSuite",  "type": "AMAZON.LITERAL"   }
-      ]
-    },
-    {      "intent": "PageViewsTodayIntent" },
-    {      "intent": "ThankYouIntent"       },
-    {      "intent": "AMAZON.HelpIntent"    },
-    {      "intent": "AMAZON.StopIntent"    },
-    {      "intent": "AMAZON.CancelIntent"  }
-  ]}
-  ```
-  <img src="/docs/images/interaction_model.png?raw=true" height="470">
+     ```json
+      {  "intents": [{
+            "intent": "OneshotReportIntent",
+            "slots": [
+              {          "name": "Metric",     "type": "LIST_OF_METRICS"    },
+              {          "name": "Duration",   "type": "LIST_OF_DURATIONS"  }
+            ]
+          },{
+            "intent": "ReportSuiteSelectionIntent",
+            "slots": [
+              {          "name": "ReportSuite",  "type": "AMAZON.LITERAL"   }
+            ]
+          },
+          {      "intent": "PageViewsTodayIntent" },
+          {      "intent": "ThankYouIntent"       },
+          {      "intent": "AMAZON.HelpIntent"    },
+          {      "intent": "AMAZON.StopIntent"    },
+          {      "intent": "AMAZON.CancelIntent"  }
+        ]}
+      ```
+      <img src="/docs/images/interaction_model.png?raw=true" height="470">
 
   * Create a custom slot for each of the items in [/speechAssets/customSlotTypes](/speechAssets/customSlotTypes) folder.
       * Click `Add Slot Type` and enter a `Type` and the associated `Values` similar to the screenshot bellow with `LIST_OF_DURATIONS` Type.
@@ -163,7 +163,7 @@ Which events would you like to trigger this webhook? | _Just the push event._
       ```
       These scopes are needed to pull data out from Marketing Cloud, Adobe Analytics.
 
-  * Set Authorization Grant type to
+  * Set Authorization Grant type to `Implicit Grant`
   * Click `Next`
 
   <img src="/docs/images/amazon-alexa-link-account.png" height="420" >
