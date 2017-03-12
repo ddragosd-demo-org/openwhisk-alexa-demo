@@ -104,12 +104,23 @@ Congratulations ! At this point your code is deployed in the Adobe I/O Runtime. 
       <img src="/docs/images/interaction_model.png?raw=true" height="470">
 
   * Create a custom slot for each of the items in [/speechAssets/customSlotTypes](/speechAssets/customSlotTypes) folder.
-      * Click `Add Slot Type` and enter a `Type` and the associated `Values` similar to the screenshot bellow with `LIST_OF_DURATIONS` Type.
+      * Click `Add Slot Type`
+      * enter a `Type` and the associated `Values`
+      * start with `LIST_OF_DURATIONS` Type and `Enter Values`:
+        ```
+        today
+        yesterday
+        this week
+        last week
+        this month
+        last month
+        this year
+        last year
+        ```
+        <img src="/docs/images/amazon-alexa-custom-slot-type-edit.png" height="300">
       * Then add another slot type called `LIST_OF_METRICS` from [/speechAssets/customSlotTypes](/speechAssets/customSlotTypes).
 
-      <img src="/docs/images/amazon-alexa-custom-slot-type-edit.png" height="300" >
-
-  * In `Sample utterances` text area paste the sample utterances from [SampleUtterances.txt](./SampleUtterances.txt) file.
+  * In `Sample utterances` text area paste the sample utterances from [SampleUtterances.txt](/speechAssets/SampleUtterances.txt) file.
 
 > Optionally if you want to learn more about Alexa's interaction model see https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/alexa-skills-kit-interaction-model-reference
 
