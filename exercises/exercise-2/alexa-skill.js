@@ -11,7 +11,7 @@
  * either express or implied.  See the License for the specific language governing permissions and
  * limitations under the License.
  */
- 
+
 var Alexa = require('alexa-sdk');   //Alexa SDK
 
 var states = {
@@ -26,6 +26,23 @@ var API_KEY = '';
 /* provided */
 var ANALYTICS_COMPANY = '';
 /* provided */
+
+//Supported Metrics
+var METRICS = {
+    'pageviews': "metrics/pageviews",
+    'page views': "metrics/pageviews",
+    'visitors': "metrics/visitors",
+    'visits':"metrics/visits",
+    'bounces':"metrics/bounces",
+    'bounce rate': "metrics/bouncerate",
+    'average page depth':'metrics/averagepagedepth',
+};
+
+//Measurements of Metrics
+var MEASUREMENT = {
+    'metrics/bouncerate': "percent",
+    'metrics/averagepagedepth': "pages"
+};
 
 //Speech strings
 var languageStrings = {
@@ -56,10 +73,199 @@ var newSessionHandlers = {
     'LaunchRequest': function () {
         //Skill was launched
 
-        //TODO: Say Hello!
-        this.emit(':tell', "Hello NAME");
-    }
+        //Set RSID selection state
+        this.handler.state = states.STATE_RSID_SELECTION;
+
+        //Store local scope
+        var that = this;
+
+        //Get a list of report suites
+        getReportSuites(this.event.session.user.accessToken, function reportSuitesResponseCallback(err, reportSuites) {
+            //Get a comma separated list of the report suites
+            var reportSuiteList = getReportsSuitesListFromObject(reportSuites);
+            console.log("Reportsuite list " + reportSuiteList);
+
+            that.attributes['reportSuites'] = reportSuites;
+            that.attributes['speechOutput'] = that.t("WELCOME", reportSuiteList);
+            that.attributes['repromptSpeech'] = that.t("WELCOME_REPROMPT", reportSuiteList);
+            that.emit(':ask', that.attributes['speechOutput'], that.attributes['repromptSpeech']);
+        });
+    },
+     'ThankYouIntent': function () {
+        //User ask for something we are unable to answer
+        var speechOutput = this.t("YOU_ARE_WELCOME");
+        this.emit(':tell', speechOutput);
+    },
+    'Unhandled': function () {
+        //Get a comma separated list of the report suites
+        var reportSuites = this.event.session.attributes.reportSuites;
+        var reportSuiteList = getReportsSuitesListFromObject(reportSuites);
+
+        //User ask for something we are unable to answer
+        var speechOutput = this.t("UNKNOWN_COMMAND_RSID_SELECTION", reportSuiteList);
+        var reprompt = this.t("UNKNOWN_COMMAND_REPROMPT_RSID_SELECTION", reportSuiteList);
+        this.emit(':ask', speechOutput, reprompt);
+    },
+    'AMAZON.HelpIntent': function () {
+        //Get a comma separated list of the report suites
+        var reportSuites = this.event.session.attributes.reportSuites;
+        var reportSuiteList = getReportsSuitesListFromObject(reportSuites);
+
+        //User asked for help
+        var speechOutput = this.t("HELP_MESSAGE_RSID_SELECTION", reportSuiteList);
+        var reprompt = this.t("HELP_REPROMPT_RSID_SELECTION", reportSuiteList);
+        this.emit(':ask', speechOutput, reprompt);
+    },
+    "AMAZON.StopIntent": function () {
+        //User stopped the skill
+        this.emit(':tell', this.t("STOP_MESSAGE"));
+    },
+    "AMAZON.CancelIntent": function () {
+        //User cancelled the skill
+        this.emit(':tell', this.t("STOP_MESSAGE"));
 };
+
+// Create a new handler for the report suite selection state
+var rsidSelectionHandlers = Alexa.CreateStateHandler(states.STATE_RSID_SELECTION, {
+    'LaunchRequest': function () {
+        this.emit('LaunchRequest'); // Uses the handler in newSessionHandlers
+    },
+    'ReportSuiteSelectionIntent': function () {
+        console.log("ReportSuiteSelectionIntent Started");
+
+        //Get all the reports suites loaded during this session
+        var reportSuites = this.event.session.attributes.reportSuites;
+
+        //Try and match the spoken report suite to one in our list
+        var matchingReportSuite = matchReportSuite(this.event.request.intent.slots.ReportSuite.value, reportSuites);
+        if(!matchingReportSuite.error){
+            //We found a match!
+
+            //Enter the query state
+            //this.handler.state = states.STATE_QUERY;
+
+            //Store the selected report suite in session
+            this.attributes['selectedReportSuite'] = matchingReportSuite;
+
+            //Tell user they can now ask for data
+            var speechOutput = this.t("REPORT_SUITE_SELECTED", matchingReportSuite.name);
+            var reprompt = this.t("REPORT_SUITE_SELECTED_REPROMPT");
+            this.emit(':ask', speechOutput, reprompt);
+        }else{
+            //We were unable to match the spoken word to a report suite
+            var reportSuiteList = getReportsSuitesListFromObject(reportSuites);
+            var speechOutput = this.t("UNKNOWN_COMMAND_RSID_SELECTION", reportSuiteList);
+            var reprompt = this.t("UNKNOWN_COMMAND_REPROMPT_RSID_SELECTION", reportSuiteList);
+            this.emit(':ask', speechOutput, reprompt);
+        }
+    },
+    'ThankYouIntent': function () {
+        //User ask for something we are unable to answer
+        var speechOutput = this.t("YOU_ARE_WELCOME");
+        this.emit(':tell', speechOutput);
+    },
+    'Unhandled': function () {
+        //Get a comma separated list of the report suites
+        var reportSuites = this.event.session.attributes.reportSuites;
+        var reportSuiteList = getReportsSuitesListFromObject(reportSuites);
+
+        //User ask for something we are unable to answer
+        var speechOutput = this.t("UNKNOWN_COMMAND_RSID_SELECTION", reportSuiteList);
+        var reprompt = this.t("UNKNOWN_COMMAND_REPROMPT_RSID_SELECTION", reportSuiteList);
+        this.emit(':ask', speechOutput, reprompt);
+    },
+    'AMAZON.HelpIntent': function () {
+        //Get a comma separated list of the report suites
+        var reportSuites = this.event.session.attributes.reportSuites;
+        var reportSuiteList = getReportsSuitesListFromObject(reportSuites);
+
+        //User asked for help
+        var speechOutput = this.t("HELP_MESSAGE_RSID_SELECTION", reportSuiteList);
+        var reprompt = this.t("HELP_REPROMPT_RSID_SELECTION", reportSuiteList);
+        this.emit(':ask', speechOutput, reprompt);
+    },
+    "AMAZON.StopIntent": function () {
+        //User stopped the skill
+        this.emit(':tell', this.t("STOP_MESSAGE"));
+    },
+    "AMAZON.CancelIntent": function () {
+        //User cancelled the skill
+        this.emit(':tell', this.t("STOP_MESSAGE"));
+    }
+});
+
+/**
+ * Returns a comma separated list of report suites loaded..
+ */
+function getReportsSuitesListFromObject(reportSuites) {
+    var reportSuiteList = '';
+    for (var key in reportSuites) {
+        var reportSuite = reportSuites[key];
+        reportSuiteList += reportSuite.name + ", ";
+    }
+
+    return reportSuiteList;
+}
+
+/**
+ * Get the list of report suites
+ */
+function getReportSuites(token, reportSuitesResponseCallback) {
+    //Create API headers
+    var headers = {
+        "Authorization": "Bearer " + token,
+        "x-api-key": API_KEY,
+        "x-proxy-company": ANALYTICS_COMPANY
+    };
+
+    var analytics = require('adobe-analytics');
+
+    analytics.config(headers).then(function (api) {
+        api.collections.findAll({expansion: "name", limit: "50"}).then(function (result) {
+            var data = JSON.parse(result["data"]);
+            var reportSuites = data.content;
+            console.log(JSON.stringify(reportSuites));
+            reportSuitesResponseCallback(null, reportSuites);
+        })
+    })
+}
+
+/**
+ * Tries to match a report suite with the spoken name
+ */
+function matchReportSuite(spokenLiteral, reportSuites) {
+    var reportSuiteList = '';
+    for (var key in reportSuites) {
+        var reportSuite = reportSuites[key];
+        var re = new RegExp(spokenLiteral.toLowerCase(),"g");
+        var match = reportSuite.name.toLowerCase().match(re);
+        if(match != null){
+            console.log("Found report suite match " + reportSuite);
+            return reportSuite;
+        }
+    }
+
+    console.log("No match found");
+    return {
+        error: true
+    }
+}
+
+
+/**
+ * Returns a comma separated list of supported metrics 
+ */
+function getAllMetricsText() {
+    var metricList = '';
+    for (var metric in METRICS) {
+        //pageviews and page views is listed as metrics.. Don't say them twice.
+        if(metric != "page views"){
+           metricList += metric + ", ";
+        }
+    }
+
+    return metricList;
+}
 
 var main = function (event) {
     console.log('ALEXA Event', event.request.type + '!');
@@ -79,7 +285,7 @@ var main = function (event) {
                     });
                 alexaSDK.APP_ID = APP_ID;
                 alexaSDK.resources = languageStrings;
-                alexaSDK.registerHandlers(newSessionHandlers);
+                alexaSDK.registerHandlers(newSessionHandlers, rsidSelectionHandlers);
                 return alexaSDK.execute();
             } catch (err) {
                 console.log(err);
@@ -87,4 +293,3 @@ var main = function (event) {
             }
         });
 };
-
