@@ -123,6 +123,7 @@ var newSessionHandlers = {
     "AMAZON.CancelIntent": function () {
         //User cancelled the skill
         this.emit(':tell', this.t("STOP_MESSAGE"));
+    }
 };
 
 // Create a new handler for the report suite selection state
