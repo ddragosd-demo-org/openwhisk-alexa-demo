@@ -212,6 +212,8 @@ function getReportsSuitesListFromObject(reportSuites) {
  * Get the list of report suites
  */
 function getReportSuites(token, reportSuitesResponseCallback) {
+    console.log("getReportSuites()");
+    
     //Create API headers
     var headers = {
         "Authorization": "Bearer " + token,
